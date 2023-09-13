@@ -13,7 +13,7 @@ Sistem informasi penggajian adalah sistem yang digunakan untuk mengumpulkan, mem
 ````
 
 - Hidayat Widi Saputra `2341720157`
-- Rafi Ody Prasetyo
+- Rafi Ody Prasetyo `2341720180`
 - Sadiya Maritza
 
 ## More Info
