@@ -16,13 +16,17 @@ public class MainApp {
                 "                                                                                                                                    ");
 
         Scanner scInput = new Scanner(System.in);
-        int potongan_Gaji, golongan, jmlMasuk, jmlTdkMasuk, pot_Tetap;  // untuk variable int yang butuh input, taruh sini
-        int total_Gaji, pokok_Gaji, uangTunjangan;                      // untuk variable int yang tidak butuh input, taruh sini
-                                                                        // biar apa? biar kelihatan rapi
+        // untuk variable int yang butuh input, taruh sini
+        int potongan_Gaji, jmlMasuk, jmlTdkMasuk, pot_Tetap;
+        char golongan;     
+        // untuk variable int yang tidak butuh input, taruh sini       
+        int total_Gaji, pokok_Gaji, uangTunjangan;                      
+        // biar apa? biar kelihatan rapi   
+                                                                     
         System.out.print("Masukkan Name: ");
         String nama = scInput.nextLine();
         System.out.print("(bilangan real) Masukkan Golongan\t\t: ");
-        golongan = scInput.nextInt();
+        golongan = scInput.next().charAt(0);
         System.out.print("(bilangan real) Masukkan Jumlah Masuk\t\t: ");
         jmlMasuk = scInput.nextInt();
         System.out.print("(bilangan real) Masukkan Jumlah Tidak Masuk\t: ");
@@ -31,7 +35,7 @@ public class MainApp {
         pot_Tetap = scInput.nextInt();
 
         switch (golongan) {
-            case 1:
+            case 'A':
                 pokok_Gaji = 1500000;
                 uangTunjangan = 250000;
                 break;
