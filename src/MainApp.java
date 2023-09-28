@@ -41,15 +41,15 @@ public class MainApp {
                 break;
             case 'B':
                 pokok_Gaji = 2000000;
-                uangTunjangan = 3000000;
+                uangTunjangan = 300000;
                 break;
             case 'C':
                 pokok_Gaji = 2500000;
-                uangTunjangan = 3500000;
+                uangTunjangan = 350000;
                 break;
             case 'D':
                 pokok_Gaji = 3000000;
-                uangTunjangan = 4000000;
+                uangTunjangan = 400000;
                 break;
         }
 
