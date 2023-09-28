@@ -47,11 +47,10 @@ public class MainApp {
                 pokok_Gaji = 2500000;
                 uangTunjangan = 3500000;
                 break;
-            case 'D'
+            case 'D':
                 pokok_Gaji = 3000000;
                 uangTunjangan = 4000000;
                 break;
-
         }
 
         scInput.close();
