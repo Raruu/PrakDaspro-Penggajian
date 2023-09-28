@@ -17,13 +17,14 @@ public class MainApp {
 
         Scanner scInput = new Scanner(System.in);
         // untuk variable int yang butuh input, taruh sini
-        int potongan_Gaji, jmlMasuk, jmlTdkMasuk, pot_Tetap;
+        int jmlMasuk, jmlTdkMasuk, jamLembur;
         char golongan;     
         // untuk variable int yang tidak butuh input, taruh sini       
-        int total_Gaji, pokok_Gaji, uangTunjangan;                      
+        int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
+        double pajak = 0.0, total_Gaji, hasil_akhir;                   
         // biar apa? biar kelihatan rapi   
                                                                      
-        System.out.print("Masukkan Name: ");
+        System.out.print("Masukkan Name\t\t\t\t\t: ");
         String nama = scInput.nextLine();
         System.out.print("(bilangan real) Masukkan Golongan\t\t: ");
         golongan = scInput.next().charAt(0);
@@ -31,27 +32,42 @@ public class MainApp {
         jmlMasuk = scInput.nextInt();
         System.out.print("(bilangan real) Masukkan Jumlah Tidak Masuk\t: ");
         jmlTdkMasuk = scInput.nextInt();
-        System.out.print("(bilangan real) Masukkan Potongan Tetap\t\t: ");
-        pot_Tetap = scInput.nextInt();
+        System.out.print("(bilangan real) Masukkan Total Jam Lembur\t: ");
+        jamLembur = scInput.nextInt();
 
         switch (golongan) {
             case 'A':
-                pokok_Gaji = 1500000;
-                uangTunjangan = 250000;
+                pokok_GajiHarian = 160000;
+                uangTunjangan = 100000;
+                pajak = 0.02;
+                bonus = 50000;
                 break;
             case 'B':
-                pokok_Gaji = 2000000;
-                uangTunjangan = 300000;
+                pokok_GajiHarian = 230000;
+                uangTunjangan = 200000;
+                pajak = 0.04;
+                bonus = 100000;
                 break;
             case 'C':
-                pokok_Gaji = 2500000;
-                uangTunjangan = 350000;
+                pokok_GajiHarian = 320000;
+                uangTunjangan = 280000;
+                pajak = 0.06;
+                bonus = 200000;
                 break;
             case 'D':
-                pokok_Gaji = 3000000;
-                uangTunjangan = 400000;
+                pokok_GajiHarian = 450000;
+                uangTunjangan = 350000;
+                pajak = 0.08;
+                bonus = 250000;
                 break;
+            default:
+            System.out.println("error");
+
         }
+
+        total_Gaji = (jmlMasuk * pokok_GajiHarian) + (jamLembur * bonus) + uangTunjangan;
+        hasil_akhir = total_Gaji - (total_Gaji * pajak);
+        System.out.println("Total Gaji\t\t\t\t\t: Rp."+ (int)hasil_akhir);
 
         scInput.close();
     }

@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "MainApp",
+      "request": "launch",
+      "mainClass": "MainApp",
+      "projectName": "PrakDaspro-Sistem-Penggajian_959ba04c"
+    },
+    {
+      "type": "java",
       "name": "Current File",
       "request": "launch",
       "mainClass": "${file}"
