@@ -39,7 +39,18 @@ public class MainApp {
                 pokok_Gaji = 1500000;
                 uangTunjangan = 250000;
                 break;
-            // case 2 resume here below
+            case 'B':
+                pokok_Gaji = 2000000;
+                uangTunjangan = 3000000;
+                break;
+            case 'C':
+                pokok_Gaji = 2500000;
+                uangTunjangan = 3500000;
+                break;
+            case 'D'
+                pokok_Gaji = 3000000;
+                uangTunjangan = 4000000;
+                break;
 
         }
 
