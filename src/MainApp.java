@@ -17,7 +17,7 @@ public class MainApp {
 
         Scanner scInput = new Scanner(System.in);
         // untuk variable int yang butuh input, taruh sini
-        int jmlMasuk, jmlTdkMasuk, jamLembur;
+        int jmlMasuk, jamLembur;
         char golongan;     
         // untuk variable int yang tidak butuh input, taruh sini       
         int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
@@ -26,14 +26,14 @@ public class MainApp {
                                                                      
         System.out.print("Masukkan Name\t\t\t\t\t: ");
         String nama = scInput.nextLine();
-        System.out.print("(bilangan real) Masukkan Golongan\t\t: ");
-        golongan = scInput.next().charAt(0);
+        System.out.print("(char) Masukkan Golongan\t\t\t: ");
+        golongan = Character.toUpperCase(scInput.next().charAt(0));        
         System.out.print("(bilangan real) Masukkan Jumlah Masuk\t\t: ");
-        jmlMasuk = scInput.nextInt();
-        System.out.print("(bilangan real) Masukkan Jumlah Tidak Masuk\t: ");
-        jmlTdkMasuk = scInput.nextInt();
+        jmlMasuk = scInput.nextInt();        
         System.out.print("(bilangan real) Masukkan Total Jam Lembur\t: ");
         jamLembur = scInput.nextInt();
+
+        scInput.close();
 
         switch (golongan) {
             case 'A':
@@ -61,14 +61,13 @@ public class MainApp {
                 bonus = 250000;
                 break;
             default:
-            System.out.println("error");
-
+            System.out.println("Golongan: "+ golongan + " tidak ada, melanjutkan perhitungan dengan data seadanya");
         }
 
         total_Gaji = (jmlMasuk * pokok_GajiHarian) + (jamLembur * bonus) + uangTunjangan;
         hasil_akhir = total_Gaji - (total_Gaji * pajak);
-        System.out.println("Total Gaji\t\t\t\t\t: Rp."+ (int)hasil_akhir);
-
-        scInput.close();
+        System.out.println("############################################################################################################################################\n");
+        System.out.println("Atas nama: " + nama);
+        System.out.println("Total Gaji\t\t\t\t\t: Rp."+ (int)hasil_akhir);    
     }
 }
