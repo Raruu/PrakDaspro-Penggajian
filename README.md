@@ -12,9 +12,9 @@ Sistem informasi penggajian adalah sistem yang digunakan untuk mengumpulkan, mem
  Nama_Lengkap ```NIM```
 ````
 
-- Hidayat Widi Saputra `2341720157`
-- Rafi Ody Prasetyo `2341720180`
-- Sadiya Maritza
+- [Hidayat Widi Saputra](https://github.com/Raruu) `2341720157`
+- [Rafi Ody Prasetyo](https://github.com/rafiody16) `2341720180`
+- [Sadiya Maritza](https://github.com/Sadiya8924)
 
 ## More Info
 
