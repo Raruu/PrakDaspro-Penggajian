@@ -21,7 +21,9 @@ public class MainApp {
         char golongan;     
         // untuk variable int yang tidak butuh input, taruh sini       
         int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
-        double pajak = 0.0, total_Gaji, hasil_akhir;                   
+        double pajak = 0.0, total_Gaji, hasil_akhir;              
+        String namaBank = "BRI", noRekening = "123456789098";
+        Boolean dataValid = false, transfStatus = false;
         // biar apa? biar kelihatan rapi   
                                                                      
         System.out.print("Masukkan Name\t\t\t\t\t: ");
@@ -68,6 +70,12 @@ public class MainApp {
         hasil_akhir = total_Gaji - (total_Gaji * pajak);
         System.out.println("############################################################################################################################################\n");
         System.out.println("Atas nama: " + nama);
-        System.out.println("Total Gaji\t\t\t\t\t: Rp."+ (int)hasil_akhir);    
+        System.out.println("Total Gaji\t\t\t\t\t: Rp."+ (int)hasil_akhir); 
+        
+        dataValid = namaBank.equalsIgnoreCase("BRI") && noRekening.length() == 12;
+        // Add if here
+            // Add nested if here
+
+        
     }
 }
