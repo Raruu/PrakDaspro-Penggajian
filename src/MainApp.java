@@ -81,10 +81,10 @@ public class MainApp {
                 if (transfStatus){
                     System.out.println("Transfer Berhasil");
                 }
-                        else {
-                            System.out.println("Eror: ");
-                            System.out.println("Transfer Gagal");
-                        }
+                else {
+                    System.out.println("Eror: ");
+                    System.out.println("Transfer Gagal");
+                }
         }
         else
         {
