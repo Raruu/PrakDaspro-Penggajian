@@ -70,7 +70,8 @@ public class MainApp {
         hasil_akhir = total_Gaji - (total_Gaji * pajak);
         System.out.println("############################################################################################################################################\n");
         System.out.println("Atas nama: " + nama);
-        System.out.println("Total Gaji\t\t\t\t\t: Rp."+ (int)hasil_akhir); 
+        System.out.println("Total Gaji\t\t\t\t\t: Rp."+ (int)hasil_akhir);
+        System.out.println("############################################################################################################################################\n"); 
         
         dataValid = namaBank.equalsIgnoreCase("BRI") && noRekening.length() == 12;
         if (dataValid) {
@@ -89,7 +90,7 @@ public class MainApp {
         else
         {
             System.out.println("Data tidak valid! Mohon tijau kembali");
-            System.out.println("Nama\t\t: xxxxxxxxxxxx");
+            System.out.println("Nama\t\t: " + nama);
             System.out.println("Nama Bank\t: " + namaBank);
             System.out.println("No Rekening\t: " + noRekening);
         }
