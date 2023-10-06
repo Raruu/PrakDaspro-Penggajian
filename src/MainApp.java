@@ -78,7 +78,11 @@ public class MainApp {
                     "Memulai transfer uang sebesar Rp." + (int)hasil_akhir + " ke " + noRekening + "(" + namaBank + ")");
             transfStatus = true;
             System.out.println("#############################################################");
-                //add nested if else
+                if (transfStatus)
+                    System.out.println("Transfer Berhasil");
+                        else {
+                            System.out.println("Eror: ");
+                            System.out.println("Transfer Gagal");
         }
         else
         {
