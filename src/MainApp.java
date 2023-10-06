@@ -73,9 +73,19 @@ public class MainApp {
         System.out.println("Total Gaji\t\t\t\t\t: Rp."+ (int)hasil_akhir); 
         
         dataValid = namaBank.equalsIgnoreCase("BRI") && noRekening.length() == 12;
-        // Add if here
-            // Add nested if here
-
-        
+        if (dataValid) {
+            System.out.println(
+                    "Memulai transfer uang sebesar Rp." + (int)hasil_akhir + " ke " + noRekening + "(" + namaBank + ")");
+            transfStatus = true;
+            System.out.println("#############################################################");
+                //add nested if else
+        }
+        else
+        {
+            System.out.println("Data tidak valid! Mohon tijau kembali");
+            System.out.println("Nama\t\t: xxxxxxxxxxxx");
+            System.out.println("Nama Bank\t: " + namaBank);
+            System.out.println("No Rekening\t: " + noRekening);
+        }
     }
 }
