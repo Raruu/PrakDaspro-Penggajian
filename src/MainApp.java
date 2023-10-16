@@ -23,10 +23,22 @@ public class MainApp {
         // untuk variable int yang tidak butuh input, taruh sini       
         int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
         double pajak = 0.0, total_Gaji, hasil_akhir;              
-        String namaBank = "BRI", noRekening = "123456789098";
-        Boolean dataValid = false, transfStatus = false;
+        String namaBank = "BRI", noRekening = "123456789098", username = "admin", 
+        password = "123456";
+        Boolean dataValid = false, transfStatus = false, login = true, checkLogin = false;
         // biar apa? biar kelihatan rapi   
-        
+
+        do {
+        System.out.println("------LOGIN------");
+        System.out.println("\nUsername: ");
+        username = scInput.nextLine();
+        System.out.println("\nPassword: ");
+        password = scInput.nextLine();
+
+
+    }
+    while (!(username.equals("admin") && password.equals("123456")));
+    System.out.println("\n------LOGIN BERHASIL------");
         
         Boolean isRunning = true;
         int menuItem;
