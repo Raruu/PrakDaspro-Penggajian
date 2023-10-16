@@ -25,20 +25,27 @@ public class MainApp {
         double pajak = 0.0, total_Gaji, hasil_akhir;              
         String namaBank = "BRI", noRekening = "123456789098", username = "admin", 
         password = "123456";
-        Boolean dataValid = false, transfStatus = false, login = true, checkLogin = false;
+        Boolean dataValid = false, transfStatus = false, login = false;
         // biar apa? biar kelihatan rapi   
 
-        do {
+    while(login == false) 
+    {
         System.out.println("------LOGIN------");
         System.out.println("\nUsername: ");
         username = scInput.nextLine();
         System.out.println("\nPassword: ");
         password = scInput.nextLine();
 
+        if (username.equals("admin") && password.equals("123456")) {
+            login = true;
+            System.out.println("\n------LOGIN BERHASIL------");
+        }
+        else
+        {
+            System.out.println("\nUsername atau Password anda salah!");
+        }
 
     }
-    while (!(username.equals("admin") && password.equals("123456")));
-    System.out.println("\n------LOGIN BERHASIL------");
         
         Boolean isRunning = true;
         int menuItem;
