@@ -32,13 +32,9 @@ public class MainApp {
         while(login == false) 
         {
             System.out.println("------LOGIN------");
-            System.out.println("Tekan CTRL+C atau isi \"0\" pada Username untuk keluar program");
+            System.out.println("Tekan CTRL+C untuk keluar program");
             System.out.print("\nUsername: ");
             username = scInput.nextLine();
-            if (username.equals("0")) {
-                scInput.close();
-                return;
-            }
             System.out.print("\nPassword: ");
             password = scInput.nextLine();
 
