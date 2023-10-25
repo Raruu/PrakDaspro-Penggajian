@@ -20,13 +20,17 @@ public class MainApp {
         // untuk variable int yang butuh input, taruh sini
         int jmlMasuk, jamLembur;
         char golongan;     
+
         // untuk variable int yang tidak butuh input, taruh sini       
         int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
         double pajak = 0.0, total_Gaji, hasil_akhir;              
-        String namaBank = "BRI", noRekening = "123456789098", username = "admin", 
-        password = "123456";
+        String namaBank = "BRI", noRekening = "123456789098", username = "admin", password = "123456";
         Boolean dataValid = false, transfStatus = false, login = false;
-        // biar apa? biar kelihatan rapi   
+        // Karyawan
+        String[] nama_Karyawan = { "Farhan Kebab", "Rian Batagor",  "Rusdy Ambatukan", "Slamet Kopling", "Vivo"};
+        String[] noRekening_Karyawan = {"1234567890987", "1234567890987654", "1234567890", "1234567890", "1234567890"};
+        String[] bank_Karyawan = {"Mandiri", "BTN", "BSI", "BSI", "BSI"};
+        int index_Karyawan = 0;
 
         // Login
         while(login == false) 
@@ -57,13 +61,35 @@ public class MainApp {
             System.out.print("\n(int) Pilih menu: ");
             menuItem = scInput.nextInt();
             scInput.nextLine();
+            System.out.println();
             switch (menuItem) {
                 case 0:
                     isRunning = false;
                     break;
                 case 1:
-                    System.out.print("Masukkan Nama\t\t\t\t\t: ");
-                    String nama = scInput.nextLine();
+                    for (int i = 0; i < bank_Karyawan.length; i++) {
+                        System.out.println(i + ". " + nama_Karyawan[i]);
+                    }                    
+                    while (true) {
+                        Boolean karyawan_isFound = false;
+                        System.out.print("\nMasukkan Nama Karyawan atau dengan index-nya\t: ");
+                        if(scInput.hasNextInt()) {
+                            index_Karyawan = scInput.nextInt();
+                            if(index_Karyawan < nama_Karyawan.length)
+                                karyawan_isFound = true;
+                        }    
+                        else{
+                            String nama_Input = scInput.nextLine();                            
+                            for (int i = 0; i < nama_Karyawan.length; i++) {
+                                if(nama_Input.equalsIgnoreCase(nama_Karyawan[i])){
+                                    index_Karyawan = i;
+                                    karyawan_isFound = true;
+                                }
+                            }
+                        } 
+                        if(karyawan_isFound) break;
+                        System.out.println("Karyawan tidak ditemukan, meminta input kembali. . .");
+                    }                                   
                     System.out.print("(char) Masukkan Golongan\t\t\t: ");
                     golongan = Character.toUpperCase(scInput.next().charAt(0));
                     System.out.print("(bilangan real) Masukkan Jumlah Masuk\t\t: ");
@@ -109,7 +135,7 @@ public class MainApp {
 
                     // Slip Gaji
                     System.out.println(PagarPemisah+"\n");
-                    System.out.println("Slip Gaji\nAtas nama: " + nama);
+                    System.out.println("Slip Gaji\nAtas nama: " + nama_Karyawan[index_Karyawan]);
                     System.out.println(
                         "\nPenghasilan: " +
                         "\nGolongan\t\t\t\t\t: " + golongan +
@@ -127,11 +153,12 @@ public class MainApp {
 
                     // Pembayaran / Transfer
                     System.out.println(PagarPemisah+"\n");
-                    dataValid = namaBank.equalsIgnoreCase("BRI") && noRekening.length() == 12;
+                    dataValid = bank_Karyawan[index_Karyawan].equalsIgnoreCase(bank_Karyawan[index_Karyawan]) 
+                                && noRekening_Karyawan[index_Karyawan].length() == noRekening_Karyawan[index_Karyawan].length(); // Change this line
                     if (dataValid) {
                         System.out.println(
                                 "Memulai transfer uang sebesar Rp." + (int) hasil_akhir + 
-                                " ke " + noRekening + "(" + namaBank + ")");
+                                " ke " + noRekening_Karyawan[index_Karyawan] + "(" + bank_Karyawan[index_Karyawan] + ")");
                         transfStatus = true;                        
                         if (transfStatus) {
                             System.out.println("Transfer Berhasil");
@@ -141,9 +168,9 @@ public class MainApp {
                         }
                     } else {
                         System.out.println("Data tidak valid! Mohon tijau kembali");
-                        System.out.println("Nama\t\t: " + nama);
-                        System.out.println("Nama Bank\t: " + namaBank);
-                        System.out.println("No Rekening\t: " + noRekening);
+                        System.out.println("Nama\t\t: " + nama_Karyawan[index_Karyawan]);
+                        System.out.println("Nama Bank\t: " + bank_Karyawan[index_Karyawan]);
+                        System.out.println("No Rekening\t: " + noRekening_Karyawan[index_Karyawan]);
                     }
                     System.out.println(PagarPemisah+"\n");
                     System.out.println("Tugas selesai, Kembali ke menu. . .");
