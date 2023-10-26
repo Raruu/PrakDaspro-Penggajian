@@ -24,12 +24,14 @@ public class MainApp {
         // untuk variable int yang tidak butuh input, taruh sini       
         int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
         double pajak = 0.0, total_Gaji, hasil_akhir;              
-        String namaBank = "BRI", noRekening = "123456789098", username = "admin", password = "123456";
+        String namaBank = "BRI", noRekening = "123456789098";
         Boolean dataValid = false, transfStatus = false, login = false;
         // Karyawan
         String[] nama_Karyawan = { "Farhan Kebab", "Rian Batagor",  "Rusdy Ambatukan", "Slamet Kopling", "Vivo"};
         String[] noRekening_Karyawan = {"1234567890987", "1234567890987654", "1234567890", "1234567890", "1234567890"};
         String[] bank_Karyawan = {"Mandiri", "BTN", "BSI", "BSI", "BSI"};
+        String[] username = {"admin"};
+        String[] password = {"123456"};
         int index_Karyawan = 0;
 
         // Login
@@ -38,25 +40,39 @@ public class MainApp {
             System.out.println("------LOGIN------");
             System.out.println("Tekan CTRL+C untuk keluar program");
             System.out.print("\nUsername: ");
-            username = scInput.nextLine();
+            String usernameInput = scInput.next();
             System.out.print("\nPassword: ");
-            password = scInput.nextLine();
+            String passwordInput = scInput.next();
 
-            if (username.equals("admin") && password.equals("123456")) {
-                login = true;
-                System.out.println("\n------LOGIN BERHASIL------");
-            }
-            else
+            for (int x = 0; x < username.length; x++)
             {
-                System.out.println("\nUsername atau Password anda salah!");
+                if (usernameInput.equals(username[x]) && passwordInput.equals(password[x])) 
+                {
+                    login = true;
+                    System.out.println("\n------LOGIN BERHASIL------");
+                    System.out.println("\n----*SELAMAT DATANG "+username[x]+"*----");
+                }
+                else
+                {
+                    System.out.println("\nUsername atau Password anda salah!");
+                }
             }
+
+            // if (usernameInput.equals(username[0]) && passwordInput.equals("123456")) {
+            //     login = true;
+            //     System.out.println("\n------LOGIN BERHASIL------");
+            // }
+            // else
+            // {
+            //     System.out.println("\nUsername atau Password anda salah!");
+            // }
         }
         
         Boolean isRunning = true;
         int menuItem;
         do {
             // Main Menu
-            System.out.println("\nMain Menu ["+ username +"]: ");
+            System.out.println("\nMain Menu: ");
             System.out.println("1. Perhitungan Gaji\n0. Keluar Program");
             System.out.print("\n(int) Pilih menu: ");
             menuItem = scInput.nextInt();
