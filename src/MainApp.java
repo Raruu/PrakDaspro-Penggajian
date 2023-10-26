@@ -58,14 +58,6 @@ public class MainApp {
                 }
             }
 
-            // if (usernameInput.equals(username[0]) && passwordInput.equals("123456")) {
-            //     login = true;
-            //     System.out.println("\n------LOGIN BERHASIL------");
-            // }
-            // else
-            // {
-            //     System.out.println("\nUsername atau Password anda salah!");
-            // }
         }
         
         Boolean isRunning = true;
