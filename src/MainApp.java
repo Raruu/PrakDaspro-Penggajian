@@ -20,7 +20,7 @@ public class MainApp {
         // untuk variable int yang butuh input, taruh sini
         int jmlMasuk, jamLembur;
         char golongan;     
-
+        Double[] bank = {Mandiri = 13 digit, BTN = 16 digit, BSI = 10 digit, Danamon = 10 digit};
         // untuk variable int yang tidak butuh input, taruh sini       
         int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
         double pajak = 0.0, total_Gaji, hasil_akhir;              
