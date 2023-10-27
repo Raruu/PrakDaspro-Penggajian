@@ -20,10 +20,8 @@ public class MainApp {
         // untuk variable int yang butuh input, taruh sini
         int jmlMasuk, jamLembur;
         char golongan;     
-        int[] btnDigits = new int[16];
-        int[] bsiDigits = new int[10];
-        int[] mandiriDigits = new int[13];
-        int[] danamonDigits = new int[10];
+        String[] bankTersedia = {"BTN", "Mandiri", "BSI", "Danamon"};
+        int[] jumlahDigit = {16, 13, 10, 10};
         // untuk variable int yang tidak butuh input, taruh sini       
         int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
         double pajak = 0.0, total_Gaji, hasil_akhir;              
