@@ -161,6 +161,20 @@ public class MainApp {
                         "\nTotal Gaji Bersih\t\t\t\t: Rp." + (long) hasil_akhir);
 
                     // Pembayaran / Transfer
+                    System.out.print("Masukkan nama bank yang ingin Anda cari: ");
+                    String searchBank = scInput.nextLine();
+                    boolean bankFound = false;
+                    for (String bank : bank_Karyawan) {
+                        if (bank.equalsIgnoreCase(searchBank)) {
+                            System.out.println("Bank " + searchBank + " ditemukan dalam array.");
+                            bankFound = true;
+                            break;
+                        }
+                    }
+                        if (!bankFound) {
+                            System.out.println("Bank " + searchBank + " tidak ditemukan dalam array.");
+                        }
+                    }
                     System.out.println(PagarPemisah+"\n");
                     dataValid = bank_Karyawan[index_Karyawan].equalsIgnoreCase(bank_Karyawan[index_Karyawan]) 
                                 && noRekening_Karyawan[index_Karyawan].length() == noRekening_Karyawan[index_Karyawan].length(); // Change this line
