@@ -19,23 +19,30 @@ public class MainApp {
        
         // untuk variable int yang butuh input, taruh sini
         int jmlMasuk, jamLembur;
-        char golongan;     
-        String[] bankTersedia = {"BTN", "Mandiri", "BSI", "Danamon"};
-        int[] jumlahDigit = {16, 13, 10, 10};
-        // untuk variable int yang tidak butuh input, taruh sini       
+        char golongan; 
+        String dialogAnswer;    
+        // untuk variable int yang tidak butuh input, taruh sini     
         int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
-        double pajak = 0.0, total_Gaji, hasil_akhir;              
-        String namaBank = "BRI", noRekening = "123456789098";
-        Boolean dataValid = false, transfStatus = false, login = false;
+        double pajak = 0.0, total_Gaji, hasil_akhir;  
+
+        // Bank(Pembayaran)        
+        String[][] listBank = {
+            {"BTN", "1234567890987654"}, {"Mandiri", "1234567890987"}, {"BRI", "123456789987456"}, {"CIMB Niaga", "12345678998745"},
+            {"BSI", "1234567890"}, {"Danamon", "1234567890"}, {"BNI", "9876543210"}, {"BCA", "1234567890"}};
+        
+
         // Karyawan
         String[] nama_Karyawan = { "Farhan Kebab", "Rian Batagor",  "Rusdy Ambatukan", "Slamet Kopling", "Vivo"};
-        String[] noRekening_Karyawan = {"1234567890987", "1234567890987654", "1234567890", "1234567890", "1234567890"};
-        String[] bank_Karyawan = {"Mandiri", "BTN", "BSI", "BSI", "BSI"};
-        String[] username = {"admin"};
-        String[] password = {"123456"};
-        int index_Karyawan = 0;
+        String[][] bank_Karyawan = {
+            {"Mandiri", "1234567890987"},{"BTN", "1234567890987654"}, {"BSI", "1234567890"},
+            {"BSI", "1234567890"}, {"BSI", "1234567890"}
+        };
+        int index_Karyawan = 0;               
 
         // Login
+        String[] username = {"admin"};
+        String[] password = {"123456"}; 
+        Boolean login = false;
         while(login == false) 
         {
             System.out.println("------LOGIN------");
@@ -104,7 +111,8 @@ public class MainApp {
                     System.out.print("(bilangan real) Masukkan Jumlah Masuk\t\t: ");
                     jmlMasuk = scInput.nextInt();
                     System.out.print("(bilangan real) Masukkan Total Jam Lembur\t: ");
-                    jamLembur = scInput.nextInt();          
+                    jamLembur = scInput.nextInt();        
+                    scInput.nextLine();  
 
                     // Perhitungan Gaji
                     switch (golongan) {
@@ -160,41 +168,41 @@ public class MainApp {
                         "\n--------------------------------------------------------------------------" +
                         "\nTotal Gaji Bersih\t\t\t\t: Rp." + (long) hasil_akhir);
 
+                    // Dialog Lanjut Transfer
+                    dialogAnswer = "";                    
+                    while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
+                        System.out.print("Lanjut ditransfer ke Rekening " + nama_Karyawan[index_Karyawan] + "? (y/n): ");
+                        dialogAnswer = scInput.nextLine();
+                    }                    
+                    if (dialogAnswer.equalsIgnoreCase("n"))
+                        break;
+
                     // Pembayaran / Transfer
-                    System.out.print("Masukkan nama bank yang ingin Anda cari: ");
-                    String searchBank = scInput.nextLine();
-                    boolean bankFound = false;
-                    for (String bank : bank_Karyawan) {
-                        if (bank.equalsIgnoreCase(searchBank)) {
-                            System.out.println("Bank " + searchBank + " ditemukan dalam array.");
-                            bankFound = true;
+                    Boolean dataValid = false, transfStatus = false;                    
+                    System.out.println(PagarPemisah+"\n");
+                    for (int i = 0; i < listBank.length; i++) {
+                        if(listBank[i][0].equals(bank_Karyawan[index_Karyawan][0])){
+                            dataValid = bank_Karyawan[index_Karyawan][1].length() == listBank[i][1].length();
                             break;
                         }
                     }
-                    if (!bankFound) {
-                        System.out.println("Bank " + searchBank + " tidak ditemukan dalam array.");
-                    }
-                    
-                    System.out.println(PagarPemisah+"\n");
-                    dataValid = bank_Karyawan[index_Karyawan].equalsIgnoreCase(bank_Karyawan[index_Karyawan]) 
-                                && noRekening_Karyawan[index_Karyawan].length() == noRekening_Karyawan[index_Karyawan].length(); // Change this line
-                    if (dataValid) {
-                        System.out.println(
-                                "Memulai transfer uang sebesar Rp." + (int) hasil_akhir + 
-                                " ke " + noRekening_Karyawan[index_Karyawan] + "(" + bank_Karyawan[index_Karyawan] + ")");
-                        transfStatus = true;                        
-                        if (transfStatus) {
-                            System.out.println("Transfer Berhasil");
-                        } else {
-                            System.out.println("Eror: ");
-                            System.out.println("Transfer Gagal");
-                        }
-                    } else {
-                        System.out.println("Data tidak valid! Mohon tijau kembali");
-                        System.out.println("Nama\t\t: " + nama_Karyawan[index_Karyawan]);
-                        System.out.println("Nama Bank\t: " + bank_Karyawan[index_Karyawan]);
-                        System.out.println("No Rekening\t: " + noRekening_Karyawan[index_Karyawan]);
-                    }
+                     if (dataValid) {
+                         System.out.println(
+                                 "Memulai transfer uang sebesar Rp." + (int) hasil_akhir + 
+                                 " ke " + bank_Karyawan[index_Karyawan][0] + "(" + bank_Karyawan[index_Karyawan][1] + ")");
+                         transfStatus = true;                        
+                         if (transfStatus) {
+                             System.out.println("Transfer Berhasil");
+                         } else {
+                             System.out.println("Eror: ");
+                             System.out.println("Transfer Gagal");
+                         }
+                     } else {
+                         System.out.println("Data tidak valid! Mohon tijau kembali");
+                         System.out.println("Nama\t\t: " + nama_Karyawan[index_Karyawan]);
+                         System.out.println("Nama Bank\t: " + bank_Karyawan[index_Karyawan][0]);
+                         System.out.println("No Rekening\t: " + bank_Karyawan[index_Karyawan][1]);
+                     }
                     System.out.println(PagarPemisah+"\n");
                     System.out.println("Tugas selesai, Kembali ke menu. . .");
                     break;
