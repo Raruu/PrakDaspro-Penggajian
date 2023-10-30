@@ -171,10 +171,10 @@ public class MainApp {
                             break;
                         }
                     }
-                        if (!bankFound) {
-                            System.out.println("Bank " + searchBank + " tidak ditemukan dalam array.");
-                        }
+                    if (!bankFound) {
+                        System.out.println("Bank " + searchBank + " tidak ditemukan dalam array.");
                     }
+                    
                     System.out.println(PagarPemisah+"\n");
                     dataValid = bank_Karyawan[index_Karyawan].equalsIgnoreCase(bank_Karyawan[index_Karyawan]) 
                                 && noRekening_Karyawan[index_Karyawan].length() == noRekening_Karyawan[index_Karyawan].length(); // Change this line

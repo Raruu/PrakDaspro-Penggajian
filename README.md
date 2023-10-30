@@ -30,7 +30,7 @@ Read on [Trello](https://trello.com/b/MzOBfiwW/projek-prodas)
 ## More Info
 
 - [Trello](https://trello.com/b/MzOBfiwW/projek-prodas)
-
+- [Kelompok 8 MD](Kelompok8.md)
 ---
 
 PrakDaspro Projek Semester1, Sistem Penggajian\
