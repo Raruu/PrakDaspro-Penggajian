@@ -40,8 +40,6 @@ public class MainApp {
         int index_Karyawan = 0;               
 
         // Login
-        String[] username = {"admin"};
-        String[] password = {"123456"}; 
         String[][] account = {
             {"admin", "123456"},
             {"user", "pengguna"},
@@ -56,13 +54,14 @@ public class MainApp {
             System.out.print("\nPassword: ");
             String passwordInput = scInput.next();
 
-            for (int x = 0; x < username.length; x++)
+            for (String[] key : account)
             {
-                if (usernameInput.equals(username[x]) && passwordInput.equals(password[x])) 
+                if (key[0].equals(usernameInput) && key[1].equals(passwordInput)) 
                 {
                     login = true;
                     System.out.println("\n------LOGIN BERHASIL------");
-                    System.out.println("\n----*SELAMAT DATANG "+username[x]+"*----");
+                    System.out.println("\n----*SELAMAT DATANG "+usernameInput+"*----");
+                    break;
                 }
                 else
                 {
