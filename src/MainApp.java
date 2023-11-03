@@ -42,6 +42,10 @@ public class MainApp {
         // Login
         String[] username = {"admin"};
         String[] password = {"123456"}; 
+        String[][] account = {
+            {"admin", "123456"},
+            {"user", "pengguna"},
+        };
         Boolean login = false;
         while(login == false) 
         {
