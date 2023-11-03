@@ -40,36 +40,41 @@ public class MainApp {
         int index_Karyawan = 0;               
 
         // Login
-        String[] username = {"admin"};
-        String[] password = {"123456"}; 
+// Login
         String[][] account = {
             {"admin", "123456"},
-            {"user", "pengguna"},
+            {"Farhan Kebab", "farhanoke"},
+            {"Rian Batagor", "rianoke"},
+            {"Rusdy Ambatukan", "rusdyoke"},
+            {"Slamet Kopling", "slametoke"},
+            {"Vivo","vivooke"},
+            {"user", "pengguna"}
         };
+        
         Boolean login = false;
-        while(login == false) 
-        {
+        while (!login) {
             System.out.println("------LOGIN------");
             System.out.println("Tekan CTRL+C untuk keluar program");
             System.out.print("\nUsername: ");
             String usernameInput = scInput.next();
-            System.out.print("\nPassword: ");
+            scInput.nextLine();
+            System.out.print("Password: ");
             String passwordInput = scInput.next();
-
-            for (int x = 0; x < username.length; x++)
-            {
-                if (usernameInput.equals(username[x]) && passwordInput.equals(password[x])) 
-                {
+        
+            boolean found = false;
+            for (int x = 0; x < account.length; x++) {
+                if (usernameInput.equals(account[x][0]) && passwordInput.equals(account[x][1])) {
                     login = true;
+                    found = true;
                     System.out.println("\n------LOGIN BERHASIL------");
-                    System.out.println("\n----*SELAMAT DATANG "+username[x]+"*----");
-                }
-                else
-                {
-                    System.out.println("\nUsername atau Password anda salah!");
+                    System.out.println("\n----*SELAMAT DATANG " + account[x][0] + "*----");
+                    break; // Keluar dari loop karena kita menemukan kecocokan
                 }
             }
-
+        
+            if (!found) {
+                System.out.println("\nUsername atau Password anda salah!");
+            }
         }
         
         Boolean isRunning = true;
