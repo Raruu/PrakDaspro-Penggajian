@@ -42,45 +42,39 @@ public class MainApp {
         // Login
         String[][] account = {
             {"admin", "123456"},
-            {"Farhan Kebab", "farhanoke"},
-            {"Rian Batagor", "rianoke"},
-            {"Rusdy Ambatukan", "rusdyoke"},
-            {"Slamet Kopling", "slametoke"},
-            {"Vivo","vivooke"},
+            {"farhan123", "farhanoke"},
+            {"rian", "rianoke"},
+            {"rusdy", "rusdyoke"},
+            {"slamet", "slametoke"},
+            {"vivo","vivooke"},
             {"user", "pengguna"}
         };
         
         Boolean login = false;
-        while (!login) {
+        while (login == false) {
             System.out.println("------LOGIN------");
             System.out.println("Tekan CTRL+C untuk keluar program");
             System.out.print("\nUsername: ");
-            String usernameInput = scInput.next();
-            scInput.nextLine();
-            System.out.print("Password: ");
-            String passwordInput = scInput.next();
+            String usernameInput = scInput.nextLine();
+            System.out.print("\nPassword: ");
+            String passwordInput = scInput.nextLine();
 
             for (String[] key : account)
             {
                 if (key[0].equals(usernameInput) && key[1].equals(passwordInput)) 
                 {
                     login = true;
-                    found = true;
                     System.out.println("\n------LOGIN BERHASIL------");
                     System.out.println("\n----*SELAMAT DATANG "+usernameInput+"*----");
                     break;
-                }
-                else
-                {
-                    System.out.println("\nUsername atau Password anda salah!");
-                }
+                }                
             }
-        
-            if (!found) {
+            if(!login){
                 System.out.println("\nUsername atau Password anda salah!");
             }
+                    
+
         }
-        
         Boolean isRunning = true;
         int menuItem;
         do {
