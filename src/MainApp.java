@@ -42,16 +42,22 @@ public class MainApp {
         // Login
         String[][] account = {
             {"admin", "123456"},
-            {"user", "pengguna"},
+            {"Farhan Kebab", "farhanoke"},
+            {"Rian Batagor", "rianoke"},
+            {"Rusdy Ambatukan", "rusdyoke"},
+            {"Slamet Kopling", "slametoke"},
+            {"Vivo","vivooke"},
+            {"user", "pengguna"}
         };
+        
         Boolean login = false;
-        while(login == false) 
-        {
+        while (!login) {
             System.out.println("------LOGIN------");
             System.out.println("Tekan CTRL+C untuk keluar program");
             System.out.print("\nUsername: ");
             String usernameInput = scInput.next();
-            System.out.print("\nPassword: ");
+            scInput.nextLine();
+            System.out.print("Password: ");
             String passwordInput = scInput.next();
 
             for (String[] key : account)
@@ -59,6 +65,7 @@ public class MainApp {
                 if (key[0].equals(usernameInput) && key[1].equals(passwordInput)) 
                 {
                     login = true;
+                    found = true;
                     System.out.println("\n------LOGIN BERHASIL------");
                     System.out.println("\n----*SELAMAT DATANG "+usernameInput+"*----");
                     break;
@@ -68,7 +75,10 @@ public class MainApp {
                     System.out.println("\nUsername atau Password anda salah!");
                 }
             }
-
+        
+            if (!found) {
+                System.out.println("\nUsername atau Password anda salah!");
+            }
         }
         
         Boolean isRunning = true;
