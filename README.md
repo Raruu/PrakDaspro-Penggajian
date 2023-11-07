@@ -37,5 +37,5 @@ Read on [Trello](https://trello.com/b/MzOBfiwW/projek-prodas)
 
 PrakDaspro Projek Semester1, Sistem Penggajian\
 <br>
-[![Tools](https://skillicons.dev/icons?i=java,vscode,git,figma)](https://skillicons.dev)
+[![Tools](https://skillicons.dev/icons?i=java,vscode,git)](https://skillicons.dev)
 
