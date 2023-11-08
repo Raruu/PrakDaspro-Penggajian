@@ -80,7 +80,7 @@ public class MainApp {
         do {
             // Main Menu
             System.out.println("\nMain Menu: ");
-            System.out.println("1. Perhitungan Gaji\n0. Keluar Program");
+            System.out.println("1. Register User\n2. Pengelolaan data karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n0. Keluar Program");
             System.out.print("\n(int) Pilih menu: ");
             menuItem = scInput.nextInt();
             scInput.nextLine();
@@ -90,6 +90,12 @@ public class MainApp {
                     isRunning = false;
                     break;
                 case 1:
+                    
+                    break;
+                case 2:
+
+                    break;
+                case 3:
                     for (int i = 0; i < bank_Karyawan.length; i++) {
                         System.out.println(i + ". " + nama_Karyawan[i]);
                     }                    
@@ -213,7 +219,10 @@ public class MainApp {
                     System.out.println(PagarPemisah+"\n");
                     System.out.println("Tugas selesai, Kembali ke menu. . .");
                     break;
-
+                case 4:
+                     break;
+                case 5:
+                     break;                     
                 default:
                     System.out.println("Input tidak terdaftar");
                     break;
