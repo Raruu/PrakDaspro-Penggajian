@@ -305,6 +305,37 @@ public class MainApp {
                     System.out.println("Tugas selesai, Kembali ke menu. . .");
                     break;
                 case 4:
+                    //cuti
+                    String[][] data = {
+                    // NAMA,    GOL,    NO TELP,    BANK:NOREK,       STATUS CUTI
+                    {"Raruu", "D", "-", "BRI:789654389987456", "Belum Mengajukan Cuti"},
+                    {"Dyyyy", "C", "-", "BTN:1234567890987654", "Belum Mengajukan Cuti"},
+                    {"Farhan Kebab", "B", "083843069913", "BSI:1234567890", "Belum Mengajukan Cuti"},
+                    {"Slamet Kopling", "B", "089675839108", "BSI:1234567890", "Belum Mengajukan Cuti"},
+                    {"Rian Batagor", "A", "08996906443", "Mandiri:1234567890987", "Belum Mengajukan Cuti"},
+                    {"Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890", "Belum Mengajukan Cuti"},
+                    {"Vivo", "D", "082118325367", "BSI:1234567890", "Belum Mengajukan Cuti"},
+                    };
+
+                    // input nama
+                    System.out.print("Masukkan nama yang sedang cuti: ");
+                    String namaCuti = scInput.nextLine();
+
+                    // cek nama
+                    boolean karyawanFound = false;
+                    for (int i = 0; i < data.length; i++) {
+                        if (namaCuti.equalsIgnoreCase(data[i][0])) {
+                            karyawanFound = true;
+                            // Update status ke "Sedang Cuti"
+                            data[i][4] = "Sedang Cuti";
+                            System.out.println(namaCuti + " telah mengajukan cuti.");
+                            break;
+                            }
+                    }
+
+                    if (!karyawanFound) {
+                        System.out.println("Karyawan dengan nama " + namaCuti + " tidak ditemukan.");
+                    }
                      break;
                 case 5:
                      break;                     
