@@ -73,14 +73,14 @@ public class MainApp {
                 System.out.println("\nUsername atau Password anda salah!");
             }                   
         }
-
+        while (login == true) {
         boolean isRunning = true;
         int menuItem;
         do {
             // Main Menu
             System.out.println(PagarPemisah);
             System.out.println("\nMain Menu: ");
-            System.out.println("1. Register User\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n0. Keluar Program");
+            System.out.println("1. Register User\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n6. Log Out\n0. Keluar Program");
             System.out.print("\n(int) Pilih menu: ");
             menuItem = scInput.nextInt();
             scInput.nextLine();
@@ -112,7 +112,7 @@ public class MainApp {
 
                                         System.out.printf("%-10s | %-10s | %-5s\n", usr, pw, rl);
                                     }
-                                break;
+                                    break;
                                 case 2:
                                     System.out.println();
                                     System.out.println("---REGISTRASI USER---");
@@ -128,7 +128,7 @@ public class MainApp {
                                     }
                                     account = acc;
                                     System.out.println("Registrasi Berhasil!");
-                                break;
+                                    break;
                             }
                         }   
                     }
@@ -136,7 +136,7 @@ public class MainApp {
                     {
                         System.out.println("ANDA TIDAK MEMILIKI HAK AKSES!!");
                     }
-                break;
+                    break;
                 case 2:                    
                     boolean isRunning_dataKaryawan = true;
                     while (isRunning_dataKaryawan) {
@@ -383,7 +383,11 @@ public class MainApp {
                     }
                      break;
                 case 5:
-                     break;                     
+                     break;     
+                case 6:
+                    login = false;
+                    System.out.println("Anda Telah Log Out.");
+                    break;
                 default:
                     System.out.println("Input tidak terdaftar");
                     break;
@@ -391,5 +395,6 @@ public class MainApp {
         } while (isRunning);
         System.out.println("\n\nProgram Berhenti");
         scInput.close();
+    }
     }
 }
