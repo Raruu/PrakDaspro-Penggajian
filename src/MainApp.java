@@ -39,7 +39,7 @@ public class MainApp {
         };
         int index_Karyawan = 0;               
 
-        // Login
+        //  Login
         String[][] account = {
             {"admin", "123456"},
             {"farhan123", "farhanoke"},
