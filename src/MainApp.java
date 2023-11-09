@@ -17,7 +17,8 @@ public class MainApp {
                 "############################################################################################################################################\n" +
                 "                                                                                                                                    ");
              
-        String dialogAnswer;               
+        String dialogAnswer;  
+        String role ="";             
         
         // Bank(Pembayaran)        
         String[][] listBank = {
@@ -40,15 +41,13 @@ public class MainApp {
         int index_Karyawan = 0;               
 
         //  Login
+        String[] register = {"Username", "Password", "Role"};
         String[][] account = {
-            {"admin", "123456"},
-            {"farhan123", "farhanoke"},
-            {"rian", "rianoke"},
-            {"rusdy", "rusdyoke"},
-            {"slamet", "slametoke"},
-            {"vivo","vivooke"},
-            {"user", "pengguna"}
-        };
+            //USERNAME, PASSWORD, ROLE
+            {"admin123", "123456", "admin"},
+            {"farhan123", "farhanoke", "user"},
+            {"user", "pengguna", "user"}
+        };    
         
         boolean login = false;
         while (login == false) {
@@ -64,6 +63,7 @@ public class MainApp {
                 if (key[0].equals(usernameInput) && key[1].equals(passwordInput)) 
                 {
                     login = true;
+                    role = key[2];
                     System.out.println("\n------LOGIN BERHASIL------");
                     System.out.println("\n----*SELAMAT DATANG "+usernameInput+"*----");
                     break;
@@ -90,8 +90,53 @@ public class MainApp {
                     isRunning = false;
                     break;
                 case 1:
-                    
-                    break;
+                    if (role.equals("admin")) {
+                        boolean isRunningAcc = true;
+                        while (isRunningAcc) {
+                            System.out.println();
+                            System.out.println("0. Kembali\n1. Data Akun\n2. Tambah Akun");
+                            System.out.print("Pilih Menu: ");
+                            menuItem = scInput.nextInt();
+                            scInput.nextLine();
+                            switch (menuItem) {
+                                case 0:
+                                    isRunningAcc = false;
+                                break;
+                                case 1:
+                                    System.out.println("Username   | Password   | Role");
+                                    System.out.println("-------------------------------");
+                                    for (int i = 0; i < account.length; i++) {
+                                        String usr = account [i][0];
+                                        String pw = account [i][1];
+                                        String rl = account [i][2];
+
+                                        System.out.printf("%-10s | %-10s | %-5s\n", usr, pw, rl);
+                                    }
+                                break;
+                                case 2:
+                                    System.out.println();
+                                    System.out.println("---REGISTRASI USER---");
+                                    String [][] acc = new String[account.length + 1][account[0].length];
+                                    for (int i = 0; i < account.length; i++) {
+                                        for (int j = 0; j < account[0].length; j++) {
+                                            acc [i][j] = account[i][j];
+                                        }
+                                    }
+                                    for (int i = 0; i < register.length; i++) {
+                                        System.out.print(register[i] + ": ");
+                                        acc[account.length][i] = scInput.nextLine();
+                                    }
+                                    account = acc;
+                                    System.out.println("Registrasi Berhasil!");
+                                break;
+                            }
+                        }   
+                    }
+                    else
+                    {
+                        System.out.println("ANDA TIDAK MEMILIKI HAK AKSES!!");
+                    }
+                break;
                 case 2:                    
                     boolean isRunning_dataKaryawan = true;
                     while (isRunning_dataKaryawan) {
