@@ -27,16 +27,16 @@ public class MainApp {
         
 
         // Karyawan
-        String[] dataKaryawan_Info = {"Nama", "Golongan", "No Telephone", "Bank:NoRekening"};
+        String[] dataKaryawan_Info = {"Nama", "Golongan", "No Telephone", "Bank:NoRekening", "Status Cuti"};
         String[][] data_Karyawan = {
-            // NAMA,    GOL,    NO TELP,    BANK:NOREK
-            {"Raruu", "D", "-", "BRI:789654389987456"},
-            {"Dyyyy", "C", "-", "BTN:1234567890987654"},
-            {"Farhan Kebab", "B", "083843069913", "BSI:1234567890"},
-            {"Slamet Kopling", "B", "089675839108", "BSI:1234567890"},
-            {"Rian Batagor", "A", "08996906443", "Mandiri:1234567890987"},
-            {"Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890"},
-            {"Vivo", "D", "082118325367", "BSI:1234567890"},
+            // NAMA,    GOL,    NO TELP,    BANK:NOREK,    STATUS CUTI
+            {"Raruu", "D", "-", "BRI:789654389987456", "Belum mengajukan cuti"},
+            {"Dyyyy", "C", "-", "BTN:1234567890987654", "Belum mengajukan cuti"},
+            {"Farhan Kebab", "B", "083843069913", "BSI:1234567890", "Belum mengajukan cuti"},
+            {"Slamet Kopling", "B", "089675839108", "BSI:1234567890", "Belum mengajukan cuti"},
+            {"Rian Batagor", "A", "08996906443", "Mandiri:1234567890987", "Belum mengajukan cuti"},
+            {"Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890", "Belum mengajukan cuti"},
+            {"Vivo", "D", "082118325367", "BSI:1234567890", "Belum mengajukan cuti"},
         };
         int index_Karyawan = 0;               
 
@@ -80,7 +80,7 @@ public class MainApp {
             // Main Menu
             System.out.println(PagarPemisah);
             System.out.println("\nMain Menu: ");
-            System.out.println("1. Register User\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n6. Log Out\n0. Keluar Program");
+            System.out.println("1. Register User\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n6. Cuti Karyawan\n7. Log Out\n0. Keluar Program");
             System.out.print("\n(int) Pilih menu: ");
             menuItem = scInput.nextInt();
             scInput.nextLine();
@@ -347,46 +347,53 @@ public class MainApp {
                     System.out.println("Tugas selesai, Kembali ke menu. . .");
                     break;
                 case 4:
-                    //cuti
-                    String[][] dataCuti = new String[data_Karyawan.length][2]; // Array cuti dengan 2 kolom: Nama dan Status Cuti
-
-                    for (int i = 0; i < data_Karyawan.length; i++) {
-                        dataCuti[i][0] = data_Karyawan[i][0]; // Nama karyawan
-                        dataCuti[i][1] = data_Karyawan[i][4]; // Status Cuti
-                    }
-                        System.out.print("Masukkan nama karyawan yang akan mengajukan atau mengubah cuti: ");
-                        String namaCuti = scInput.nextLine();
-                        int indexKaryawan = -1;
-                    for (int i = 0; i < dataCuti.length; i++) {
-                        if (namaCuti.equalsIgnoreCase(dataCuti[i][0])) {
-                            indexKaryawan = i;
-                            break;
-                        }
-                    }
-                        if (indexKaryawan != -1) {
-                            System.out.println("Status Cuti untuk " + namaCuti + ": " + dataCuti[indexKaryawan][1]);
-                            System.out.print("Masukkan status cuti baru (e.g., 'Sedang Cuti' atau 'Belum Mengajukan Cuti'): ");
-                            String statusCutiBaru = scInput.nextLine();
-                    for (int i = 0; i < dataCuti.length; i++) {
-                        if (namaCuti.equalsIgnoreCase(dataCuti[i][0])) {
-                            dataCuti[i][1] = statusCutiBaru;
-                    for (int j = 0; j < data_Karyawan.length; j++) {
-                        if (namaCuti.equalsIgnoreCase(data_Karyawan[j][0])) {
-                            data_Karyawan[j][4] = statusCutiBaru;
-                            break;
-                        }
-                    }
-                        break;
-                    }
-                }
-                    System.out.println("Status cuti untuk " + namaCuti + " berhasil diubah menjadi: " + statusCutiBaru);
-                    } else {
-                    System.out.println("Karyawan dengan nama " + namaCuti + " tidak ditemukan.");
-                }
                      break;
                 case 5:
                      break;     
                 case 6:
+                     //cuti
+                    String[] statusCuti = new String[data_Karyawan.length];
+
+                    for (int i = 0; i < data_Karyawan.length; i++) {
+                       statusCuti[i] = data_Karyawan[i][4];
+                    }
+ 
+                    System.out.print("Masukkan nama karyawan yang akan mengajukan atau mengubah cuti: ");
+                    String namaCuti = scInput.nextLine();
+
+                    int indexKaryawan = -1;
+                    for (int i = 0; i < data_Karyawan.length; i++) {
+                        if (namaCuti.equalsIgnoreCase(data_Karyawan[i][0])) {
+                            indexKaryawan = i;
+                            break;
+                        }
+                    }
+
+                    if (indexKaryawan != -1) {
+                        System.out.println("Status Cuti untuk " + namaCuti + ": " + data_Karyawan[indexKaryawan][4]);
+                        System.out.print("Masukkan status cuti baru (e.g., 'Sedang Cuti' atau 'Belum Mengajukan Cuti'): ");
+                        String statusCutiBaru = scInput.nextLine();
+
+                    for (int i = 0; i < data_Karyawan.length; i++) {
+                        if (namaCuti.equalsIgnoreCase(data_Karyawan[i][0])) {
+                            data_Karyawan[i][1] = statusCutiBaru;
+
+                        for (int j = 0; j < data_Karyawan.length; j++) {
+                            if (namaCuti.equalsIgnoreCase(data_Karyawan[j][0])) {
+                                data_Karyawan[j][4] = statusCutiBaru;
+                                break;
+                            }
+                        }
+                            break;
+                        }
+                    }
+
+                    System.out.println("Status cuti untuk " + namaCuti + " berhasil diubah menjadi: " + statusCutiBaru);
+                    } else {
+                    System.out.println("Karyawan dengan nama " + namaCuti + " tidak ditemukan.");
+                    }
+                    break;
+                case 7: 
                     login = false;
                     System.out.println("Anda Telah Log Out.");
                     break;
