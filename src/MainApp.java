@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class MainApp {
     public static void main(String[] args) throws Exception {
-        final String PagarPemisah = "###".repeat(47); 
-        final Scanner scInput = new Scanner(System.in);        
+        final String PagarPemisah = "###".repeat(47);
+        final Scanner scInput = new Scanner(System.in);
         System.out.println(
                 "############################################################################################################################################\n" +
                 "############################################################################################################################################\n" +
@@ -17,38 +17,39 @@ public class MainApp {
                 "############################################################################################################################################\n" +
                 "                                                                                                                                    ");
              
-        String dialogAnswer;  
-        String role ="";             
-        
-        // Bank(Pembayaran)        
+        String dialogAnswer;
+        String role = "";
+
+        // Bank(Pembayaran)
         String[][] listBank = {
-            {"BTN", "1234567890987654"}, {"Mandiri", "1234567890987"}, {"BRI", "123456789987456"}, {"CIMB Niaga", "12345678998745"},
-            {"BSI", "1234567890"}, {"Danamon", "1234567890"}, {"BNI", "9876543210"}, {"BCA", "1234567890"}};
-        
+                { "BTN", "1234567890987654" }, { "Mandiri", "1234567890987" }, { "BRI", "123456789987456" },
+                { "CIMB Niaga", "12345678998745" },
+                { "BSI", "1234567890" }, { "Danamon", "1234567890" }, { "BNI", "9876543210" },
+                { "BCA", "1234567890" } };
 
         // Karyawan
-        String[] dataKaryawan_Info = {"Nama", "Golongan", "No Telephone", "Bank:NoRekening"};
+        String[] dataKaryawan_Info = { "Nama", "Golongan", "No Telephone", "Bank:NoRekening" };
         String[][] data_Karyawan = {
-            // NAMA,    GOL,    NO TELP,    BANK:NOREK
-            {"Raruu", "D", "-", "BRI:789654389987456"},
-            {"Dyyyy", "C", "-", "BTN:1234567890987654"},
-            {"Farhan Kebab", "B", "083843069913", "BSI:1234567890"},
-            {"Slamet Kopling", "B", "089675839108", "BSI:1234567890"},
-            {"Rian Batagor", "A", "08996906443", "Mandiri:1234567890987"},
-            {"Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890"},
-            {"Vivo", "D", "082118325367", "BSI:1234567890"},
+                // NAMA, GOL, NO TELP, BANK:NOREK
+                { "Raruu", "D", "-", "BRI:789654389987456" },
+                { "Dyyyy", "C", "-", "BTN:1234567890987654" },
+                { "Farhan Kebab", "B", "083843069913", "BSI:1234567890" },
+                { "Slamet Kopling", "B", "089675839108", "BSI:1234567890" },
+                { "Rian Batagor", "A", "08996906443", "Mandiri:1234567890987" },
+                { "Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890" },
+                { "Vivo", "D", "082118325367", "BSI:1234567890" },
         };
-        int index_Karyawan = 0;               
+        int index_Karyawan = 0;
 
-        //  Login
-        String[] register = {"Username", "Password", "Role"};
+        // Login
+        String[] register = { "Username", "Password", "Role" };
         String[][] account = {
-            //USERNAME, PASSWORD, ROLE
-            {"admin123", "123456", "admin"},
-            {"farhan123", "farhanoke", "user"},
-            {"user", "pengguna", "user"}
-        };    
-        
+                // USERNAME, PASSWORD, ROLE
+                { "admin123", "123456", "admin" },
+                { "farhan123", "farhanoke", "user" },
+                { "user", "pengguna", "user" }
+        };
+
         boolean login = false;
         while (login == false) {
             System.out.println("------LOGIN------");
@@ -58,21 +59,20 @@ public class MainApp {
             System.out.print("\nPassword: ");
             String passwordInput = scInput.nextLine();
 
-            for (String[] key : account)
-            {
-                if (key[0].equals(usernameInput) && key[1].equals(passwordInput)) 
-                {
+            for (String[] key : account) {
+                if (key[0].equals(usernameInput) && key[1].equals(passwordInput)) {
                     login = true;
                     role = key[2];
                     System.out.println("\n------LOGIN BERHASIL------");
-                    System.out.println("\n----*SELAMAT DATANG "+usernameInput+"*----");
+                    System.out.println("\n----*SELAMAT DATANG " + usernameInput + "*----");
                     break;
-                }                
+                }
             }
-            if(!login){
+            if (!login) {
                 System.out.println("\nUsername atau Password anda salah!");
-            }                   
+            }
         }
+
 
         boolean isRunning = true;
         int menuItem;
@@ -80,7 +80,8 @@ public class MainApp {
             // Main Menu
             System.out.println(PagarPemisah);
             System.out.println("\nMain Menu: ");
-            System.out.println("1. Register User\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n6. Log Out\n0. Keluar Program");
+            System.out.println(
+                    "1. Register User\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n6. Log Out\n0. Keluar Program");
             System.out.print("\n(int) Pilih menu: ");
             menuItem = scInput.nextInt();
             scInput.nextLine();
@@ -90,51 +91,54 @@ public class MainApp {
                     isRunning = false;
                     break;
                 case 1:
-                    if (!role.equals("admin")) {
-                        System.out.println("MAAF ANDA TIDAK MEMILKI HAK AKSES!!");
-                        break;
-                    }    
-                    boolean isRunningAcc = true;
-                    while (isRunningAcc) {
-                        System.out.println();
-                        System.out.println("0. Kembali\n1. Data Akun\n2. Tambah Akun");
-                        System.out.print("Pilih Menu: ");
-                        menuItem = scInput.nextInt();
-                        scInput.nextLine();
-                        switch (menuItem) {
-                            case 0:
-                                isRunningAcc = false;
-                            break;
-                            case 1:
-                                System.out.println("Username   | Password   | Role");
-                                System.out.println("-------------------------------");
-                                for (int i = 0; i < account.length; i++) {
-                                    String usr = account [i][0];
-                                    String pw = account [i][1];
-                                    String rl = account [i][2];
-                                    System.out.printf("%-10s | %-10s | %-5s\n", usr, pw, rl);
-                                }
+                    if (role.equals("admin")) {
+                        boolean isRunningAcc = true;
+                        while (isRunningAcc) {
+                            System.out.println();
+                            System.out.println("0. Kembali\n1. Data Akun\n2. Tambah Akun");
+                            System.out.print("Pilih Menu: ");
+                            menuItem = scInput.nextInt();
+                            scInput.nextLine();
+                            switch (menuItem) {
+                                case 0:
+                                    isRunningAcc = false;
                                 break;
-                            case 2:
-                                System.out.println();
-                                System.out.println("---REGISTRASI USER---");
-                                String [][] acc = new String[account.length + 1][account[0].length];
-                                for (int i = 0; i < account.length; i++) {
-                                    for (int j = 0; j < account[0].length; j++) {
-                                        acc [i][j] = account[i][j];
+                                case 1:
+                                    System.out.println("Username   | Password   | Role");
+                                    System.out.println("-------------------------------");
+                                    for (int i = 0; i < account.length; i++) {
+                                        String usr = account [i][0];
+                                        String pw = account [i][1];
+                                        String rl = account [i][2];
+
+                                        System.out.printf("%-10s | %-10s | %-5s\n", usr, pw, rl);
                                     }
-                                }
-                                for (int i = 0; i < register.length; i++) {
-                                    System.out.print(register[i] + ": ");
-                                    acc[account.length][i] = scInput.nextLine();
-                                }
-                                account = acc;
-                                System.out.println("Registrasi Berhasil!");
-                                break;
-                        }
-                    }   
+                                    break;
+                                case 2:
+                                    System.out.println();
+                                    System.out.println("---REGISTRASI USER---");
+                                    String [][] acc = new String[account.length + 1][account[0].length];
+                                    for (int i = 0; i < account.length; i++) {
+                                        for (int j = 0; j < account[0].length; j++) {
+                                            acc [i][j] = account[i][j];
+                                        }
+                                    }
+                                    for (int i = 0; i < register.length; i++) {
+                                        System.out.print(register[i] + ": ");
+                                        acc[account.length][i] = scInput.nextLine();
+                                    }
+                                    account = acc;
+                                    System.out.println("Registrasi Berhasil!");
+                                    break;
+                            }
+                        }   
+                    }
+                    else
+                    {
+                        System.out.println("ANDA TIDAK MEMILIKI HAK AKSES!!");
+                    }
                     break;
-                case 2:                    
+                case 2:
                     boolean isRunning_dataKaryawan = true;
                     while (isRunning_dataKaryawan) {
                         System.out.println(PagarPemisah);
@@ -142,8 +146,8 @@ public class MainApp {
                         System.out.println("Pengelolaan Data Karyawan\n");
                         System.out.println("List Karyawan:");
                         for (int i = 0; i < data_Karyawan.length; i++) {
-                            System.out.println((i+1) + ". " + data_Karyawan[i][0]);
-                        } 
+                            System.out.println((i + 1) + ". " + data_Karyawan[i][0]);
+                        }
                         System.out.println("\nMenu:");
                         System.out.println("0. Kembali\n1. Edit/Lihat Data\n2. Tambahkan Karyawan");
                         System.out.print("Pilih Menu: ");
@@ -155,47 +159,50 @@ public class MainApp {
                                 break;
                             case 1:
                                 while (true) {
-                                    //Input
+                                    // Input
                                     boolean karyawan_isFound = false;
                                     System.out.print("\nMasukkan Nama Karyawan atau dengan index-nya\t: ");
-                                    if(scInput.hasNextInt()) {
+                                    if (scInput.hasNextInt()) {
                                         index_Karyawan = scInput.nextInt() - 1;
-                                        if(index_Karyawan < data_Karyawan.length)
+                                        if (index_Karyawan < data_Karyawan.length)
                                             karyawan_isFound = true;
-                                    }    
-                                    else{
-                                        String nama_Input = scInput.nextLine();                            
+                                    } else {
+                                        String nama_Input = scInput.nextLine();
                                         for (int i = 0; i < data_Karyawan.length; i++) {
-                                            if(nama_Input.equalsIgnoreCase(data_Karyawan[i][0])){
+                                            if (nama_Input.equalsIgnoreCase(data_Karyawan[i][0])) {
                                                 index_Karyawan = i;
                                                 karyawan_isFound = true;
                                             }
                                         }
-                                    } 
-                                    if(karyawan_isFound) break;
+                                    }
+                                    if (karyawan_isFound)
+                                        break;
                                     System.out.println("Karyawan tidak ditemukan, meminta input kembali. . .");
                                 }
                                 while (true) {
                                     System.out.println(PagarPemisah);
                                     System.out.println();
                                     for (int i = 0; i < dataKaryawan_Info.length; i++) {
-                                        System.out.println((i+1) +". " + dataKaryawan_Info[i] + ": " + data_Karyawan[index_Karyawan][i]);
+                                        System.out.println((i + 1) + ". " + dataKaryawan_Info[i] + ": "
+                                                + data_Karyawan[index_Karyawan][i]);
                                     }
                                     System.out.print("\nMasukkan '0' untuk keluar,\nPilih nomor untuk di edit: ");
                                     menuItem = scInput.nextInt();
                                     scInput.nextLine();
-                                    if(menuItem == 0) break;
-                                    int selectedItem = menuItem -1;
+                                    if (menuItem == 0)
+                                        break;
+                                    int selectedItem = menuItem - 1;
                                     System.out.print(dataKaryawan_Info[selectedItem] + ": ");
-                                    
+
                                     data_Karyawan[index_Karyawan][selectedItem] = scInput.nextLine();
-                                }  
+                                }
                                 break;
                             case 2:
                                 System.out.println(PagarPemisah);
                                 System.out.println();
                                 System.out.println("Masukkan data-data karyawan:");
-                                String[][] arrayTemp = new String[data_Karyawan.length + 1][data_Karyawan[0].length];
+                                String[][] arrayTemp = new String[data_Karyawan.length
+                                        + 1][data_Karyawan[0].length];
                                 for (int i = 0; i < data_Karyawan.length; i++) {
                                     for (int j = 0; j < data_Karyawan[0].length; j++) {
                                         arrayTemp[i][j] = data_Karyawan[i][j];
@@ -206,52 +213,53 @@ public class MainApp {
                                     arrayTemp[data_Karyawan.length][i] = scInput.nextLine();
                                 }
                                 data_Karyawan = arrayTemp;
-                                System.out.println("\nPenambahan Karyawan " + data_Karyawan[data_Karyawan.length-1][0] + " Berhasil!");
+                                System.out.println("\nPenambahan Karyawan "
+                                        + data_Karyawan[data_Karyawan.length - 1][0] + " Berhasil!");
                                 break;
                             default:
-                                System.out.println("Menu "+ menuItem +" Tidak ada");
+                                System.out.println("Menu " + menuItem + " Tidak ada");
                                 break;
                         }
                     }
-                    
+
                     break;
                 case 3:
                     // Butuh Input
-                    int jmlMasuk, jamLembur;  
+                    int jmlMasuk, jamLembur;
                     // Ga butuh
-                    int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
-                    double pajak = 0.0, total_Gaji, hasil_akhir; 
+                    int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;
+                    double pajak = 0.0, total_Gaji, hasil_akhir;
 
-                    System.out.println(PagarPemisah); 
+                    System.out.println(PagarPemisah);
                     System.out.println();
                     for (int i = 0; i < data_Karyawan.length; i++) {
-                        System.out.println((i+1) + ". " + data_Karyawan[i][0]);
-                    }                    
+                        System.out.println((i + 1) + ". " + data_Karyawan[i][0]);
+                    }
                     while (true) {
                         boolean karyawan_isFound = false;
                         System.out.print("\nMasukkan Nama Karyawan atau dengan index-nya\t: ");
-                        if(scInput.hasNextInt()) {
+                        if (scInput.hasNextInt()) {
                             index_Karyawan = scInput.nextInt() - 1;
-                            if(index_Karyawan < data_Karyawan.length)
+                            if (index_Karyawan < data_Karyawan.length)
                                 karyawan_isFound = true;
-                        }    
-                        else{
-                            String nama_Input = scInput.nextLine();                            
+                        } else {
+                            String nama_Input = scInput.nextLine();
                             for (int i = 0; i < data_Karyawan.length; i++) {
-                                if(nama_Input.equalsIgnoreCase(data_Karyawan[i][0])){
+                                if (nama_Input.equalsIgnoreCase(data_Karyawan[i][0])) {
                                     index_Karyawan = i;
                                     karyawan_isFound = true;
                                 }
                             }
-                        } 
-                        if(karyawan_isFound) break;
+                        }
+                        if (karyawan_isFound)
+                            break;
                         System.out.println("Karyawan tidak ditemukan, meminta input kembali. . .");
-                    }                                   
+                    }
                     System.out.print("(bilangan real) Masukkan Jumlah Masuk\t\t: ");
                     jmlMasuk = scInput.nextInt();
                     System.out.print("(bilangan real) Masukkan Total Jam Lembur\t: ");
-                    jamLembur = scInput.nextInt();        
-                    scInput.nextLine();  
+                    jamLembur = scInput.nextInt();
+                    scInput.nextLine();
                     char golongan = data_Karyawan[index_Karyawan][1].toUpperCase().toCharArray()[0];
 
                     // Perhitungan Gaji
@@ -291,47 +299,48 @@ public class MainApp {
                     hasil_akhir = total_Gaji - potongan_Pajak;
 
                     // Slip Gaji
-                    System.out.println(PagarPemisah+"\n");
+                    System.out.println(PagarPemisah + "\n");
                     System.out.println("Slip Gaji\nAtas nama: " + data_Karyawan[index_Karyawan][0]);
                     System.out.println(
-                        "\nPenghasilan: " +
-                        "\nGolongan\t\t\t\t\t: " + golongan +
-                        "\nGaji Pokok\t\t\t\t\t: Rp." + pokok_Gaji +
-                        "\nBonus Gaji\t\t\t\t\t: Rp." + bonus_Gaji +
-                        "\nTunjangan\t\t\t\t\t: Rp." + uangTunjangan +
-                        "\n--------------------------------------------------------------------------" +
-                        "\nTotal Penghasilan\t\t\t\t: Rp." + (long) total_Gaji);
+                            "\nPenghasilan: " +
+                                    "\nGolongan\t\t\t\t\t: " + golongan +
+                                    "\nGaji Pokok\t\t\t\t\t: Rp." + pokok_Gaji +
+                                    "\nBonus Gaji\t\t\t\t\t: Rp." + bonus_Gaji +
+                                    "\nTunjangan\t\t\t\t\t: Rp." + uangTunjangan +
+                                    "\n--------------------------------------------------------------------------" +
+                                    "\nTotal Penghasilan\t\t\t\t: Rp." + (long) total_Gaji);
                     System.out.println(
-                        "\nPotongan: " +
-                        "\nPajak\t\t\t\t\t\t: Rp." + (long) potongan_Pajak);
+                            "\nPotongan: " +
+                                    "\nPajak\t\t\t\t\t\t: Rp." + (long) potongan_Pajak);
                     System.out.println(
-                        "\n--------------------------------------------------------------------------" +
-                        "\nTotal Gaji Bersih\t\t\t\t: Rp." + (long) hasil_akhir);
+                            "\n--------------------------------------------------------------------------" +
+                                    "\nTotal Gaji Bersih\t\t\t\t: Rp." + (long) hasil_akhir);
 
                     // Dialog Lanjut Transfer
-                    dialogAnswer = "";                    
+                    dialogAnswer = "";
                     while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
-                        System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[index_Karyawan][0] + "? (y/n): ");
+                        System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[index_Karyawan][0]
+                                + "? (y/n): ");
                         dialogAnswer = scInput.nextLine();
-                    }                    
+                    }
                     if (dialogAnswer.equalsIgnoreCase("n"))
                         break;
 
                     // Pembayaran / Transfer
-                    boolean dataValid = false, transfStatus = false;                    
-                    System.out.println(PagarPemisah+"\n");
+                    boolean dataValid = false, transfStatus = false;
+                    System.out.println(PagarPemisah + "\n");
                     String[] bank_Karyawan = data_Karyawan[index_Karyawan][3].split(":", 2);
                     for (int i = 0; i < listBank.length; i++) {
-                        if(listBank[i][0].equals(bank_Karyawan[0])){
+                        if (listBank[i][0].equals(bank_Karyawan[0])) {
                             dataValid = bank_Karyawan[1].length() == listBank[i][1].length();
                             break;
                         }
                     }
                     if (dataValid) {
                         System.out.println(
-                                "Memulai transfer uang sebesar Rp." + (int) hasil_akhir + 
-                                " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
-                        transfStatus = true;                        
+                                "Memulai transfer uang sebesar Rp." + (int) hasil_akhir +
+                                        " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
+                        transfStatus = true;
                         if (transfStatus) {
                             System.out.println("Transfer Berhasil");
                         } else {
@@ -347,16 +356,17 @@ public class MainApp {
                     System.out.println("Tugas selesai, Kembali ke menu. . .");
                     break;
                 case 4:
-                    //cuti
+                    // cuti
                     String[][] data = {
-                    // NAMA,    GOL,    NO TELP,    BANK:NOREK,       STATUS CUTI
-                    {"Raruu", "D", "-", "BRI:789654389987456", "Belum Mengajukan Cuti"},
-                    {"Dyyyy", "C", "-", "BTN:1234567890987654", "Belum Mengajukan Cuti"},
-                    {"Farhan Kebab", "B", "083843069913", "BSI:1234567890", "Belum Mengajukan Cuti"},
-                    {"Slamet Kopling", "B", "089675839108", "BSI:1234567890", "Belum Mengajukan Cuti"},
-                    {"Rian Batagor", "A", "08996906443", "Mandiri:1234567890987", "Belum Mengajukan Cuti"},
-                    {"Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890", "Belum Mengajukan Cuti"},
-                    {"Vivo", "D", "082118325367", "BSI:1234567890", "Belum Mengajukan Cuti"},
+                            // NAMA, GOL, NO TELP, BANK:NOREK, STATUS CUTI
+                            { "Raruu", "D", "-", "BRI:789654389987456", "Belum Mengajukan Cuti" },
+                            { "Dyyyy", "C", "-", "BTN:1234567890987654", "Belum Mengajukan Cuti" },
+                            { "Farhan Kebab", "B", "083843069913", "BSI:1234567890", "Belum Mengajukan Cuti" },
+                            { "Slamet Kopling", "B", "089675839108", "BSI:1234567890", "Belum Mengajukan Cuti" },
+                            { "Rian Batagor", "A", "08996906443", "Mandiri:1234567890987",
+                                    "Belum Mengajukan Cuti" },
+                            { "Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890", "Belum Mengajukan Cuti" },
+                            { "Vivo", "D", "082118325367", "BSI:1234567890", "Belum Mengajukan Cuti" },
                     };
 
                     // input nama
@@ -372,15 +382,15 @@ public class MainApp {
                             data[i][4] = "Sedang Cuti";
                             System.out.println(namaCuti + " telah mengajukan cuti.");
                             break;
-                            }
+                        }
                     }
 
                     if (!karyawanFound) {
                         System.out.println("Karyawan dengan nama " + namaCuti + " tidak ditemukan.");
                     }
-                     break;
+                    break;
                 case 5:
-                     break;     
+                    break;
                 case 6:
                     login = false;
                     System.out.println("Anda Telah Log Out.");
@@ -391,6 +401,7 @@ public class MainApp {
             }
         } while (isRunning);
         System.out.println("\n\nProgram Berhenti");
+
         scInput.close();
     }
 }
