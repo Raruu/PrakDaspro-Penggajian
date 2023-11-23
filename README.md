@@ -6,6 +6,7 @@ Sistem informasi penggajian adalah sistem yang digunakan untuk mengumpulkan, mem
 1. Perhitungan Gaji
 1. Cetak Slip Gaji
 1. Pembayaran Gaji Otomatis
+1. Pengelolaan Data Karyawan
 1. Rekap bonus dan lembur
 1. Manajemen absensi dan cuti
 
@@ -14,12 +15,12 @@ Read on [Trello](https://trello.com/b/MzOBfiwW/projek-prodas)
 
 # Kontributor
 ````
- Nama_Lengkap `NIM`
+ 'NIM' Nama_Lengkap
 ````
 
-- [Hidayat Widi Saputra](https://github.com/Raruu) `2341720157`
-- [Rafi Ody Prasetyo](https://github.com/rafiody16) `2341720180`
-- [Sadiya Maritza](https://github.com/Sadiya8924) `2341720147`
+- `2341720157` [Hidayat Widi Saputra](https://github.com/Raruu)
+- `2341720180` [Rafi Ody Prasetyo](https://github.com/rafiody16)
+- `2341720147` [Sadiya Maritza](https://github.com/Sadiya8924)
 <br/>
 <br/>
 <br/>
@@ -31,7 +32,7 @@ Read on [Trello](https://trello.com/b/MzOBfiwW/projek-prodas)
 
 ## More Info
 
-- [Trello](https://trello.com/b/MzOBfiwW/projek-prodas)
+- <a href="https://trello.com/b/MzOBfiwW/projek-prodas" target="_blank">Trello</a>
 - [Kelompok 8 MD](Kelompok8.md)
 ---
 
