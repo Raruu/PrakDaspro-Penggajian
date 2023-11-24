@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class MainApp {
     private static Scanner scInput;
     private static String[][] accounts;
-
+    private static String usernameLogin;
     private static String role;
     public static void clearScreen() {  
         System.out.print("\033[H\033[2J");  
@@ -33,7 +33,12 @@ public class MainApp {
         }
         return true;
     }
-
+     public static void printMenu(){
+        System.out.println("Login: " + usernameLogin);
+        System.out.println("\nMenu Utama: ");
+        System.out.println("1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n6. Cuti Karyawan\n7. Keluar\n0. Program");
+        System.out.println("\npilih Menu (angka): ");
+    }
 
     public static void main(String[] args) throws Exception {
         final String PagarPemisah = "###".repeat(47); 
@@ -103,10 +108,7 @@ public class MainApp {
         int menuItem;
         do {
             // Main Menu
-            System.out.println("Login: " + usernameLogin);
-            System.out.println("\nMain Menu: ");
-            System.out.println("1. Register User\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n6. Cuti Karyawan\n7. Log Out\n0. Keluar Program");
-            System.out.print("\n(int) Pilih menu: ");
+            printMenu():
             menuItem = scInput.nextInt();
             scInput.nextLine();
             System.out.println();
