@@ -25,29 +25,6 @@ public class MainApp {
                 "                                                                                                                                    ");
              
     }
-    public static boolean login(String username, String password)
-    {
-        role = auth(username, password);
-        if (role != null) {
-            System.out.println("Login Berhasil");
-            return true;
-        }
-        else{
-            System.out.println("Login Gagal");
-            return false;
-        }
-    }
-
-    private static String auth(String username, String Password)
-    {
-        for (String[] acc : accounts) {
-            if (acc[0].equals(username) && acc[1].equals(Password)) {
-                return acc[2];
-            }
-        }
-        return null;
-    }
-
     public static boolean checkAdmin(String x)
     {
         if (!"admin".equals(x)) {
@@ -56,13 +33,6 @@ public class MainApp {
         }
         return true;
     }
-
-    // public AccessControl(String[][] accounts, String role)
-    // {
-    //     this.accounts = accounts;
-    //     this.role = role;
-    
-    // }
 
 
     public static void main(String[] args) throws Exception {
