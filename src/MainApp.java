@@ -1,6 +1,10 @@
 import java.util.Scanner;
 
 public class MainApp {
+    private static Scanner scInput;
+    private static String[][] accounts;
+
+    private static String role;
     public static void clearScreen() {  
         System.out.print("\033[H\033[2J");  
         System.out.flush();  
@@ -21,6 +25,45 @@ public class MainApp {
                 "                                                                                                                                    ");
              
     }
+    public static boolean login(String username, String password)
+    {
+        role = auth(username, password);
+        if (role != null) {
+            System.out.println("Login Berhasil");
+            return true;
+        }
+        else{
+            System.out.println("Login Gagal");
+            return false;
+        }
+    }
+
+    private static String auth(String username, String Password)
+    {
+        for (String[] acc : accounts) {
+            if (acc[0].equals(username) && acc[1].equals(Password)) {
+                return acc[2];
+            }
+        }
+        return null;
+    }
+
+    public static boolean checkAdmin(String x)
+    {
+        if (!"admin".equals(x)) {
+            System.out.println("Maaf Anda Tidak Memiliki Hak Akses!!");
+            return false;
+        }
+        return true;
+    }
+
+    // public AccessControl(String[][] accounts, String role)
+    // {
+    //     this.accounts = accounts;
+    //     this.role = role;
+    
+    // }
+
 
     public static void main(String[] args) throws Exception {
         final String PagarPemisah = "###".repeat(47); 
@@ -97,57 +140,60 @@ public class MainApp {
             menuItem = scInput.nextInt();
             scInput.nextLine();
             System.out.println();
+            boolean auth = checkAdmin(role);
             switch (menuItem) {
                 case 0:
                     isRunning = false;
                     break;
                 case 1:
-                    if (!role.equals("admin")) {
-                        System.out.println("MAAF ANDA TIDAK MEMILKI HAK AKSES!!");
-                        break;
-                    }                        
-                    clearScreen();
-                    boolean isRunningAcc = true;
-                    while (isRunningAcc) {
-                        System.out.println();
-                        System.out.println("0. Kembali\n1. Data Akun\n2. Tambah Akun");
-                        System.out.print("Pilih Menu: ");
-                        menuItem = scInput.nextInt();
-                        scInput.nextLine();
-                        clearScreen(); 
-                        switch (menuItem) {
-                            case 0:
-                                isRunningAcc = false;
-                            break;
-                            case 1:
-                                System.out.println("Username   | Password   | Role");
-                                System.out.println("-------------------------------");
-                                for (int i = 0; i < account.length; i++) {
-                                    String usr = account [i][0];
-                                    String pw = account [i][1];
-                                    String rl = account [i][2];
-                                    System.out.printf("%-10s | %-10s | %-5s\n", usr, pw, rl);
-                                }
+                    if (auth) {
+                        clearScreen();
+                        boolean isRunningAcc = true;
+                        while (isRunningAcc) {
+                            System.out.println();
+                            System.out.println("0. Kembali\n1. Data Akun\n2. Tambah Akun");
+                            System.out.print("Pilih Menu: ");
+                            menuItem = scInput.nextInt();
+                            scInput.nextLine();
+                            clearScreen(); 
+                            switch (menuItem) {
+                                case 0:
+                                    isRunningAcc = false;
                                 break;
-                            case 2:
-                                System.out.println();
-                                System.out.println("---REGISTRASI USER---");
-                                String [][] acc = new String[account.length + 1][account[0].length];
-                                for (int i = 0; i < account.length; i++) {
-                                    for (int j = 0; j < account[0].length; j++) {
-                                        acc [i][j] = account[i][j];
+                                case 1:
+                                    System.out.println("Username   | Password   | Role");
+                                    System.out.println("-------------------------------");
+                                    for (int i = 0; i < account.length; i++) {
+                                        String usr = account [i][0];
+                                        String pw = account [i][1];
+                                        String rl = account [i][2];
+                                        System.out.printf("%-10s | %-10s | %-5s\n", usr, pw, rl);
                                     }
-                                }
-                                for (int i = 0; i < register.length; i++) {
-                                    System.out.print(register[i] + ": ");
-                                    acc[account.length][i] = scInput.nextLine();
-                                }
-                                account = acc;
-                                clearScreen();
-                                System.out.println("Registrasi Berhasil!");
-                                break;
+                                    break;
+                                case 2:
+                                    System.out.println();
+                                    System.out.println("---REGISTRASI USER---");
+                                    String [][] acc = new String[account.length + 1][account[0].length];
+                                    for (int i = 0; i < account.length; i++) {
+                                        for (int j = 0; j < account[0].length; j++) {
+                                            acc [i][j] = account[i][j];
+                                        }
+                                    }
+                                    for (int i = 0; i < register.length; i++) {
+                                        System.out.print(register[i] + ": ");
+                                        acc[account.length][i] = scInput.nextLine();
+                                    }
+                                    account = acc;
+                                    clearScreen();
+                                    System.out.println("Registrasi Berhasil!");
+                                    break;
+                            }
                         }
-                    }   
+                    }
+                    else
+                    {
+                        System.out.println("Mohon maaf anda tidak memiliki hak Akses!");
+                    }            
                     break;
                 case 2:    
                     clearScreen();                
