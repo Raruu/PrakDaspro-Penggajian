@@ -39,88 +39,15 @@ public class MainApp {
         System.out.println("1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n6. Cuti Karyawan\n7. Keluar\n0. Program");
         System.out.println("\npilih Menu (angka): ");
     }
-
-    public static void main(String[] args) throws Exception {
-        final String PagarPemisah = "###".repeat(47); 
-        final Scanner scInput = new Scanner(System.in);
-        printBanner();        
-
-        String dialogAnswer;  
-        String role ="";             
-        
-        // Bank(Pembayaran)        
-        String[][] listBank = {
-            {"BTN", "1234567890987654"}, {"Mandiri", "1234567890987"}, {"BRI", "123456789987456"}, {"CIMB Niaga", "12345678998745"},
-            {"BSI", "1234567890"}, {"Danamon", "1234567890"}, {"BNI", "9876543210"}, {"BCA", "1234567890"}};
-        
-
-        // Karyawan
-        String[] dataKaryawan_Info = {"Nama", "Golongan", "No Telephone", "Bank:NoRekening", "Status Cuti"};
-        String[][] data_Karyawan = {
-            // NAMA,    GOL,    NO TELP,    BANK:NOREK,    STATUS CUTI
-            {"Raruu", "D", "-", "BRI:789654389987456", "Belum mengajukan cuti"},
-            {"Dyyyy", "C", "-", "BTN:1234567890987654", "Belum mengajukan cuti"},
-            {"Farhan Kebab", "B", "083843069913", "BSI:1234567890", "Belum mengajukan cuti"},
-            {"Slamet Kopling", "B", "089675839108", "BSI:1234567890", "Belum mengajukan cuti"},
-            {"Rian Batagor", "A", "08996906443", "Mandiri:1234567890987", "Belum mengajukan cuti"},
-            {"Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890", "Belum mengajukan cuti"},
-            {"Vivo", "D", "082118325367", "BSI:1234567890", "Belum mengajukan cuti"},
-        };
-        int index_Karyawan = 0;               
-
-        //  Login
+        public static void editDataKaryawan(String[][] data_Karyawan, Scanner scInput, int index_Karyawan){
+        boolean isRunningAcc = true;
+        int menuItem;
         String[] register = {"Username", "Password", "Role"};
         String[][] account = {
-            //USERNAME, PASSWORD, ROLE
             {"admin123", "123456", "admin"},
             {"farhan123", "farhanoke", "user"},
             {"user", "pengguna", "user"}
-        };    
-        
-        boolean login = false;
-        String usernameLogin = "";
-        while (login == false) {
-            System.out.println("------LOGIN------");
-            System.out.println("Tekan CTRL+C untuk keluar program");
-            System.out.print("\nUsername: ");
-            usernameLogin = scInput.nextLine();
-            System.out.print("\nPassword: ");
-            String passwordInput = scInput.nextLine();
-
-            for (String[] key : account)
-            {
-                if (key[0].equals(usernameLogin) && key[1].equals(passwordInput)) 
-                {
-                    login = true;
-                    role = key[2];
-                    clearScreen();
-                    System.out.println("\n------LOGIN BERHASIL------");
-                    System.out.println("\n----*SELAMAT DATANG "+usernameLogin+"*----\n");
-                    break;
-                }                
-            }
-            if(!login){
-                System.out.println("\nUsername atau Password anda salah!");
-            }                   
-        }
-
-        boolean isRunning = true;
-        int menuItem;
-        do {
-            // Main Menu
-            printMenu():
-            menuItem = scInput.nextInt();
-            scInput.nextLine();
-            System.out.println();
-            boolean auth = checkAdmin(role);
-            switch (menuItem) {
-                case 0:
-                    isRunning = false;
-                    break;
-                case 1:
-                    if (auth) {
-                        clearScreen();
-                        boolean isRunningAcc = true;
+        };        
                         while (isRunningAcc) {
                             System.out.println();
                             System.out.println("0. Kembali\n1. Data Akun\n2. Tambah Akun");
@@ -161,15 +88,11 @@ public class MainApp {
                                     break;
                             }
                         }
-                    }
-                    else
-                    {
-                        System.out.println("Mohon maaf anda tidak memiliki hak Akses!");
-                    }            
-                    break;
-                case 2:    
-                    clearScreen();                
-                    boolean isRunning_dataKaryawan = true;
+    }
+    public static void aturDataKaryawan(String[][] data_Karyawan, int index_Karyawan){
+        boolean isRunning_dataKaryawan = true;
+        int menuItem;
+        String[] dataKaryawan_Info = {"Nama", "Golongan", "No Telephone", "Bank:NoRekening", "Status Cuti"};
                     clearScreen();
                     while (isRunning_dataKaryawan) {
                         // System.out.println(PagarPemisah);
@@ -250,14 +173,18 @@ public class MainApp {
                                 break;
                         }
                     }
-                    
-                    break;
-                case 3:
-                    // Butuh Input
+    }
+    public static void perhitunganGaji(String[][] data_Karyawan, int index_Karyawan){
+        // Butuh Input
                     int jmlMasuk, jamLembur;  
                     // Ga butuh
                     int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;   
-                    double pajak = 0.0, total_Gaji, hasil_akhir; 
+                    double pajak = 0.0, total_Gaji, hasil_akhir;
+                    String dialogAnswer = " "; 
+                    String[][] listBank = {
+                    {"BTN", "1234567890987654"}, {"Mandiri", "1234567890987"}, {"BRI", "123456789987456"}, {"CIMB Niaga", "12345678998745"},
+                    {"BSI", "1234567890"}, {"Danamon", "1234567890"}, {"BNI", "9876543210"}, {"BCA", "1234567890"}};
+                    final String PagarPemisah = "###".repeat(47); 
 
                     clearScreen();
                     System.out.println("Perhitungan Gaji"); 
@@ -347,13 +274,14 @@ public class MainApp {
                         "\nTotal Gaji Bersih\t\t\t\t: Rp." + (long) hasil_akhir);
 
                     // Dialog Lanjut Transfer
-                    dialogAnswer = "";                    
+                    dialogAnswer = "";                
                     while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
                         System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[index_Karyawan][0] + "? (y/n): ");
                         dialogAnswer = scInput.nextLine();
                     }                    
-                    if (dialogAnswer.equalsIgnoreCase("n"))
-                        break;
+                    if (dialogAnswer.equalsIgnoreCase("n")){
+                        return;
+                    }
 
                     // Pembayaran / Transfer
                     clearScreen();
@@ -385,13 +313,10 @@ public class MainApp {
                     }
                     System.out.println("Tugas selesai, Tekan ENTER untuk Kembali ke menu:");
                     scInput.nextLine();
-                    break;
-                case 4:
-                     break;
-                case 5:
-                     break;     
-                case 6:
-                     //cuti
+                    return;
+    }
+    public static void kelolaCutiKaryawan(String[][] data_Karyawan){
+                             //cuti
                     String[] statusCuti = new String[data_Karyawan.length];
 
                     for (int i = 0; i < data_Karyawan.length; i++) {
@@ -432,6 +357,109 @@ public class MainApp {
                     } else {
                     System.out.println("Karyawan dengan nama " + namaCuti + " tidak ditemukan.");
                     }
+    }
+
+    public static void main(String[] args) throws Exception {
+        final String PagarPemisah = "###".repeat(47); 
+        final Scanner scInput = new Scanner(System.in);
+        printBanner();        
+
+        String dialogAnswer;  
+        String role ="";             
+        
+        // Bank(Pembayaran)        
+        String[][] listBank = {
+            {"BTN", "1234567890987654"}, {"Mandiri", "1234567890987"}, {"BRI", "123456789987456"}, {"CIMB Niaga", "12345678998745"},
+            {"BSI", "1234567890"}, {"Danamon", "1234567890"}, {"BNI", "9876543210"}, {"BCA", "1234567890"}};
+        
+
+        // Karyawan
+        String[] dataKaryawan_Info = {"Nama", "Golongan", "No Telephone", "Bank:NoRekening", "Status Cuti"};
+        String[][] data_Karyawan = {
+            // NAMA,    GOL,    NO TELP,    BANK:NOREK,    STATUS CUTI
+            {"Raruu", "D", "-", "BRI:789654389987456", "Belum mengajukan cuti"},
+            {"Dyyyy", "C", "-", "BTN:1234567890987654", "Belum mengajukan cuti"},
+            {"Farhan Kebab", "B", "083843069913", "BSI:1234567890", "Belum mengajukan cuti"},
+            {"Slamet Kopling", "B", "089675839108", "BSI:1234567890", "Belum mengajukan cuti"},
+            {"Rian Batagor", "A", "08996906443", "Mandiri:1234567890987", "Belum mengajukan cuti"},
+            {"Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890", "Belum mengajukan cuti"},
+            {"Vivo", "D", "082118325367", "BSI:1234567890", "Belum mengajukan cuti"},
+        };
+        int index_Karyawan = 0;               
+
+        //  Login
+        String[] register = {"Username", "Password", "Role"};
+        String[][] account = {
+            //USERNAME, PASSWORD, ROLE
+            {"admin123", "123456", "admin"},
+            {"farhan123", "farhanoke", "user"},
+            {"user", "pengguna", "user"}
+        };    
+        
+        boolean login = false;
+        String usernameLogin = "";
+        while (login == false) {
+            System.out.println("------LOGIN------");
+            System.out.println("Tekan CTRL+C untuk keluar program");
+            System.out.print("\nUsername: ");
+            usernameLogin = scInput.nextLine();
+            System.out.print("\nPassword: ");
+            String passwordInput = scInput.nextLine();
+
+            for (String[] key : account)
+            {
+                if (key[0].equals(usernameLogin) && key[1].equals(passwordInput)) 
+                {
+                    login = true;
+                    role = key[2];
+                    clearScreen();
+                    System.out.println("\n------LOGIN BERHASIL------");
+                    System.out.println("\n----*SELAMAT DATANG "+usernameLogin+"*----\n");
+                    break;
+                }                
+            }
+            if(!login){
+                System.out.println("\nUsername atau Password anda salah!");
+            }                   
+        }
+
+        boolean isRunning = true;
+        int menuItem;
+        do {
+            // Main Menu
+            printMenu():
+            menuItem = scInput.nextInt();
+            scInput.nextLine();
+            System.out.println();
+            boolean auth = checkAdmin(role);
+            switch (menuItem) {
+                case 0:
+                    isRunning = false;
+                    break;
+                case 1:
+                    if (auth) {
+                        clearScreen();
+                        editDataKaryawan(data_Karyawan, scInput, index_Karyawan);
+                    }
+                    else
+                    {
+                        System.out.println("Mohon maaf anda tidak memiliki hak Akses!");
+                    }            
+                    break;
+                case 2:    
+                    clearScreen();                
+                    aturDataKaryawan(data_Karyawan, index_Karyawan);
+                    break;
+                case 3:
+                    clearScreen();
+                    perhitunganGaji(data_Karyawan, index_Karyawan);
+                case 4:
+                     break;
+                case 5:
+                     break;     
+                case 6:
+                    clearScreen();
+                    kelolaCutiKaryawan(data_Karyawan);
                     break;
                 case 7: 
                     login = false;
