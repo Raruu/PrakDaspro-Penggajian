@@ -38,6 +38,51 @@ public class MainApp {
     };
     private static int index_Karyawan = 0;
 
+    // Slip Gaji
+    static String[] array_SlipGaji_Info = { "Id: ", "Atas Nama: ", "Golongan\t\t\t\t\t: ",
+            "Gaji Pokok\t\t\t\t\t: Rp.", "Bonus Gaji\t\t\t\t\t: Rp.", "Tunjangan\t\t\t\t\t: Rp.",
+            "Total Penghasilan\t\t\t\t: Rp.", "Pajak\t\t\t\t\t\t: Rp.", "Total Gaji Bersih\t\t\t\t: Rp." };
+    static String[][] array_SlipGajis = new String[0][0];
+
+    public static void addSlipGaji(String nama, char gol, long pokok_Gaji, int bonus_Gaji, int uangTunjangan,
+            double total_Gaji, double potongan_Pajak, double hasil_Akhir) {
+        String[] str = new String[9];
+        str[0] = String.valueOf(array_SlipGajis.length);
+        str[1] = nama;
+        str[2] = String.valueOf(gol);
+        str[3] = String.valueOf(pokok_Gaji);
+        str[4] = String.valueOf(bonus_Gaji);
+        str[5] = String.valueOf(uangTunjangan);
+        str[6] = String.valueOf((long) total_Gaji);
+        str[7] = String.valueOf((long) potongan_Pajak);
+        str[8] = String.valueOf((long) hasil_Akhir);
+
+        array_SlipGajis = addElementArray(array_SlipGajis, str);
+    }
+
+    public static void printSlipGaji(int id) {
+        clearScreen();
+        if (id > array_SlipGajis.length) {
+            System.out.println("Id: " + id + " Tidak tersedia");
+            return;
+        }
+
+        System.out.println("Slip gaji\n");
+        for (int i = 0; i < array_SlipGaji_Info.length; i++) {
+            boolean extraEnter = false;
+            if (i == 1)
+                extraEnter = true;
+            if (i == 2)
+                System.out.println("Penghasilan: ");
+            if (i == 6 || i == 8)
+                System.out.println("--------------------------------------------------------------------------");
+
+            System.out.println(array_SlipGaji_Info[i] + array_SlipGajis[id][i]);
+            if (extraEnter)
+                System.out.println();
+        }
+    }
+
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -71,11 +116,24 @@ public class MainApp {
         System.out.println("Login: " + usernameLogin);
         System.out.println("\nMenu Utama: ");
         System.out.println(
-                "1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Cetak Slip Gaji\n6. Cuti Karyawan\n7. Keluar\n0. Program");
-        System.out.println("\npilih Menu (angka): ");
+                "1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. LogOut\n0. Keluar Program");
+        System.out.print("\npilih Menu (angka): ");
     }
 
-    public static String[][] addElementArray(String[][] arr, String[] msg) {
+    public static String[][] addElementArray(String[][] arr, String... str) {
+        String[][] arrayTemp = new String[arr.length + 1][str.length];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                arrayTemp[i][j] = arr[i][j];
+            }
+        }
+        for (int i = 0; i < str.length; i++) {
+            arrayTemp[arr.length][i] = str[i];
+        }
+        return arrayTemp;
+    }
+
+    public static String[][] addElementArrayInput(String[][] arr, String[] msg) {
         String[][] arrayTemp = new String[arr.length + 1][arr[0].length];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
@@ -94,7 +152,7 @@ public class MainApp {
         System.out.print("\nMasukkan Nama Karyawan atau dengan index-nya\t: ");
         if (scInput.hasNextInt()) {
             index_Karyawan = scInput.nextInt() - 1;
-            if (index_Karyawan < data_Karyawan.length && index_Karyawan > 0)
+            if (index_Karyawan < data_Karyawan.length && index_Karyawan > -1)
                 karyawan_isFound = true;
         } else {
             String nama_Input = scInput.nextLine();
@@ -135,7 +193,7 @@ public class MainApp {
                 case 2:
                     System.out.println();
                     System.out.println("---REGISTRASI USER---");
-                    account = addElementArray(account, register);
+                    account = addElementArrayInput(account, register);
                     clearScreen();
                     System.out.println("Registrasi Berhasil!");
                     break;
@@ -193,7 +251,7 @@ public class MainApp {
                     System.out.println("Tambahkan Karyawan");
                     System.out.println();
                     System.out.println("Masukkan data-data karyawan:");
-                    data_Karyawan = addElementArray(data_Karyawan, dataKaryawan_Info);
+                    data_Karyawan = addElementArrayInput(data_Karyawan, dataKaryawan_Info);
                     clearScreen();
                     System.out.println(
                             "\nPenambahan Karyawan " + data_Karyawan[data_Karyawan.length - 1][0] + " Berhasil!");
@@ -268,22 +326,10 @@ public class MainApp {
         hasil_akhir = total_Gaji - potongan_Pajak;
 
         // Slip Gaji
-        clearScreen();
-        System.out.println("Slip Gaji\n\nAtas nama: " + data_Karyawan[index_Karyawan][0]);
-        System.out.println(
-                "\nPenghasilan: " +
-                        "\nGolongan\t\t\t\t\t: " + golongan +
-                        "\nGaji Pokok\t\t\t\t\t: Rp." + pokok_Gaji +
-                        "\nBonus Gaji\t\t\t\t\t: Rp." + bonus_Gaji +
-                        "\nTunjangan\t\t\t\t\t: Rp." + uangTunjangan +
-                        "\n--------------------------------------------------------------------------" +
-                        "\nTotal Penghasilan\t\t\t\t: Rp." + (long) total_Gaji);
-        System.out.println(
-                "\nPotongan: " +
-                        "\nPajak\t\t\t\t\t\t: Rp." + (long) potongan_Pajak);
-        System.out.println(
-                "\n--------------------------------------------------------------------------" +
-                        "\nTotal Gaji Bersih\t\t\t\t: Rp." + (long) hasil_akhir);
+        int slipgajiid = array_SlipGajis.length;
+        addSlipGaji(data_Karyawan[index_Karyawan][0], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
+                potongan_Pajak, hasil_akhir);
+        printSlipGaji(slipgajiid);
 
         // Dialog Lanjut Transfer
         dialogAnswer = "";
@@ -322,8 +368,29 @@ public class MainApp {
             System.out.println("Nama Bank\t: " + bank_Karyawan[0]);
             System.out.println("No Rekening\t: " + bank_Karyawan[1]);
         }
-        System.out.println("Tugas selesai, Tekan ENTER untuk Kembali ke menu:");
+        System.out.print("Tugas selesai, Tekan ENTER untuk Kembali ke menu:");
         scInput.nextLine();
+    }
+
+    public static void slipGaji() {
+        while (true) {
+            clearScreen();
+            System.out.println("ID\tNama");
+            for (String[] slipGajis : array_SlipGajis) {
+                System.out.println(slipGajis[0] + ". \t" + slipGajis[1]);
+            }
+            System.out.println("\nUntuk Kembali, Masukkan Selain Angka");
+            System.out.print("Untuk Melihat, Masukkan Id: ");
+            if (!scInput.hasNextInt()) {
+                scInput.nextLine();
+                break;
+            }
+            printSlipGaji(scInput.nextInt());
+            scInput.nextLine();
+            System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
+            scInput.nextLine();
+        }
+
     }
 
     public static void kelolaCutiKaryawan(String[][] data_Karyawan) {
@@ -372,7 +439,6 @@ public class MainApp {
     }
 
     public static void main(String[] args) throws Exception {
-
         scInput = new Scanner(System.in);
         printBanner();
 
@@ -432,6 +498,7 @@ public class MainApp {
                 case 4:
                     break;
                 case 5:
+                    slipGaji();
                     break;
                 case 6:
                     kelolaCutiKaryawan(data_Karyawan);
