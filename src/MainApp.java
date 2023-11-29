@@ -24,7 +24,8 @@ public class MainApp {
             { "BCA", "1234567890" } };
 
     // Karyawan
-    private static String[] dataKaryawan_Info = { "Nama", "Golongan", "No Telephone", "Bank:NoRekening", "Status Cuti" };
+    private static String[] dataKaryawan_Info = { "Nama", "Golongan", "No Telephone", "Bank:NoRekening",
+            "Status Cuti" };
     private static String[][] data_Karyawan = {
             // NAMA, GOL, NO TELP, BANK:NOREK, STATUS CUTI
             { "Raruu", "D", "-", "BRI:789654389987456", "Belum mengajukan cuti" },
@@ -74,6 +75,39 @@ public class MainApp {
         System.out.println("\npilih Menu (angka): ");
     }
 
+    public static String[][] addElementArray(String[][] arr, String[] msg) {
+        String[][] arrayTemp = new String[arr.length + 1][arr[0].length];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                arrayTemp[i][j] = arr[i][j];
+            }
+        }
+        for (int i = 0; i < msg.length; i++) {
+            System.out.print(msg[i] + ": ");
+            arrayTemp[arr.length][i] = scInput.nextLine();
+        }
+        return arrayTemp;
+    }
+
+    public static boolean karyawanSelector() {
+        boolean karyawan_isFound = false;
+        System.out.print("\nMasukkan Nama Karyawan atau dengan index-nya\t: ");
+        if (scInput.hasNextInt()) {
+            index_Karyawan = scInput.nextInt() - 1;
+            if (index_Karyawan < data_Karyawan.length && index_Karyawan > 0)
+                karyawan_isFound = true;
+        } else {
+            String nama_Input = scInput.nextLine();
+            for (int i = 0; i < data_Karyawan.length; i++) {
+                if (nama_Input.equalsIgnoreCase(data_Karyawan[i][0])) {
+                    index_Karyawan = i;
+                    karyawan_isFound = true;
+                }
+            }
+        }
+        return karyawan_isFound;
+    }
+
     public static void registerPengguna() {
         clearScreen();
         boolean isRunningAcc = true;
@@ -101,23 +135,12 @@ public class MainApp {
                 case 2:
                     System.out.println();
                     System.out.println("---REGISTRASI USER---");
-                    String[][] acc = new String[account.length + 1][account[0].length];
-                    for (int i = 0; i < account.length; i++) {
-                        for (int j = 0; j < account[0].length; j++) {
-                            acc[i][j] = account[i][j];
-                        }
-                    }
-                    for (int i = 0; i < register.length; i++) {
-                        System.out.print(register[i] + ": ");
-                        acc[account.length][i] = scInput.nextLine();
-                    }
-                    account = acc;
+                    account = addElementArray(account, register);
                     clearScreen();
                     System.out.println("Registrasi Berhasil!");
                     break;
             }
         }
-
     }
 
     public static void kelolaKaryawan() {
@@ -125,7 +148,6 @@ public class MainApp {
         boolean isRunning_dataKaryawan = true;
         clearScreen();
         while (isRunning_dataKaryawan) {
-            // System.out.println(PagarPemisah);
             System.out.println();
             System.out.println("Pengelolaan Data Karyawan\n");
             System.out.println("List Karyawan:");
@@ -144,22 +166,7 @@ public class MainApp {
                 case 1:
                     while (true) {
                         // Input
-                        boolean karyawan_isFound = false;
-                        System.out.print("\nMasukkan Nama Karyawan atau dengan index-nya\t: ");
-                        if (scInput.hasNextInt()) {
-                            index_Karyawan = scInput.nextInt() - 1;
-                            if (index_Karyawan < data_Karyawan.length)
-                                karyawan_isFound = true;
-                        } else {
-                            String nama_Input = scInput.nextLine();
-                            for (int i = 0; i < data_Karyawan.length; i++) {
-                                if (nama_Input.equalsIgnoreCase(data_Karyawan[i][0])) {
-                                    index_Karyawan = i;
-                                    karyawan_isFound = true;
-                                }
-                            }
-                        }
-                        if (karyawan_isFound)
+                        if (karyawanSelector())
                             break;
                         System.out.println("Karyawan tidak ditemukan, meminta input kembali. . .");
                     }
@@ -186,17 +193,7 @@ public class MainApp {
                     System.out.println("Tambahkan Karyawan");
                     System.out.println();
                     System.out.println("Masukkan data-data karyawan:");
-                    String[][] arrayTemp = new String[data_Karyawan.length + 1][data_Karyawan[0].length];
-                    for (int i = 0; i < data_Karyawan.length; i++) {
-                        for (int j = 0; j < data_Karyawan[0].length; j++) {
-                            arrayTemp[i][j] = data_Karyawan[i][j];
-                        }
-                    }
-                    for (int i = 0; i < dataKaryawan_Info.length; i++) {
-                        System.out.print(dataKaryawan_Info[i] + ": ");
-                        arrayTemp[data_Karyawan.length][i] = scInput.nextLine();
-                    }
-                    data_Karyawan = arrayTemp;
+                    data_Karyawan = addElementArray(data_Karyawan, dataKaryawan_Info);
                     clearScreen();
                     System.out.println(
                             "\nPenambahan Karyawan " + data_Karyawan[data_Karyawan.length - 1][0] + " Berhasil!");
@@ -223,22 +220,7 @@ public class MainApp {
             System.out.println((i + 1) + ". " + data_Karyawan[i][0]);
         }
         while (true) {
-            boolean karyawan_isFound = false;
-            System.out.print("\nMasukkan Nama Karyawan atau dengan index-nya\t: ");
-            if (scInput.hasNextInt()) {
-                index_Karyawan = scInput.nextInt() - 1;
-                if (index_Karyawan < data_Karyawan.length)
-                    karyawan_isFound = true;
-            } else {
-                String nama_Input = scInput.nextLine();
-                for (int i = 0; i < data_Karyawan.length; i++) {
-                    if (nama_Input.equalsIgnoreCase(data_Karyawan[i][0])) {
-                        index_Karyawan = i;
-                        karyawan_isFound = true;
-                    }
-                }
-            }
-            if (karyawan_isFound)
+            if (karyawanSelector())
                 break;
             System.out.println("Karyawan tidak ditemukan, meminta input kembali. . .");
         }
