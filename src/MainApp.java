@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class MainApp {
     final static String PagarPemisah = "###".repeat(47);
     private static Scanner scInput;
+    private static String role = "";    
     private static String usernameLogin;
     private static String dialogAnswer;
     private static int menuItem;
@@ -103,6 +104,7 @@ public class MainApp {
                 "                                                                                                                                    ");
              
     }
+
 
     public static boolean checkAdmin(String x) {
         if (!"admin".equals(x)) {
@@ -438,14 +440,9 @@ public class MainApp {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        scInput = new Scanner(System.in);
-        printBanner();
-
-        String role = "";
-
+    public static void login()
+    {
         boolean login = false;
-        String usernameLogin = "";
         while (login == false) {
             System.out.println("------LOGIN------");
             System.out.println("Tekan CTRL+C untuk keluar program");
@@ -453,7 +450,6 @@ public class MainApp {
             usernameLogin = scInput.nextLine();
             System.out.print("\nPassword: ");
             String passwordInput = scInput.nextLine();
-
             for (String[] key : account) {
                 if (key[0].equals(usernameLogin) && key[1].equals(passwordInput)) {
                     login = true;
@@ -467,11 +463,19 @@ public class MainApp {
             if (!login) {
                 System.out.println("\nUsername atau Password anda salah!");
             }
+            
         }
+    }
 
-        boolean isRunning = true;
-
-        do {
+    public static void main(String[] args) throws Exception {
+        scInput = new Scanner(System.in);
+        printBanner();
+        
+        boolean unlogin = true;
+        while (unlogin) {
+            login();            
+            boolean isRunning = true;
+            do {
             // Main Menu
             printMenu();
             menuItem = scInput.nextInt();
@@ -481,6 +485,7 @@ public class MainApp {
             switch (menuItem) {
                 case 0:
                     isRunning = false;
+                    unlogin = false;
                     break;
                 case 1:
                     if (auth) {
@@ -503,16 +508,17 @@ public class MainApp {
                 case 6:
                     kelolaCutiKaryawan(data_Karyawan);
                     break;
-                case 7:
-                    login = false;
-                    System.out.println("Anda Telah Log Out.");
-                    break;
+                case 7:                
+                System.out.println("Anda Telah Log Out.");
+                isRunning = false;
+                break;
                 default:
-                    System.out.println("Input tidak terdaftar");
-                    break;
+                System.out.println("Input tidak terdaftar");
+                break;
             }
             clearScreen();
         } while (isRunning);
+    }
         System.out.println("\n\nProgram Berhenti");
         scInput.close();
     }
