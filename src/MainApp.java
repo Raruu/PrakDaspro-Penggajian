@@ -37,6 +37,8 @@ public class MainApp {
             { "Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890", "Belum mengajukan cuti" },
             { "Vivo", "D", "082118325367", "BSI:1234567890", "Belum mengajukan cuti" },
     };
+
+    private static String[][] arrayPembGaji = new String[0][0];
     private static int index_Karyawan = 0;
 
     // Slip Gaji
@@ -327,11 +329,15 @@ public class MainApp {
         double potongan_Pajak = total_Gaji * pajak;
         hasil_akhir = total_Gaji - potongan_Pajak;
 
+
         // Slip Gaji
         int slipgajiid = array_SlipGajis.length;
         addSlipGaji(data_Karyawan[index_Karyawan][0], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
                 potongan_Pajak, hasil_akhir);
         printSlipGaji(slipgajiid);
+
+        //add array pembGaji
+        arrayPembGaji = addElementArray(arrayPembGaji, String.valueOf(arrayPembGaji.length), String.valueOf(index_Karyawan), String.valueOf((long)hasil_akhir));
 
         // Dialog Lanjut Transfer
         dialogAnswer = "";
@@ -372,6 +378,79 @@ public class MainApp {
         }
         System.out.print("Tugas selesai, Tekan ENTER untuk Kembali ke menu:");
         scInput.nextLine();
+    }
+
+    public static void pembGaji()
+    {
+        while (true) {
+            clearScreen();
+            System.out.println("ID\tNama");
+            for (String[] pembGaji : arrayPembGaji) {
+                System.out.println(pembGaji[0] + ". \t" + data_Karyawan[Integer.parseInt(pembGaji[1])][0]);
+            }
+
+            System.out.println("\nUntuk Kembali, Masukkan Selain Angka");
+            System.out.print("Untuk Melihat, Masukkan Id: ");
+            if (!scInput.hasNextInt()) {
+                scInput.nextLine();
+                break;
+            }
+
+            int input = scInput.nextInt();
+            scInput.nextLine();
+            if(checkPembGaji(input)){     
+                int id = Integer.parseInt(arrayPembGaji[input][1].toString());           
+                dialogAnswer = "";
+                while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
+                    System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[id][0] + "? (y/n): ");
+                    dialogAnswer = scInput.nextLine();
+                }
+                if (dialogAnswer.equalsIgnoreCase("n"))
+                    continue;
+
+                    clearScreen();
+                    boolean dataValid = false, transfStatus = false;
+                    System.out.println(PagarPemisah + "\n");
+                    String[] bank_Karyawan = data_Karyawan[id][3].split(":", 2);
+                    for (int i = 0; i < listBank.length; i++) {
+                        if (listBank[i][0].equals(bank_Karyawan[0])) {
+                            dataValid = bank_Karyawan[1].length() == listBank[i][1].length();
+                            break;
+                        }
+                    }
+                    if (dataValid) {
+                System.out.println(
+                    "Memulai transfer uang sebesar Rp." + arrayPembGaji[input][2] +
+                    " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
+                    transfStatus = true;
+                    if (transfStatus) {
+                        System.out.println("Transfer Berhasil");
+                    } else {
+                        System.out.println("Eror: ");
+                        System.out.println("Transfer Gagal");
+                    }
+                } else {
+                    System.out.println("Data tidak valid! Mohon tijau kembali");
+                    System.out.println("Nama\t\t: " + data_Karyawan[id][0]);
+                    System.out.println("Nama Bank\t: " + bank_Karyawan[0]);
+                    System.out.println("No Rekening\t: " + bank_Karyawan[1]);
+                }
+                System.out.print("Tugas selesai, Tekan ENTER untuk Kembali ke menu:");
+                scInput.nextLine();
+            }
+
+        }
+    }
+
+    public static boolean checkPembGaji(int id)
+    {
+        clearScreen();
+        if (id > arrayPembGaji.length) {
+            System.out.println("Id: " + id + " Tidak tersedia");
+            return false;
+        }
+        return true;
+
     }
 
     public static void slipGaji() {
@@ -500,7 +579,9 @@ public class MainApp {
                     break;
                 case 3:
                     perhitunganGaji();
+                    break;
                 case 4:
+                    pembGaji();
                     break;
                 case 5:
                     slipGaji();
