@@ -151,6 +151,17 @@ public class MainApp {
         return arrayTemp;
     }
 
+    public static String[][] removeElementArray(String[][] arr, int indexAt){
+        String[][] arrayTemp = new String[arr.length - 1][arr[0].length];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                if(i == indexAt) continue;
+                arrayTemp[i][j] = arr[i][j];
+            }
+        }
+        return arrayTemp;
+    }
+
     public static boolean karyawanSelector() {
         boolean karyawan_isFound = false;
         System.out.print("\nMasukkan Nama Karyawan atau dengan index-nya\t: ");
@@ -336,48 +347,9 @@ public class MainApp {
                 potongan_Pajak, hasil_akhir);
         printSlipGaji(slipgajiid);
 
-        //add array pembGaji
+        // add array pembGaji
         arrayPembGaji = addElementArray(arrayPembGaji, String.valueOf(arrayPembGaji.length), String.valueOf(index_Karyawan), String.valueOf((long)hasil_akhir));
-
-        // Dialog Lanjut Transfer
-        dialogAnswer = "";
-        while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
-            System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[index_Karyawan][0] + "? (y/n): ");
-            dialogAnswer = scInput.nextLine();
-        }
-        if (dialogAnswer.equalsIgnoreCase("n"))
-            return;
-
-        // Pembayaran / Transfer
-        clearScreen();
-        boolean dataValid = false, transfStatus = false;
-        System.out.println(PagarPemisah + "\n");
-        String[] bank_Karyawan = data_Karyawan[index_Karyawan][3].split(":", 2);
-        for (int i = 0; i < listBank.length; i++) {
-            if (listBank[i][0].equals(bank_Karyawan[0])) {
-                dataValid = bank_Karyawan[1].length() == listBank[i][1].length();
-                break;
-            }
-        }
-        if (dataValid) {
-            System.out.println(
-                    "Memulai transfer uang sebesar Rp." + (int) hasil_akhir +
-                            " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
-            transfStatus = true;
-            if (transfStatus) {
-                System.out.println("Transfer Berhasil");
-            } else {
-                System.out.println("Eror: ");
-                System.out.println("Transfer Gagal");
-            }
-        } else {
-            System.out.println("Data tidak valid! Mohon tijau kembali");
-            System.out.println("Nama\t\t: " + data_Karyawan[index_Karyawan][0]);
-            System.out.println("Nama Bank\t: " + bank_Karyawan[0]);
-            System.out.println("No Rekening\t: " + bank_Karyawan[1]);
-        }
-        System.out.print("Tugas selesai, Tekan ENTER untuk Kembali ke menu:");
-        scInput.nextLine();
+        doPembGaji(arrayPembGaji.length - 1);        
     }
 
     public static void pembGaji()
@@ -396,61 +368,57 @@ public class MainApp {
                 break;
             }
 
-            int input = scInput.nextInt();
+            doPembGaji(scInput.nextInt());            
             scInput.nextLine();
-            if(checkPembGaji(input)){     
-                int id = Integer.parseInt(arrayPembGaji[input][1].toString());           
-                dialogAnswer = "";
-                while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
-                    System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[id][0] + "? (y/n): ");
-                    dialogAnswer = scInput.nextLine();
-                }
-                if (dialogAnswer.equalsIgnoreCase("n"))
-                    continue;
-
-                    clearScreen();
-                    boolean dataValid = false, transfStatus = false;
-                    System.out.println(PagarPemisah + "\n");
-                    String[] bank_Karyawan = data_Karyawan[id][3].split(":", 2);
-                    for (int i = 0; i < listBank.length; i++) {
-                        if (listBank[i][0].equals(bank_Karyawan[0])) {
-                            dataValid = bank_Karyawan[1].length() == listBank[i][1].length();
-                            break;
-                        }
-                    }
-                    if (dataValid) {
-                System.out.println(
-                    "Memulai transfer uang sebesar Rp." + arrayPembGaji[input][2] +
-                    " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
-                    transfStatus = true;
-                    if (transfStatus) {
-                        System.out.println("Transfer Berhasil");
-                    } else {
-                        System.out.println("Eror: ");
-                        System.out.println("Transfer Gagal");
-                    }
-                } else {
-                    System.out.println("Data tidak valid! Mohon tijau kembali");
-                    System.out.println("Nama\t\t: " + data_Karyawan[id][0]);
-                    System.out.println("Nama Bank\t: " + bank_Karyawan[0]);
-                    System.out.println("No Rekening\t: " + bank_Karyawan[1]);
-                }
-                System.out.print("Tugas selesai, Tekan ENTER untuk Kembali ke menu:");
-                scInput.nextLine();
-            }
-
         }
     }
 
-    public static boolean checkPembGaji(int id)
+    public static void doPembGaji(int input)
     {
         clearScreen();
-        if (id > arrayPembGaji.length) {
-            System.out.println("Id: " + id + " Tidak tersedia");
-            return false;
+        if (input > arrayPembGaji.length) {
+            System.out.println("Id: " + input + " Tidak tersedia");
+            return;
         }
-        return true;
+        int id = Integer.parseInt(arrayPembGaji[input][1].toString());   
 
+        dialogAnswer = "";
+        while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
+            System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[id][0] + "? (y/n): ");
+            dialogAnswer = scInput.nextLine();
+        }
+        if (dialogAnswer.equalsIgnoreCase("n"))
+            return;
+
+        clearScreen();
+        boolean dataValid = false, transfStatus = false;
+        System.out.println(PagarPemisah + "\n");
+        String[] bank_Karyawan = data_Karyawan[id][3].split(":", 2);
+        for (int i = 0; i < listBank.length; i++) {
+            if (listBank[i][0].equals(bank_Karyawan[0])) {
+                dataValid = bank_Karyawan[1].length() == listBank[i][1].length();
+                break;
+            }
+        }
+        if (dataValid) {
+            System.out.println(
+                "Memulai transfer uang sebesar Rp." + arrayPembGaji[input][2] +
+                " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
+            transfStatus = true;
+            if (transfStatus) {
+                System.out.println("Transfer Berhasil");
+            } else {
+                System.out.println("Eror: ");
+                System.out.println("Transfer Gagal");
+            }
+        } else {
+            System.out.println("Data tidak valid! Mohon tijau kembali");
+            System.out.println("Nama\t\t: " + data_Karyawan[id][0]);
+            System.out.println("Nama Bank\t: " + bank_Karyawan[0]);
+            System.out.println("No Rekening\t: " + bank_Karyawan[1]);
+        }
+        System.out.print("Tugas selesai, Tekan ENTER untuk Kembali ke menu:");
+        scInput.nextLine();           
     }
 
     public static void slipGaji() {
