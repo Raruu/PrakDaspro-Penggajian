@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class MainApp {
     final static String PagarPemisah = "###".repeat(47);
     private static Scanner scInput;
-    private static String role = "";    
+    private static String role = "";
     private static String usernameLogin;
     private static String dialogAnswer;
     private static int menuItem;
@@ -14,7 +14,8 @@ public class MainApp {
             // USERNAME, PASSWORD, ROLE
             { "admin123", "123456", "admin" },
             { "farhan123", "farhanoke", "user" },
-            { "user", "pengguna", "user" }
+            { "user", "pengguna", "user" },
+            { "", "", "admin" }
     };
 
     // Bank(Pembayaran)
@@ -91,22 +92,31 @@ public class MainApp {
         System.out.flush();
     }
 
-    public static void printBanner(){
+    public static void printBanner() {
         System.out.println(
-                "############################################################################################################################################\n" +
-                "############################################################################################################################################\n" +
-                "#   ███████╗██╗███████╗████████╗███████╗███╗   ███╗    ██████╗ ███████╗███╗   ██╗ ██████╗  ██████╗  █████╗      ██╗██╗ █████╗ ███╗   ██╗   #\r\n" + 
-                "#   ██╔════╝██║██╔════╝╚══██╔══╝██╔════╝████╗ ████║    ██╔══██╗██╔════╝████╗  ██║██╔════╝ ██╔════╝ ██╔══██╗     ██║██║██╔══██╗████╗  ██║   #\r\n" +
-                "#   ███████╗██║███████╗   ██║   █████╗  ██╔████╔██║    ██████╔╝█████╗  ██╔██╗ ██║██║  ███╗██║  ███╗███████║     ██║██║███████║██╔██╗ ██║   #\r\n" +
-                "#   ╚════██║██║╚════██║   ██║   ██╔══╝  ██║╚██╔╝██║    ██╔═══╝ ██╔══╝  ██║╚██╗██║██║   ██║██║   ██║██╔══██║██   ██║██║██╔══██║██║╚██╗██║   #\r\n" + 
-                "#   ███████║██║███████║   ██║   ███████╗██║ ╚═╝ ██║    ██║     ███████╗██║ ╚████║╚██████╔╝╚██████╔╝██║  ██║╚█████╔╝██║██║  ██║██║ ╚████║   #\r\n" + 
-                "#   ╚══════╝╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝     ╚═╝    ╚═╝     ╚══════╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ ╚════╝ ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝   #\r\n" + 
-                "############################################################################################################################################\n" +
-                "############################################################################################################################################\n" +
-                "                                                                                                                                    ");
-             
-    }
+                "############################################################################################################################################\n"
+                        +
+                        "############################################################################################################################################\n"
+                        +
+                        "#   ███████╗██╗███████╗████████╗███████╗███╗   ███╗    ██████╗ ███████╗███╗   ██╗ ██████╗  ██████╗  █████╗      ██╗██╗ █████╗ ███╗   ██╗   #\r\n"
+                        +
+                        "#   ██╔════╝██║██╔════╝╚══██╔══╝██╔════╝████╗ ████║    ██╔══██╗██╔════╝████╗  ██║██╔════╝ ██╔════╝ ██╔══██╗     ██║██║██╔══██╗████╗  ██║   #\r\n"
+                        +
+                        "#   ███████╗██║███████╗   ██║   █████╗  ██╔████╔██║    ██████╔╝█████╗  ██╔██╗ ██║██║  ███╗██║  ███╗███████║     ██║██║███████║██╔██╗ ██║   #\r\n"
+                        +
+                        "#   ╚════██║██║╚════██║   ██║   ██╔══╝  ██║╚██╔╝██║    ██╔═══╝ ██╔══╝  ██║╚██╗██║██║   ██║██║   ██║██╔══██║██   ██║██║██╔══██║██║╚██╗██║   #\r\n"
+                        +
+                        "#   ███████║██║███████║   ██║   ███████╗██║ ╚═╝ ██║    ██║     ███████╗██║ ╚████║╚██████╔╝╚██████╔╝██║  ██║╚█████╔╝██║██║  ██║██║ ╚████║   #\r\n"
+                        +
+                        "#   ╚══════╝╚═╝╚══════╝   ╚═╝   ╚══════╝╚═╝     ╚═╝    ╚═╝     ╚══════╝╚═╝  ╚═══╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ ╚════╝ ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝   #\r\n"
+                        +
+                        "############################################################################################################################################\n"
+                        +
+                        "############################################################################################################################################\n"
+                        +
+                        "                                                                                                                                    ");
 
+    }
 
     public static boolean checkAdmin(String x) {
         if (!"admin".equals(x)) {
@@ -114,14 +124,6 @@ public class MainApp {
             return false;
         }
         return true;
-    }
-
-    public static void printMenu() {
-        System.out.println("Login: " + usernameLogin);
-        System.out.println("\nMenu Utama: ");
-        System.out.println(
-                "1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. LogOut\n0. Keluar Program");
-        System.out.print("\npilih Menu (angka): ");
     }
 
     public static String[][] addElementArray(String[][] arr, String... str) {
@@ -151,12 +153,21 @@ public class MainApp {
         return arrayTemp;
     }
 
-    public static String[][] removeElementArray(String[][] arr, int indexAt){
+    public static String[][] removeElementArray(String[][] arr, int indexAt) {
+        if (indexAt >= arr.length)
+            return arr;
         String[][] arrayTemp = new String[arr.length - 1][arr[0].length];
+        boolean removed = false;
         for (int i = 0; i < arr.length; i++) {
+            if (i == indexAt) {
+                removed = true;
+                continue;
+            }
             for (int j = 0; j < arr[0].length; j++) {
-                if(i == indexAt) continue;
-                arrayTemp[i][j] = arr[i][j];
+                if (removed)
+                    arrayTemp[i - 1][j] = arr[i][j];
+                else
+                    arrayTemp[i][j] = arr[i][j];
             }
         }
         return arrayTemp;
@@ -179,6 +190,14 @@ public class MainApp {
             }
         }
         return karyawan_isFound;
+    }
+
+    public static void printKaryawanList() {
+        System.out.println("List Karyawan:");
+        System.out.println("No.\tNama Karyawan");
+        for (int i = 0; i < data_Karyawan.length; i++) {
+            System.out.println((i + 1) + ".\t" + data_Karyawan[i][0]);
+        }
     }
 
     public static void registerPengguna() {
@@ -223,12 +242,9 @@ public class MainApp {
         while (isRunning_dataKaryawan) {
             System.out.println();
             System.out.println("Pengelolaan Data Karyawan\n");
-            System.out.println("List Karyawan:");
-            for (int i = 0; i < data_Karyawan.length; i++) {
-                System.out.println((i + 1) + ". " + data_Karyawan[i][0]);
-            }
+            printKaryawanList();
             System.out.println("\nMenu:");
-            System.out.println("0. Kembali\n1. Edit/Lihat Data\n2. Tambahkan Karyawan");
+            System.out.println("0. Kembali\n1. Edit/Lihat Data\n2. Tambahkan Karyawan\n3. Hapus Karyawan");
             System.out.print("Pilih Menu: ");
             menuItem = scInput.nextInt();
             scInput.nextLine();
@@ -271,6 +287,16 @@ public class MainApp {
                     System.out.println(
                             "\nPenambahan Karyawan " + data_Karyawan[data_Karyawan.length - 1][0] + " Berhasil!");
                     break;
+                case 3:
+                    System.out.println("Hapus Karyawan");
+                    while (true) {
+                        if (karyawanSelector())
+                            break;
+                        else
+                            System.out.println("Karyawan tersebut tidak ada");
+                    }
+                    data_Karyawan = removeElementArray(data_Karyawan, index_Karyawan);
+                    break;
                 default:
                     System.out.println("Menu " + menuItem + " Tidak ada");
                     break;
@@ -289,9 +315,7 @@ public class MainApp {
         clearScreen();
         System.out.println("Perhitungan Gaji");
         System.out.println();
-        for (int i = 0; i < data_Karyawan.length; i++) {
-            System.out.println((i + 1) + ". " + data_Karyawan[i][0]);
-        }
+        printKaryawanList();
         while (true) {
             if (karyawanSelector())
                 break;
@@ -340,20 +364,21 @@ public class MainApp {
         double potongan_Pajak = total_Gaji * pajak;
         hasil_akhir = total_Gaji - potongan_Pajak;
 
-
         // Slip Gaji
         int slipgajiid = array_SlipGajis.length;
         addSlipGaji(data_Karyawan[index_Karyawan][0], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
                 potongan_Pajak, hasil_akhir);
         printSlipGaji(slipgajiid);
+        System.out.print("TEKAN ENTER UNTUK LANJUT: ");
+        scInput.nextLine();
 
         // add array pembGaji
-        arrayPembGaji = addElementArray(arrayPembGaji, String.valueOf(arrayPembGaji.length), String.valueOf(index_Karyawan), String.valueOf((long)hasil_akhir));
-        doPembGaji(arrayPembGaji.length - 1);        
+        arrayPembGaji = addElementArray(arrayPembGaji, String.valueOf(arrayPembGaji.length),
+                String.valueOf(index_Karyawan), String.valueOf((long) hasil_akhir));
+        doPembGaji(arrayPembGaji.length - 1);
     }
 
-    public static void pembGaji()
-    {
+    public static void pembGaji() {
         while (true) {
             clearScreen();
             System.out.println("ID\tNama");
@@ -368,19 +393,18 @@ public class MainApp {
                 break;
             }
 
-            doPembGaji(scInput.nextInt());            
+            doPembGaji(scInput.nextInt());
             scInput.nextLine();
         }
     }
 
-    public static void doPembGaji(int input)
-    {
+    public static void doPembGaji(int input) {
         clearScreen();
         if (input > arrayPembGaji.length) {
             System.out.println("Id: " + input + " Tidak tersedia");
             return;
         }
-        int id = Integer.parseInt(arrayPembGaji[input][1].toString());   
+        int id = Integer.parseInt(arrayPembGaji[input][1].toString());
 
         dialogAnswer = "";
         while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
@@ -402,8 +426,8 @@ public class MainApp {
         }
         if (dataValid) {
             System.out.println(
-                "Memulai transfer uang sebesar Rp." + arrayPembGaji[input][2] +
-                " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
+                    "Memulai transfer uang sebesar Rp." + arrayPembGaji[input][2] +
+                            " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
             transfStatus = true;
             if (transfStatus) {
                 System.out.println("Transfer Berhasil");
@@ -418,7 +442,7 @@ public class MainApp {
             System.out.println("No Rekening\t: " + bank_Karyawan[1]);
         }
         System.out.print("Tugas selesai, Tekan ENTER untuk Kembali ke menu:");
-        scInput.nextLine();           
+        scInput.nextLine();
     }
 
     public static void slipGaji() {
@@ -486,6 +510,7 @@ public class MainApp {
             System.out.println("Karyawan dengan nama " + namaCuti + " tidak ditemukan.");
         }
     }
+
     public static void cutiKaryawan() {
         boolean isRunningCuti = true;
         while (isRunningCuti) {
@@ -515,8 +540,7 @@ public class MainApp {
         }
     }
 
-    public static void login()
-    {
+    public static void login() {
         boolean login = false;
         while (login == false) {
             System.out.println("------LOGIN------");
@@ -538,64 +562,68 @@ public class MainApp {
             if (!login) {
                 System.out.println("\nUsername atau Password anda salah!");
             }
-            
+
         }
     }
 
     public static void main(String[] args) throws Exception {
         scInput = new Scanner(System.in);
         printBanner();
-        
+
         boolean unlogin = true;
         while (unlogin) {
-            login();            
+            login();
             boolean isRunning = true;
             do {
-            // Main Menu
-            printMenu();
-            menuItem = scInput.nextInt();
-            scInput.nextLine();
-            System.out.println();
-            boolean auth = checkAdmin(role);
-            switch (menuItem) {
-                case 0:
-                    isRunning = false;
-                    unlogin = false;
-                    break;
-                case 1:
-                    if (auth) {
-
-                        registerPengguna();
-                    } else {
-                        System.out.println("Mohon maaf anda tidak memiliki hak Akses!");
-                    }
-                    break;
-                case 2:
-                    kelolaKaryawan();
-                    break;
-                case 3:
-                    perhitunganGaji();
-                    break;
-                case 4:
-                    pembGaji();
-                    break;
-                case 5:
-                    slipGaji();
-                    break;
-                case 6:
-                    cutiKaryawan();
-                    break;
-                case 7:                
-                System.out.println("Anda Telah Log Out.");
-                isRunning = false;
-                break;
-                default:
-                System.out.println("Input tidak terdaftar");
-                break;
-            }
-            clearScreen();
-        } while (isRunning);
-    }
+                // Main Menu
+                System.out.println("Login: " + usernameLogin);
+                System.out.println("\nMenu Utama: ");
+                System.out.println(
+                        "1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. LogOut\n0. Keluar Program");
+                System.out.print("\npilih Menu (angka): ");
+                if (!scInput.hasNextInt())
+                    menuItem = -1;
+                else
+                    menuItem = scInput.nextInt();
+                scInput.nextLine();
+                System.out.println();
+                switch (menuItem) {
+                    case 0:
+                        isRunning = false;
+                        unlogin = false;
+                        break;
+                    case 1:
+                        if (checkAdmin(role)) {
+                            registerPengguna();
+                        } else {
+                            System.out.println("Mohon maaf anda tidak memiliki hak Akses!");
+                        }
+                        break;
+                    case 2:
+                        kelolaKaryawan();
+                        break;
+                    case 3:
+                        perhitunganGaji();
+                        break;
+                    case 4:
+                        pembGaji();
+                        break;
+                    case 5:
+                        slipGaji();
+                        break;
+                    case 6:
+                        cutiKaryawan();
+                        break;
+                    case 7:
+                        System.out.println("Anda Telah Log Out.");
+                        isRunning = false;
+                        break;
+                    default:
+                        break;
+                }
+                clearScreen();
+            } while (isRunning);
+        }
         System.out.println("\n\nProgram Berhenti");
         scInput.close();
     }
