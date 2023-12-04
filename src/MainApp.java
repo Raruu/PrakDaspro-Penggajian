@@ -439,6 +439,34 @@ public class MainApp {
             System.out.println("Karyawan dengan nama " + namaCuti + " tidak ditemukan.");
         }
     }
+    public static void cutiKaryawan() {
+        boolean isRunningCuti = true;
+        while (isRunningCuti) {
+            System.out.println("\nMenu Cuti Karyawan:");
+            System.out.println("1. Lihat Status Cuti Karyawan");
+            System.out.println("2. Kelola Cuti Karyawan");
+            System.out.println("0. Kembali");
+            System.out.print("Pilih Menu: ");
+            menuItem = scInput.nextInt();
+            scInput.nextLine();
+            switch (menuItem) {
+                case 0:
+                    isRunningCuti = false;
+                    break;
+                case 1:
+                    for (int i = 0; i < data_Karyawan.length; i++) {
+                        System.out.println(data_Karyawan[i][0] + ": " + data_Karyawan[i][4]);
+                    }
+                    break;
+                case 2:
+                    kelolaCutiKaryawan(data_Karyawan);
+                    break;
+                default:
+                    System.out.println("Menu " + menuItem + " tidak valid.");
+                    break;
+            }
+        }
+    }
 
     public static void login()
     {
@@ -506,7 +534,7 @@ public class MainApp {
                     slipGaji();
                     break;
                 case 6:
-                    kelolaCutiKaryawan(data_Karyawan);
+                    cutiKaryawan();
                     break;
                 case 7:                
                 System.out.println("Anda Telah Log Out.");
