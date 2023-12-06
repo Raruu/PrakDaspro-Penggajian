@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class MainApp {
@@ -26,66 +27,26 @@ public class MainApp {
             { "BCA", "1234567890" } };
 
     // Karyawan
-    private static String[] dataKaryawan_Info = { "Nama", "Golongan", "No Telephone", "Bank:NoRekening",
-            "Status Cuti" };
+    private static String[] dataKaryawan_Info = { "Nama", "Golongan", "No Telephone", "Bank:NoRekening" };
     private static String[][] data_Karyawan = {
             // NAMA, GOL, NO TELP, BANK:NOREK, STATUS CUTI
-            { "Raruu", "D", "-", "BRI:789654389987456", "Belum mengajukan cuti" },
-            { "Dyyyy", "C", "-", "BTN:1234567890987654", "Belum mengajukan cuti" },
-            { "Farhan Kebab", "B", "083843069913", "BSI:1234567890", "Belum mengajukan cuti" },
-            { "Slamet Kopling", "B", "089675839108", "BSI:1234567890", "Belum mengajukan cuti" },
-            { "Rian Batagor", "A", "08996906443", "Mandiri:1234567890987", "Belum mengajukan cuti" },
-            { "Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890", "Belum mengajukan cuti" },
-            { "Vivo", "D", "082118325367", "BSI:1234567890", "Belum mengajukan cuti" },
+            { "Raruu", "D", "-", "BRI:789654389987456", null },
+            { "Dyyyy", "C", "-", "BTN:1234567890987654", "" },
+            { "Farhan Kebab", "B", "083843069913", "BSI:1234567890", null },
+            { "Slamet Kopling", "B", "089675839108", "BSI:1234567890", null },
+            { "Rian Batagor", "A", "08996906443", "Mandiri:1234567890987", null },
+            { "Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890", null },
+            { "Vivo", "D", "082118325367", "BSI:1234567890", null },
     };
+    private static int index_Karyawan = 0;
 
     private static String[][] arrayPembGaji = new String[0][0];
-    private static int index_Karyawan = 0;
 
     // Slip Gaji
     static String[] array_SlipGaji_Info = { "Id: ", "Atas Nama: ", "Golongan\t\t\t\t\t: ",
             "Gaji Pokok\t\t\t\t\t: Rp.", "Bonus Gaji\t\t\t\t\t: Rp.", "Tunjangan\t\t\t\t\t: Rp.",
             "Total Penghasilan\t\t\t\t: Rp.", "Pajak\t\t\t\t\t\t: Rp.", "Total Gaji Bersih\t\t\t\t: Rp." };
     static String[][] array_SlipGajis = new String[0][0];
-
-    public static void addSlipGaji(String nama, char gol, long pokok_Gaji, int bonus_Gaji, int uangTunjangan,
-            double total_Gaji, double potongan_Pajak, double hasil_Akhir) {
-        String[] str = new String[9];
-        str[0] = String.valueOf(array_SlipGajis.length);
-        str[1] = nama;
-        str[2] = String.valueOf(gol);
-        str[3] = String.valueOf(pokok_Gaji);
-        str[4] = String.valueOf(bonus_Gaji);
-        str[5] = String.valueOf(uangTunjangan);
-        str[6] = String.valueOf((long) total_Gaji);
-        str[7] = String.valueOf((long) potongan_Pajak);
-        str[8] = String.valueOf((long) hasil_Akhir);
-
-        array_SlipGajis = addElementArray(array_SlipGajis, str);
-    }
-
-    public static void printSlipGaji(int id) {
-        clearScreen();
-        if (id > array_SlipGajis.length) {
-            System.out.println("Id: " + id + " Tidak tersedia");
-            return;
-        }
-
-        System.out.println("Slip gaji\n");
-        for (int i = 0; i < array_SlipGaji_Info.length; i++) {
-            boolean extraEnter = false;
-            if (i == 1)
-                extraEnter = true;
-            if (i == 2)
-                System.out.println("Penghasilan: ");
-            if (i == 6 || i == 8)
-                System.out.println("--------------------------------------------------------------------------");
-
-            System.out.println(array_SlipGaji_Info[i] + array_SlipGajis[id][i]);
-            if (extraEnter)
-                System.out.println();
-        }
-    }
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -123,6 +84,81 @@ public class MainApp {
             System.out.println("Maaf Anda Tidak Memiliki Hak Akses!!");
             return false;
         }
+        return true;
+    }
+
+    public static String generateID() {
+        return String.format("%010d", (new Random()).nextInt(100000000) + 1);
+    }
+
+    public static String generateRandomString() {
+        String ABCDE = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        char[] temp = new char[10];
+        Random rand = new Random();
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = ABCDE.charAt(rand.nextInt(ABCDE.length()));
+        }
+        return new String(temp);
+    }
+
+    public static boolean isKaryawanIDTaken(String id) {
+        boolean isTrue = false;
+        for (int i = 0; i < data_Karyawan.length; i++) {
+            if (data_Karyawan[i][4] == null)
+                continue;
+            if (data_Karyawan[i][4].equals(id)) {
+                isTrue = true;
+                break;
+            }
+        }
+        return isTrue;
+    }
+
+    public static void generateKaryawanID() {
+        for (int i = 0; i < data_Karyawan.length; i++) {
+            if (data_Karyawan[i][4] != null)
+                continue;
+            String id;
+            do {
+                id = generateID();
+
+            } while (isKaryawanIDTaken(id));
+            data_Karyawan[i][4] = id;
+        }
+    }
+
+    public static void generateKaryawanID(int index) {
+        String id;
+        do {
+            id = generateID();
+
+        } while (isKaryawanIDTaken(id));
+        data_Karyawan[index][4] = id;
+    }
+
+    public static int getIndexById(String[][] arr, int arrIdAt, String id) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i][arrIdAt].equals(id))
+                return i;
+        }
+        return -1;
+    }
+
+    public static String getIdByIndex(String[][] arr, int arrIdAt, int index) {
+        try {
+            return arr[index][arrIdAt];
+
+        } catch (Exception e) {
+            System.out.println("getIdByIndex Failed!: " + e.toString());
+        }
+        return null;
+    }
+
+    public static boolean isIndexValid(String[][] arr, int index) {
+        if (index < 0)
+            return false;
+        if (index >= arr.length)
+            return false;
         return true;
     }
 
@@ -365,50 +401,64 @@ public class MainApp {
         hasil_akhir = total_Gaji - potongan_Pajak;
 
         // Slip Gaji
-        int slipgajiid = array_SlipGajis.length;
-        addSlipGaji(data_Karyawan[index_Karyawan][0], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
-                potongan_Pajak, hasil_akhir);
-        printSlipGaji(slipgajiid);
+        String id = generateRandomString();
+
+        addSlipGaji(id, data_Karyawan[index_Karyawan][0], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
+                potongan_Pajak, hasil_akhir, data_Karyawan[index_Karyawan][4]);
+        printSlipGaji(id);
         System.out.print("TEKAN ENTER UNTUK LANJUT: ");
         scInput.nextLine();
 
         // add array pembGaji
-        arrayPembGaji = addElementArray(arrayPembGaji, String.valueOf(arrayPembGaji.length),
-                String.valueOf(index_Karyawan), String.valueOf((long) hasil_akhir));
-        doPembGaji(arrayPembGaji.length - 1);
+        addPembGaji(id, data_Karyawan[index_Karyawan][4]);
+        doPembGaji(id);
+    }
+
+    public static void addPembGaji(String id, String karyawanID) {
+        arrayPembGaji = addElementArray(arrayPembGaji, id, karyawanID);
     }
 
     public static void pembGaji() {
+        if (arrayPembGaji.length <= 0) {
+            System.out.println("Tidak ada antrian tersedia");
+            System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
+            scInput.nextLine();
+            return;
+        }
         while (true) {
             clearScreen();
-            System.out.println("ID\tNama");
-            for (String[] pembGaji : arrayPembGaji) {
-                System.out.println(pembGaji[0] + ". \t" + data_Karyawan[Integer.parseInt(pembGaji[1])][0]);
+            System.out.println("No\tID\t\tNama");
+            for (int i = 0; i < arrayPembGaji.length; i++) {
+                int indexka = getIndexById(data_Karyawan, 4, arrayPembGaji[i][1]);
+                if (indexka < 0)
+                    continue;
+                System.out.println((i + 1) + "\t" + arrayPembGaji[i][0] + "\t" + data_Karyawan[indexka][0]);
             }
 
-            System.out.println("\nUntuk Kembali, Masukkan Selain Angka");
-            System.out.print("Untuk Melihat, Masukkan Id: ");
-            if (!scInput.hasNextInt()) {
-                scInput.nextLine();
-                break;
-            }
+            System.out.println("\nUntuk Kembali, Masukkan 0");
+            System.out.print("Untuk Melihat, Masukkan No atau Id: ");
+            String input = scInput.nextLine();
+            try {
+                int temp = Integer.parseInt(input) - 1;
+                if (temp == -1)
+                    break;
+                if (temp < -1)
+                    continue;
+                input = getIdByIndex(arrayPembGaji, 0, temp);
+            } catch (Exception e) {
 
-            doPembGaji(scInput.nextInt());
-            scInput.nextLine();
+            }
+            doPembGaji(input);
         }
     }
 
-    public static void doPembGaji(int input) {
+    public static void doPembGaji(String id) {
         clearScreen();
-        if (input > arrayPembGaji.length) {
-            System.out.println("Id: " + input + " Tidak tersedia");
-            return;
-        }
-        int id = Integer.parseInt(arrayPembGaji[input][1].toString());
-
+        int no = getIndexById(arrayPembGaji, 0, id);
+        int karyawanIndex = getIndexById(data_Karyawan, 4, arrayPembGaji[no][1]);
         dialogAnswer = "";
         while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
-            System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[id][0] + "? (y/n): ");
+            System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[karyawanIndex][0] + "? (y/n): ");
             dialogAnswer = scInput.nextLine();
         }
         if (dialogAnswer.equalsIgnoreCase("n"))
@@ -416,8 +466,8 @@ public class MainApp {
 
         clearScreen();
         boolean dataValid = false, transfStatus = false;
-        System.out.println(PagarPemisah + "\n");
-        String[] bank_Karyawan = data_Karyawan[id][3].split(":", 2);
+        String amount = array_SlipGajis[getIndexById(array_SlipGajis, 0, id)][8];
+        String[] bank_Karyawan = data_Karyawan[karyawanIndex][3].split(":", 2);
         for (int i = 0; i < listBank.length; i++) {
             if (listBank[i][0].equals(bank_Karyawan[0])) {
                 dataValid = bank_Karyawan[1].length() == listBank[i][1].length();
@@ -426,7 +476,7 @@ public class MainApp {
         }
         if (dataValid) {
             System.out.println(
-                    "Memulai transfer uang sebesar Rp." + arrayPembGaji[input][2] +
+                    "Memulai transfer uang sebesar Rp." + amount +
                             " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
             transfStatus = true;
             if (transfStatus) {
@@ -437,7 +487,7 @@ public class MainApp {
             }
         } else {
             System.out.println("Data tidak valid! Mohon tijau kembali");
-            System.out.println("Nama\t\t: " + data_Karyawan[id][0]);
+            System.out.println("Nama\t\t: " + data_Karyawan[karyawanIndex][0]);
             System.out.println("Nama Bank\t: " + bank_Karyawan[0]);
             System.out.println("No Rekening\t: " + bank_Karyawan[1]);
         }
@@ -446,24 +496,80 @@ public class MainApp {
     }
 
     public static void slipGaji() {
+        if (array_SlipGajis.length <= 0) {
+            System.out.println("Tidak ada Slip Gaji tersedia, lakukan perhitungan gaji terlebih dahulu");
+            System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
+            scInput.nextLine();
+            return;
+        }
         while (true) {
             clearScreen();
-            System.out.println("ID\tNama");
-            for (String[] slipGajis : array_SlipGajis) {
-                System.out.println(slipGajis[0] + ". \t" + slipGajis[1]);
+            System.out.println("No\tID\t\tNama");
+            for (int i = 0; i < array_SlipGajis.length; i++) {
+                System.out.println((i + 1) + ".\t" + array_SlipGajis[i][0] + "\t" + array_SlipGajis[i][1]);
             }
-            System.out.println("\nUntuk Kembali, Masukkan Selain Angka");
-            System.out.print("Untuk Melihat, Masukkan Id: ");
-            if (!scInput.hasNextInt()) {
-                scInput.nextLine();
-                break;
+            System.out.println("\nUntuk Kembali, Masukkan 0");
+            System.out.print("Untuk Melihat, Masukkan No atau Id: ");
+            String input = scInput.nextLine();
+            try {
+                int temp = Integer.parseInt(input) - 1;
+                if (temp == -1)
+                    break;
+                if (temp < -1)
+                    continue;
+                input = getIdByIndex(array_SlipGajis, 0, temp);
+            } catch (Exception e) {
+
             }
-            printSlipGaji(scInput.nextInt());
-            scInput.nextLine();
+
+            printSlipGaji(input);
             System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
             scInput.nextLine();
         }
+    }
 
+    public static void addSlipGaji(String id, String nama, char gol, long pokok_Gaji, int bonus_Gaji, int uangTunjangan,
+            double total_Gaji, double potongan_Pajak, double hasil_Akhir, String karyawanID) {
+        String[] str = new String[10];
+        str[0] = id;
+        str[1] = nama;
+        str[2] = String.valueOf(gol);
+        str[3] = String.valueOf(pokok_Gaji);
+        str[4] = String.valueOf(bonus_Gaji);
+        str[5] = String.valueOf(uangTunjangan);
+        str[6] = String.valueOf((long) total_Gaji);
+        str[7] = String.valueOf((long) potongan_Pajak);
+        str[8] = String.valueOf((long) hasil_Akhir);
+        str[9] = karyawanID;
+
+        array_SlipGajis = addElementArray(array_SlipGajis, str);
+    }
+
+    public static void printSlipGaji(String id) {
+        clearScreen();
+        int index = getIndexById(array_SlipGajis, 0, id);
+        if (!isIndexValid(array_SlipGajis, index)) {
+            System.out.println("Tidak dapat menemukan data");
+            scInput.nextLine();
+            return;
+        }
+
+        System.out.println("Slip gaji\n");
+        for (int i = 0; i < array_SlipGaji_Info.length; i++) {
+            boolean extraEnter = false;
+            if (i == 1)
+                extraEnter = true;
+            if (i == 2)
+                System.out.println("Penghasilan: ");
+            if (i == 6 || i == 8)
+                System.out.println("--------------------------------------------------------------------------");
+            if (i == 7)
+                System.out.println("\nPotongan: ");
+
+            System.out.println(array_SlipGaji_Info[i] + array_SlipGajis[index][i]);
+            if (extraEnter)
+                System.out.println();
+        }
     }
 
     public static void kelolaCutiKaryawan(String[][] data_Karyawan) {
@@ -568,6 +674,7 @@ public class MainApp {
 
     public static void main(String[] args) throws Exception {
         scInput = new Scanner(System.in);
+        generateKaryawanID();
         printBanner();
 
         boolean unlogin = true;
