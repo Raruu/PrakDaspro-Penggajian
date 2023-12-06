@@ -6,34 +6,6 @@
   "configurations": [
     {
       "type": "java",
-      "name": "MainApp",
-      "request": "launch",
-      "mainClass": "MainApp",
-      "projectName": "PrakDaspro-Sistem-Penggajian_c6449e44"
-    },
-    {
-      "type": "java",
-      "name": "MainApp",
-      "request": "launch",
-      "mainClass": "MainApp",
-      "projectName": "PrakDaspro-Sistem-Penggajian_ce46aacb"
-    },
-    {
-      "type": "java",
-      "name": "MainApp",
-      "request": "launch",
-      "mainClass": "MainApp",
-      "projectName": "PrakDaspro-Penggajian_7b155772"
-    },
-    {
-      "type": "java",
-      "name": "MainApp",
-      "request": "launch",
-      "mainClass": "MainApp",
-      "projectName": "PrakDaspro-Sistem-Penggajian_959ba04c"
-    },
-    {
-      "type": "java",
       "name": "Current File",
       "request": "launch",
       "mainClass": "${file}"
