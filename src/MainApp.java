@@ -480,6 +480,8 @@ public class MainApp {
                             " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
             transfStatus = true;
             if (transfStatus) {
+                //Add Element Remove Element Array
+                arrayPembGaji = removeElementArray(arrayPembGaji, no);
                 System.out.println("Transfer Berhasil");
             } else {
                 System.out.println("Eror: ");
