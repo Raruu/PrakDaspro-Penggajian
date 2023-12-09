@@ -9,6 +9,7 @@ Sistem informasi penggajian adalah sistem yang digunakan untuk mengumpulkan, mem
 1. Pengelolaan Data Karyawan
 1. Rekap bonus dan lembur
 1. Manajemen absensi dan cuti
+1. Menampilkan laporan transaksi
 
 ## Upcoming
 Read on [Trello](https://trello.com/b/MzOBfiwW/projek-prodas)
