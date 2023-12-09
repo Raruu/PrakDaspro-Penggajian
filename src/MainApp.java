@@ -31,7 +31,7 @@ public class MainApp {
     private static String[][] data_Karyawan = {
             // NAMA, GOL, NO TELP, BANK:NOREK, STATUS CUTI
             { "Raruu", "D", "-", "BRI:789654389987456", null },
-            { "Dyyyy", "C", "-", "BTN:1234567890987654", "" },
+            { "Dyyyy", "C", "-", "BTN:1234567890987654", null },
             { "Farhan Kebab", "B", "083843069913", "BSI:1234567890", null },
             { "Slamet Kopling", "B", "089675839108", "BSI:1234567890", null },
             { "Rian Batagor", "A", "08996906443", "Mandiri:1234567890987", null },
@@ -41,6 +41,9 @@ public class MainApp {
     private static int index_Karyawan = 0;
 
     private static String[][] arrayPembGaji = new String[0][0];
+
+    private static String[][] arrayRekapGaji = new String[0][0];
+
 
     // Slip Gaji
     static String[] array_SlipGaji_Info = { "Id: ", "Atas Nama: ", "Golongan\t\t\t\t\t: ",
@@ -400,8 +403,13 @@ public class MainApp {
         double potongan_Pajak = total_Gaji * pajak;
         hasil_akhir = total_Gaji - potongan_Pajak;
 
-        // Slip Gaji
         String id = generateRandomString();
+
+        // Rekap Gaji
+        addRekapGaji(data_Karyawan[index_Karyawan][0], golongan, jmlMasuk, jamLembur, 
+                    hasil_akhir, data_Karyawan[index_Karyawan][4]);
+
+        // Slip Gaji
 
         addSlipGaji(id, data_Karyawan[index_Karyawan][0], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
                 potongan_Pajak, hasil_akhir, data_Karyawan[index_Karyawan][4]);
@@ -419,14 +427,14 @@ public class MainApp {
     }
 
     public static void pembGaji() {
-        if (arrayPembGaji.length <= 0) {
+        while (true) {
+            clearScreen();
+            if (arrayPembGaji.length <= 0) {
             System.out.println("Tidak ada antrian tersedia");
             System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
             scInput.nextLine();
             return;
-        }
-        while (true) {
-            clearScreen();
+            }
             System.out.println("No\tID\t\tNama");
             for (int i = 0; i < arrayPembGaji.length; i++) {
                 int indexka = getIndexById(data_Karyawan, 4, arrayPembGaji[i][1]);
@@ -648,6 +656,44 @@ public class MainApp {
         }
     }
 
+    public static void addRekapGaji(String nama, char gol, int jmlMasuk, int jamLembur,
+            double hasil_Akhir, String karyawanID) {
+        String[] str = new String[7];
+        str[0] = nama;
+        str[1] = String.valueOf(gol);
+        str[2] = String.valueOf(jmlMasuk);
+        str[3] = String.valueOf(jamLembur);
+        str[4] = String.valueOf((long) hasil_Akhir);
+        str[5] = karyawanID;
+
+
+        arrayRekapGaji = addElementArray(arrayRekapGaji, str);
+    }
+
+    public static void RekapGaji()
+    {
+        clearScreen();
+        System.out.println("Rekap Gaji Karyawan");
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", "Nama", "Golongan", "Jumlah Masuk", "Jam Lembur", "Total Gaji", "Karyawan ID");
+        System.out.println("---------------------------------------------------------------------------------------");
+
+        if (arrayRekapGaji.length <= 0) {
+            System.out.println("Belum ada data perhitungan gaji yang diinputkan!!");
+            System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
+            scInput.nextLine();
+            return;
+        }
+
+        for (int i = 0; i < arrayRekapGaji.length; i++) {
+            System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", arrayRekapGaji[i][0], arrayRekapGaji[i][1],
+                    arrayRekapGaji[i][2], arrayRekapGaji[i][3], arrayRekapGaji[i][4], arrayRekapGaji[i][5]);
+            System.out.println();
+        }
+        System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
+        scInput.nextLine();
+    }    
+
     public static void login() {
         boolean login = false;
         while (login == false) {
@@ -688,7 +734,7 @@ public class MainApp {
                 System.out.println("Login: " + usernameLogin);
                 System.out.println("\nMenu Utama: ");
                 System.out.println(
-                        "1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. LogOut\n0. Keluar Program");
+                        "1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. Rekap Gaji\n8. LogOut\n0. Keluar Program");
                 System.out.print("\npilih Menu (angka): ");
                 if (!scInput.hasNextInt())
                     menuItem = -1;
@@ -724,6 +770,9 @@ public class MainApp {
                         cutiKaryawan();
                         break;
                     case 7:
+                        RekapGaji();
+                        break;
+                    case 8:
                         System.out.println("Anda Telah Log Out.");
                         isRunning = false;
                         break;
