@@ -44,7 +44,6 @@ public class MainApp {
 
     private static String[][] arrayRekapGaji = new String[0][0];
 
-
     // Slip Gaji
     static String[] array_SlipGaji_Info = { "Id: ", "Atas Nama: ", "Golongan\t\t\t\t\t: ",
             "Gaji Pokok\t\t\t\t\t: Rp.", "Bonus Gaji\t\t\t\t\t: Rp.", "Tunjangan\t\t\t\t\t: Rp.",
@@ -80,6 +79,16 @@ public class MainApp {
                         +
                         "                                                                                                                                    ");
 
+    }
+
+    public static void enterToContinue() {
+        System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
+        scInput.nextLine();
+    }
+
+    public static void enterToContinue(String msg) {
+        System.out.print(msg);
+        scInput.nextLine();
     }
 
     public static boolean checkAdmin(String x) {
@@ -406,20 +415,21 @@ public class MainApp {
         String id = generateRandomString();
 
         // Rekap Gaji
-        addRekapGaji(data_Karyawan[index_Karyawan][0], golongan, jmlMasuk, jamLembur, 
-                    hasil_akhir, data_Karyawan[index_Karyawan][4]);
+        addRekapGaji(data_Karyawan[index_Karyawan][0], golongan, jmlMasuk, jamLembur,
+                hasil_akhir, data_Karyawan[index_Karyawan][4]);
 
         // Slip Gaji
 
         addSlipGaji(id, data_Karyawan[index_Karyawan][0], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
                 potongan_Pajak, hasil_akhir, data_Karyawan[index_Karyawan][4]);
         printSlipGaji(id);
-        System.out.print("TEKAN ENTER UNTUK LANJUT: ");
-        scInput.nextLine();
+        enterToContinue("TEKAN ENTER UNTUK LANJUT: ");
 
         // add array pembGaji
         addPembGaji(id, data_Karyawan[index_Karyawan][4]);
         doPembGaji(id);
+
+        enterToContinue("TEKAN ENTER UNTUK KEMBALI KE MENU: ");
     }
 
     public static void addPembGaji(String id, String karyawanID) {
@@ -430,10 +440,9 @@ public class MainApp {
         while (true) {
             clearScreen();
             if (arrayPembGaji.length <= 0) {
-            System.out.println("Tidak ada antrian tersedia");
-            System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
-            scInput.nextLine();
-            return;
+                System.out.println("Tidak ada antrian tersedia");
+                enterToContinue();
+                return;
             }
             System.out.println("No\tID\t\tNama");
             for (int i = 0; i < arrayPembGaji.length; i++) {
@@ -457,13 +466,19 @@ public class MainApp {
 
             }
             doPembGaji(input);
+            enterToContinue("Tekan ENTER untuk Kembali ke menu:");
         }
     }
 
     public static void doPembGaji(String id) {
         clearScreen();
-        int no = getIndexById(arrayPembGaji, 0, id);
-        int karyawanIndex = getIndexById(data_Karyawan, 4, arrayPembGaji[no][1]);
+        int index = getIndexById(arrayPembGaji, 0, id);
+        if (!isIndexValid(arrayPembGaji, index)) {
+            System.out.println("Tidak dapat menemukan data");
+            return;
+        }
+
+        int karyawanIndex = getIndexById(data_Karyawan, 4, arrayPembGaji[index][1]);
         dialogAnswer = "";
         while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
             System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[karyawanIndex][0] + "? (y/n): ");
@@ -488,8 +503,8 @@ public class MainApp {
                             " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
             transfStatus = true;
             if (transfStatus) {
-                //Add Element Remove Element Array
-                arrayPembGaji = removeElementArray(arrayPembGaji, no);
+                // Add Element Remove Element Array
+                arrayPembGaji = removeElementArray(arrayPembGaji, index);
                 System.out.println("Transfer Berhasil");
             } else {
                 System.out.println("Eror: ");
@@ -501,20 +516,17 @@ public class MainApp {
             System.out.println("Nama Bank\t: " + bank_Karyawan[0]);
             System.out.println("No Rekening\t: " + bank_Karyawan[1]);
         }
-        System.out.print("Tugas selesai, Tekan ENTER untuk Kembali ke menu:");
-        scInput.nextLine();
     }
 
     public static void slipGaji() {
-        if (array_SlipGajis.length <= 0) {
-            System.out.println("Tidak ada Slip Gaji tersedia, lakukan perhitungan gaji terlebih dahulu");
-            System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
-            scInput.nextLine();
-            return;
-        }
         while (true) {
+            if (array_SlipGajis.length <= 0) {
+                System.out.println("Tidak ada Slip Gaji tersedia, lakukan perhitungan gaji terlebih dahulu");
+                enterToContinue();
+                return;
+            }
             clearScreen();
-            System.out.println("No\tID Karyawan\t\tNama");
+            System.out.println("No\tID Karyawan\tNama");
             for (int i = 0; i < array_SlipGajis.length; i++) {
                 System.out.println((i + 1) + ".\t" + array_SlipGajis[i][0] + "\t" + array_SlipGajis[i][1]);
             }
@@ -533,8 +545,7 @@ public class MainApp {
             }
 
             printSlipGaji(input);
-            System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
-            scInput.nextLine();
+            enterToContinue();
         }
     }
 
@@ -560,15 +571,16 @@ public class MainApp {
         int index = getIndexById(array_SlipGajis, 0, id);
         if (!isIndexValid(array_SlipGajis, index)) {
             System.out.println("Tidak dapat menemukan data");
-            scInput.nextLine();
             return;
         }
 
         System.out.println("Slip gaji\n");
         for (int i = 0; i < array_SlipGaji_Info.length; i++) {
-            boolean extraEnter = false;
-            if (i == 1)
-                extraEnter = true;
+            if (i == 1) {
+                System.out.println(
+                        array_SlipGaji_Info[i] + array_SlipGajis[index][i] + " [" + array_SlipGajis[index][9] + "]\n");
+                continue;
+            }
             if (i == 2)
                 System.out.println("Penghasilan: ");
             if (i == 6 || i == 8)
@@ -577,8 +589,6 @@ public class MainApp {
                 System.out.println("\nPotongan: ");
 
             System.out.println(array_SlipGaji_Info[i] + array_SlipGajis[index][i]);
-            if (extraEnter)
-                System.out.println();
         }
     }
 
@@ -666,22 +676,20 @@ public class MainApp {
         str[4] = String.valueOf((long) hasil_Akhir);
         str[5] = karyawanID;
 
-
         arrayRekapGaji = addElementArray(arrayRekapGaji, str);
     }
 
-    public static void RekapGaji()
-    {
+    public static void RekapGaji() {
         clearScreen();
         System.out.println("Rekap Gaji Karyawan");
         System.out.println("---------------------------------------------------------------------------------------");
-        System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", "Nama", "Golongan", "Jumlah Masuk", "Jam Lembur", "Total Gaji", "Karyawan ID");
+        System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", "Nama", "Golongan", "Jumlah Masuk", "Jam Lembur",
+                "Total Gaji", "Karyawan ID");
         System.out.println("---------------------------------------------------------------------------------------");
 
         if (arrayRekapGaji.length <= 0) {
             System.out.println("Belum ada data perhitungan gaji yang diinputkan!!");
-            System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
-            scInput.nextLine();
+            enterToContinue();
             return;
         }
 
@@ -690,9 +698,8 @@ public class MainApp {
                     arrayRekapGaji[i][2], arrayRekapGaji[i][3], arrayRekapGaji[i][4], arrayRekapGaji[i][5]);
             System.out.println();
         }
-        System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
-        scInput.nextLine();
-    }    
+        enterToContinue();
+    }
 
     public static void login() {
         boolean login = false;
