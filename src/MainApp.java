@@ -514,7 +514,7 @@ public class MainApp {
         }
         while (true) {
             clearScreen();
-            System.out.println("No\tID\t\tNama");
+            System.out.println("No\tID Karyawan\t\tNama");
             for (int i = 0; i < array_SlipGajis.length; i++) {
                 System.out.println((i + 1) + ".\t" + array_SlipGajis[i][0] + "\t" + array_SlipGajis[i][1]);
             }
