@@ -640,21 +640,21 @@ public class MainApp {
         }
     }
 
-    public static void kelolaCutiKaryawan(String[][] arrayStatusCuStrings) {
+    public static void kelolaCutiKaryawan(String[][] arrayStatusCuti) {
 
         System.out.print("Masukkan nama karyawan yang akan mengajukan atau mengubah cuti: ");
         String namaCuti = scInput.nextLine();
 
         int indexKaryawan = -1;
         for (int i = 0; i < arrayStatusCuti.length; i++) {
-            if (namaCuti.equalsIgnoreCase(arrayStatusCuti[i][1])) {
+            if (namaCuti.equalsIgnoreCase(arrayStatusCuti[i][0])) {
                 indexKaryawan = i;
                 break;
             }
         }
 
         if (indexKaryawan != -1) {
-            System.out.println("Status Cuti untuk " + namaCuti + ": " + arrayStatusCuti[indexKaryawan][2]);
+            System.out.println("Status Cuti untuk " + namaCuti + ": " + arrayStatusCuti[indexKaryawan][1]);
             System.out.print("Masukkan status cuti baru (e.g., 'Sedang Cuti' atau 'Belum Mengajukan Cuti'): ");
             String statusCutiBaru = scInput.nextLine();
 
@@ -663,8 +663,8 @@ public class MainApp {
             }
 
             for (int i = 0; i < arrayStatusCuti.length; i++) {
-                if (namaCuti.equalsIgnoreCase(arrayStatusCuti[i][1])) {
-                    arrayStatusCuti[i][2] = statusCutiBaru;
+                if (namaCuti.equalsIgnoreCase(arrayStatusCuti[i][0])) {
+                    arrayStatusCuti[i][1] = statusCutiBaru;
                     break;
                 }
             }
