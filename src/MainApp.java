@@ -260,6 +260,17 @@ public class MainApp {
         return input;
     }
 
+    public static boolean summonDialog(String msg) {
+        String dialogAnswer = "";
+        while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
+            System.out.print("\n" + msg + "? (y/n): ");
+            dialogAnswer = scInput.nextLine();
+        }
+        if (dialogAnswer.equalsIgnoreCase("n"))
+            return false;
+        return true;
+    }
+
     public static void printKaryawanList() {
         System.out.println("List Karyawan:");
         System.out.println("No.\tNama Karyawan");
@@ -498,7 +509,6 @@ public class MainApp {
         }
 
         int karyawanIndex = getIndexById(data_Karyawan, 4, arrayPembGaji[index][1]);
-
         if (!summonDialog("Lanjut ditransfer ke Rekening " + data_Karyawan[karyawanIndex][0]))
             return;
 
@@ -583,20 +593,8 @@ public class MainApp {
                 default:
                     break;
             }
-
             enterToContinue();
         }
-    }
-
-    public static boolean summonDialog(String msg) {
-        String dialogAnswer = "";
-        while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
-            System.out.print("\n" + msg + "? (y/n): ");
-            dialogAnswer = scInput.nextLine();
-        }
-        if (dialogAnswer.equalsIgnoreCase("n"))
-            return false;
-        return true;
     }
 
     public static void addSlipGaji(String id, String nama, char gol, long pokok_Gaji, int bonus_Gaji, int uangTunjangan,
