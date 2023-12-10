@@ -44,9 +44,9 @@ public class MainApp {
 
     private static String[][] arrayRekapGaji = new String[0][0];
 
-    //Cuti Karyawan
+    // Cuti Karyawan
     private static String[][] arrayCutiKaryawan = new String[0][0];
-    private static String[][] arrayStatusCuti= {
+    private static String[][] arrayStatusCuti = {
             { "Raruu", "belum mengajukan cuti" },
             { "Dyyyy", "belum mengajukan cuti" },
             { "Farhan Kebab", "belum mengajukan cuti" },
@@ -55,7 +55,7 @@ public class MainApp {
             { "Rusdy Ambatukan", "belum mengajukan cuti" },
             { "Vivo", "belum mengajukan cuti" },
     };
-    
+
     // Slip Gaji
     static String[] array_SlipGaji_Info = { "Id: ", "Atas Nama: ", "Golongan\t\t\t\t\t: ",
             "Gaji Pokok\t\t\t\t\t: Rp.", "Bonus Gaji\t\t\t\t\t: Rp.", "Tunjangan\t\t\t\t\t: Rp.",
@@ -252,6 +252,15 @@ public class MainApp {
         return karyawan_isFound;
     }
 
+    public static int intInput() {
+        int input = -1;
+        if (scInput.hasNextInt()) {
+            input = scInput.nextInt();
+        }
+        scInput.nextLine();
+        return input;
+    }
+
     public static void printKaryawanList() {
         System.out.println("List Karyawan:");
         System.out.println("No.\tNama Karyawan");
@@ -267,8 +276,7 @@ public class MainApp {
             System.out.println();
             System.out.println("0. Kembali\n1. Data Akun\n2. Tambah Akun");
             System.out.print("Pilih Menu: ");
-            menuItem = scInput.nextInt();
-            scInput.nextLine();
+            menuItem = intInput();
             clearScreen();
             switch (menuItem) {
                 case 0:
@@ -306,8 +314,7 @@ public class MainApp {
             System.out.println("\nMenu:");
             System.out.println("0. Kembali\n1. Edit/Lihat Data\n2. Tambahkan Karyawan\n3. Hapus Karyawan");
             System.out.print("Pilih Menu: ");
-            menuItem = scInput.nextInt();
-            scInput.nextLine();
+            menuItem = intInput();
             switch (menuItem) {
                 case 0:
                     isRunning_dataKaryawan = false;
@@ -327,8 +334,7 @@ public class MainApp {
                                     (i + 1) + ". " + dataKaryawan_Info[i] + ": " + data_Karyawan[index_Karyawan][i]);
                         }
                         System.out.print("\nMasukkan '0' untuk keluar,\nPilih nomor untuk di edit: ");
-                        menuItem = scInput.nextInt();
-                        scInput.nextLine();
+                        menuItem = intInput();
                         if (menuItem == 0)
                             break;
                         int selectedItem = menuItem - 1;
@@ -556,7 +562,6 @@ public class MainApp {
                     continue;
                 input = getIdByIndex(array_SlipGajis, 0, temp);
             } catch (Exception e) {
-
             }
 
             printSlipGaji(input);
@@ -608,10 +613,10 @@ public class MainApp {
     }
 
     public static void kelolaCutiKaryawan(String[][] arrayStatusCuStrings) {
-        
+
         System.out.print("Masukkan nama karyawan yang akan mengajukan atau mengubah cuti: ");
         String namaCuti = scInput.nextLine();
-    
+
         int indexKaryawan = -1;
         for (int i = 0; i < arrayStatusCuti.length; i++) {
             if (namaCuti.equalsIgnoreCase(arrayStatusCuti[i][1])) {
@@ -619,23 +624,23 @@ public class MainApp {
                 break;
             }
         }
-    
+
         if (indexKaryawan != -1) {
             System.out.println("Status Cuti untuk " + namaCuti + ": " + arrayStatusCuti[indexKaryawan][2]);
             System.out.print("Masukkan status cuti baru (e.g., 'Sedang Cuti' atau 'Belum Mengajukan Cuti'): ");
             String statusCutiBaru = scInput.nextLine();
-    
+
             if (statusCutiBaru.equalsIgnoreCase("Sedang Cuti")) {
                 arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, namaCuti, statusCutiBaru);
             }
-    
+
             for (int i = 0; i < arrayStatusCuti.length; i++) {
                 if (namaCuti.equalsIgnoreCase(arrayStatusCuti[i][1])) {
                     arrayStatusCuti[i][2] = statusCutiBaru;
                     break;
                 }
             }
-    
+
             System.out.println("Status cuti untuk " + namaCuti + " berhasil diubah menjadi: " + statusCutiBaru);
         } else {
             System.out.println("Karyawan dengan nama " + namaCuti + " tidak ditemukan.");
@@ -648,11 +653,11 @@ public class MainApp {
         System.out.println("--------------------------------------");
         System.out.printf("%-5s%-20s%-15s\n", "No.", "Nama", "Status Cuti");
         System.out.println("--------------------------------------");
-    
+
         for (int i = 0; i < arrayCutiKaryawan.length; i++) {
             System.out.printf("%-5d%-20s%-15s\n", (i + 1), arrayCutiKaryawan[i][0], arrayCutiKaryawan[i][1]);
         }
-    
+
         System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
         scInput.nextLine();
     }
@@ -666,8 +671,7 @@ public class MainApp {
             System.out.println("3. Daftar Karyawan Sedang Cuti");
             System.out.println("0. Kembali");
             System.out.print("Pilih Menu: ");
-            menuItem = scInput.nextInt();
-            scInput.nextLine();
+            menuItem = intInput();
             switch (menuItem) {
                 case 0:
                     isRunningCuti = false;
@@ -678,11 +682,11 @@ public class MainApp {
                     System.out.println("--------------------------------------");
                     System.out.printf("%-5s%-20s%-15s\n", "No.", "Nama", "Status Cuti");
                     System.out.println("--------------------------------------");
-                
+
                     for (int i = 0; i < arrayStatusCuti.length; i++) {
                         System.out.printf("%-5d%-20s%-15s\n", (i + 1), arrayStatusCuti[i][0], arrayStatusCuti[i][1]);
                     }
-                
+
                     System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
                     scInput.nextLine();
                     break;
@@ -776,11 +780,7 @@ public class MainApp {
                 System.out.println(
                         "1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. Rekap Gaji\n8. LogOut\n0. Keluar Program");
                 System.out.print("\npilih Menu (angka): ");
-                if (!scInput.hasNextInt())
-                    menuItem = -1;
-                else
-                    menuItem = scInput.nextInt();
-                scInput.nextLine();
+                menuItem = intInput();
                 System.out.println();
                 switch (menuItem) {
                     case 0:
