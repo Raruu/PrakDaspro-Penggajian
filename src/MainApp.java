@@ -439,11 +439,13 @@ public class MainApp {
     public static void pembGaji() {
         while (true) {
             clearScreen();
+            System.out.println("Pembayaran Gaji\n");
             if (arrayPembGaji.length <= 0) {
                 System.out.println("Tidak ada antrian tersedia");
                 enterToContinue();
                 return;
             }
+
             System.out.println("No\tID\t\tNama");
             for (int i = 0; i < arrayPembGaji.length; i++) {
                 int indexka = getIndexById(data_Karyawan, 4, arrayPembGaji[i][1]);
@@ -520,13 +522,14 @@ public class MainApp {
 
     public static void slipGaji() {
         while (true) {
+            clearScreen();
+            System.out.println("Slip Gaji\n");
             if (array_SlipGajis.length <= 0) {
                 System.out.println("Tidak ada Slip Gaji tersedia, lakukan perhitungan gaji terlebih dahulu");
                 enterToContinue();
                 return;
             }
-            clearScreen();
-            System.out.println("No\tID Karyawan\tNama");
+            System.out.println("No\tID\tNama");
             for (int i = 0; i < array_SlipGajis.length; i++) {
                 System.out.println((i + 1) + ".\t" + array_SlipGajis[i][0] + "\t" + array_SlipGajis[i][1]);
             }
