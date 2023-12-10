@@ -44,6 +44,18 @@ public class MainApp {
 
     private static String[][] arrayRekapGaji = new String[0][0];
 
+    //Cuti Karyawan
+    private static String[][] arrayCutiKaryawan = new String[0][0];
+    private static String[][] arrayStatusCuti= {
+            { "Raruu", "belum mengajukan cuti" },
+            { "Dyyyy", "belum mengajukan cuti" },
+            { "Farhan Kebab", "belum mengajukan cuti" },
+            { "Slamet Kopling", "belum mengajukan cuti" },
+            { "Rian Batagor", "belum mengajukan cuti" },
+            { "Rusdy Ambatukan", "belum mengajukan cuti" },
+            { "Vivo", "belum mengajukan cuti" },
+    };
+    
     // Slip Gaji
     static String[] array_SlipGaji_Info = { "Id: ", "Atas Nama: ", "Golongan\t\t\t\t\t: ",
             "Gaji Pokok\t\t\t\t\t: Rp.", "Bonus Gaji\t\t\t\t\t: Rp.", "Tunjangan\t\t\t\t\t: Rp.",
@@ -595,49 +607,54 @@ public class MainApp {
         }
     }
 
-    public static void kelolaCutiKaryawan(String[][] data_Karyawan) {
-        clearScreen();
-        // cuti
-        String[] statusCuti = new String[data_Karyawan.length];
-
-        for (int i = 0; i < data_Karyawan.length; i++) {
-            statusCuti[i] = data_Karyawan[i][4];
-        }
-
+    public static void kelolaCutiKaryawan(String[][] arrayStatusCuStrings) {
+        
         System.out.print("Masukkan nama karyawan yang akan mengajukan atau mengubah cuti: ");
         String namaCuti = scInput.nextLine();
-
+    
         int indexKaryawan = -1;
-        for (int i = 0; i < data_Karyawan.length; i++) {
-            if (namaCuti.equalsIgnoreCase(data_Karyawan[i][0])) {
+        for (int i = 0; i < arrayStatusCuti.length; i++) {
+            if (namaCuti.equalsIgnoreCase(arrayStatusCuti[i][1])) {
                 indexKaryawan = i;
                 break;
             }
         }
-
+    
         if (indexKaryawan != -1) {
-            System.out.println("Status Cuti untuk " + namaCuti + ": " + data_Karyawan[indexKaryawan][4]);
+            System.out.println("Status Cuti untuk " + namaCuti + ": " + arrayStatusCuti[indexKaryawan][2]);
             System.out.print("Masukkan status cuti baru (e.g., 'Sedang Cuti' atau 'Belum Mengajukan Cuti'): ");
             String statusCutiBaru = scInput.nextLine();
-
-            for (int i = 0; i < data_Karyawan.length; i++) {
-                if (namaCuti.equalsIgnoreCase(data_Karyawan[i][0])) {
-                    data_Karyawan[i][1] = statusCutiBaru;
-
-                    for (int j = 0; j < data_Karyawan.length; j++) {
-                        if (namaCuti.equalsIgnoreCase(data_Karyawan[j][0])) {
-                            data_Karyawan[j][4] = statusCutiBaru;
-                            break;
-                        }
-                    }
+    
+            if (statusCutiBaru.equalsIgnoreCase("Sedang Cuti")) {
+                arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, namaCuti, statusCutiBaru);
+            }
+    
+            for (int i = 0; i < arrayStatusCuti.length; i++) {
+                if (namaCuti.equalsIgnoreCase(arrayStatusCuti[i][1])) {
+                    arrayStatusCuti[i][2] = statusCutiBaru;
                     break;
                 }
             }
-
+    
             System.out.println("Status cuti untuk " + namaCuti + " berhasil diubah menjadi: " + statusCutiBaru);
         } else {
             System.out.println("Karyawan dengan nama " + namaCuti + " tidak ditemukan.");
         }
+    }
+
+    public static void displayCutiKaryawan() {
+        clearScreen();
+        System.out.println("Daftar Karyawan Sedang Cuti");
+        System.out.println("--------------------------------------");
+        System.out.printf("%-5s%-20s%-15s\n", "No.", "Nama", "Status Cuti");
+        System.out.println("--------------------------------------");
+    
+        for (int i = 0; i < arrayCutiKaryawan.length; i++) {
+            System.out.printf("%-5d%-20s%-15s\n", (i + 1), arrayCutiKaryawan[i][0], arrayCutiKaryawan[i][1]);
+        }
+    
+        System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
+        scInput.nextLine();
     }
 
     public static void cutiKaryawan() {
@@ -646,6 +663,7 @@ public class MainApp {
             System.out.println("\nMenu Cuti Karyawan:");
             System.out.println("1. Lihat Status Cuti Karyawan");
             System.out.println("2. Kelola Cuti Karyawan");
+            System.out.println("3. Daftar Karyawan Sedang Cuti");
             System.out.println("0. Kembali");
             System.out.print("Pilih Menu: ");
             menuItem = scInput.nextInt();
@@ -655,12 +673,24 @@ public class MainApp {
                     isRunningCuti = false;
                     break;
                 case 1:
-                    for (int i = 0; i < data_Karyawan.length; i++) {
-                        System.out.println(data_Karyawan[i][0] + ": " + data_Karyawan[i][4]);
+                    clearScreen();
+                    System.out.println("Daftar Status Cuti Karyawan");
+                    System.out.println("--------------------------------------");
+                    System.out.printf("%-5s%-20s%-15s\n", "No.", "Nama", "Status Cuti");
+                    System.out.println("--------------------------------------");
+                
+                    for (int i = 0; i < arrayStatusCuti.length; i++) {
+                        System.out.printf("%-5d%-20s%-15s\n", (i + 1), arrayStatusCuti[i][0], arrayStatusCuti[i][1]);
                     }
+                
+                    System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
+                    scInput.nextLine();
                     break;
                 case 2:
-                    kelolaCutiKaryawan(data_Karyawan);
+                    kelolaCutiKaryawan(arrayStatusCuti);
+                    break;
+                case 3:
+                    displayCutiKaryawan();
                     break;
                 default:
                     System.out.println("Menu " + menuItem + " tidak valid.");
