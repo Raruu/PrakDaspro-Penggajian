@@ -6,7 +6,6 @@ public class MainApp {
     private static Scanner scInput;
     private static String role = "";
     private static String usernameLogin;
-    private static String dialogAnswer;
     private static int menuItem;
 
     // Login
@@ -499,12 +498,8 @@ public class MainApp {
         }
 
         int karyawanIndex = getIndexById(data_Karyawan, 4, arrayPembGaji[index][1]);
-        dialogAnswer = "";
-        while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
-            System.out.print("\nLanjut ditransfer ke Rekening " + data_Karyawan[karyawanIndex][0] + "? (y/n): ");
-            dialogAnswer = scInput.nextLine();
-        }
-        if (dialogAnswer.equalsIgnoreCase("n"))
+
+        if (!summonDialog("Lanjut ditransfer ke Rekening " + data_Karyawan[karyawanIndex][0]))
             return;
 
         clearScreen();
@@ -547,7 +542,7 @@ public class MainApp {
                 enterToContinue();
                 return;
             }
-            System.out.println("No\tID\tNama");
+            System.out.println("No\tID\t\tNama");
             for (int i = 0; i < array_SlipGajis.length; i++) {
                 System.out.println((i + 1) + ".\t" + array_SlipGajis[i][0] + "\t" + array_SlipGajis[i][1]);
             }
@@ -563,10 +558,45 @@ public class MainApp {
                 input = getIdByIndex(array_SlipGajis, 0, temp);
             } catch (Exception e) {
             }
+            if (getIndexById(array_SlipGajis, 0, input) < 0) {
+                enterToContinue("Tidak dapat menemukan data");
+                continue;
+            }
 
-            printSlipGaji(input);
+            System.out.println("\n1. Print Slip Gaji\n2. Hapus Slip Gaji\n0. Kembali");
+            System.out.print("Masukkan pilihan: ");
+            int menuItem = intInput();
+            switch (menuItem) {
+                case 1:
+                    printSlipGaji(input);
+                    break;
+                case 2:
+                    clearScreen();
+                    if (summonDialog("HAPUS SLIP GAJI " + input)) {
+                        array_SlipGajis = removeElementArray(array_SlipGajis, getIndexById(array_SlipGajis, 0, input));
+                        int indexPembGaji = getIndexById(arrayPembGaji, 0, input);
+                        if (isIndexValid(arrayPembGaji, indexPembGaji))
+                            arrayPembGaji = removeElementArray(arrayPembGaji, indexPembGaji);
+                        System.out.println("\nBerhasil dihapus");
+                    }
+                    break;
+                default:
+                    break;
+            }
+
             enterToContinue();
         }
+    }
+
+    public static boolean summonDialog(String msg) {
+        String dialogAnswer = "";
+        while (!(dialogAnswer.equalsIgnoreCase("y") || dialogAnswer.equalsIgnoreCase("n"))) {
+            System.out.print("\n" + msg + "? (y/n): ");
+            dialogAnswer = scInput.nextLine();
+        }
+        if (dialogAnswer.equalsIgnoreCase("n"))
+            return false;
+        return true;
     }
 
     public static void addSlipGaji(String id, String nama, char gol, long pokok_Gaji, int bonus_Gaji, int uangTunjangan,
