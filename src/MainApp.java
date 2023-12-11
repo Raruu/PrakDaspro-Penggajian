@@ -48,15 +48,6 @@ public class MainApp {
 
     // Cuti Karyawan
     private static String[][] arrayCutiKaryawan = new String[0][0];
-    // private static String[][] arrayStatusCuti = {
-    // { "Raruu", "belum mengajukan cuti" },
-    // { "Dyyyy", "belum mengajukan cuti" },
-    // { "Farhan Kebab", "belum mengajukan cuti" },
-    // { "Slamet Kopling", "belum mengajukan cuti" },
-    // { "Rian Batagor", "belum mengajukan cuti" },
-    // { "Rusdy Ambatukan", "belum mengajukan cuti" },
-    // { "Vivo", "belum mengajukan cuti" },
-    // };
 
     // Slip Gaji
     static String[] array_SlipGaji_Info = { "Id: ", "Atas Nama: ", "Golongan\t\t\t\t\t: ",
