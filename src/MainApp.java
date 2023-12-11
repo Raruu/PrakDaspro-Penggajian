@@ -644,45 +644,7 @@ public class MainApp {
     }
 
     // TODO: Delete
-    public static void kelolaCutiKaryawan(String[][] arrayStatusCuti) {
-
-        System.out.print("Masukkan nama karyawan yang akan mengajukan atau mengubah cuti: ");
-        String namaCuti = scInput.nextLine();
-
-        int indexKaryawan = -1;
-        for (int i = 0; i < arrayStatusCuti.length; i++) {
-            if (namaCuti.equalsIgnoreCase(arrayStatusCuti[i][0])) {
-                indexKaryawan = i;
-                break;
-            }
-        }
-
-        if (indexKaryawan != -1) {
-            System.out.println("Status Cuti untuk " + namaCuti + ": " + arrayStatusCuti[indexKaryawan][1]);
-            System.out.print("Masukkan status cuti baru (e.g., 'Sedang Cuti' atau 'Belum Mengajukan Cuti'): ");
-            String statusCutiBaru = scInput.nextLine();
-
-            if (statusCutiBaru.equalsIgnoreCase("Sedang Cuti")) {
-                arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, namaCuti, statusCutiBaru);
-
-                addRekapAbsensi(arrayStatusCuti[index_Karyawan][0], arrayRekapGaji[indexKaryawan][2],
-                        arrayStatusCuti[index_Karyawan][1]);
-
-            }
-
-            for (int i = 0; i < arrayStatusCuti.length; i++) {
-                if (namaCuti.equalsIgnoreCase(arrayStatusCuti[i][0])) {
-                    arrayStatusCuti[i][1] = statusCutiBaru;
-                    break;
-                }
-            }
-
-            System.out.println("Status cuti untuk " + namaCuti + " berhasil diubah menjadi: " + statusCutiBaru);
-        } else {
-            System.out.println("Karyawan dengan nama " + namaCuti + " tidak ditemukan.");
-        }
-    }
-
+    
     public static void displayCutiKaryawan() {
         clearScreen();
         System.out.println("Daftar Karyawan Sedang Cuti");
@@ -728,6 +690,8 @@ public class MainApp {
 
                     arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, data_Karyawan[index_Karyawan][4],
                             data_Karyawan[index_Karyawan][0], String.valueOf(daysCuti), whyCuti);
+                    addRekapAbsensi(data_Karyawan[index_Karyawan][0], arrayRekapGaji[index_Karyawan][2],
+                        arrayCutiKaryawan[index_Karyawan][2]);
                     enterToContinue("\nPengajuan Cuti Selesai,\nENTER UNTUK LANJUT: ");
                     break;
                 case 2:
@@ -793,11 +757,12 @@ public class MainApp {
     }
 
     public static void printRekapAbsensi() {
-        System.out.println("=============================================");
+        System.out.println("=====================================================");
         System.out.println("          Tabel Rekap Jumlah Masuk dan Status Cuti");
-        System.out.println("=============================================");
-        System.out.printf("%-20s%-15s%-15s\n", "Nama Karyawan", "Jumlah Masuk", "Status Cuti");
+        System.out.println("=====================================================");
+        System.out.printf("%-20s%-15s%-15s\n", "Nama Karyawan", "Jumlah Masuk", "Jumlah Cuti");
         System.out.println("---------------------------------------------");
+
 
         if (arrayRekapAbsensi.length <= 0) {
             System.out.println("Belum ada data perhitungan gaji yang diinputkan!!");
@@ -806,8 +771,15 @@ public class MainApp {
         }
 
         for (int i = 0; i < arrayRekapAbsensi.length; i++) {
-            System.out.printf("%-20s%-15s%-15s\n", arrayRekapAbsensi[i][0], arrayRekapAbsensi[i][1],
-                    arrayRekapAbsensi[i][2]);
+            String namaKaryawan = arrayRekapAbsensi[i][0];
+            String jmlMasuk = arrayRekapAbsensi[i][1];
+            String jmlCuti = arrayRekapAbsensi[i][2];
+
+            if (jmlCuti == null || jmlCuti.isEmpty()) {
+                jmlCuti = "0";
+            }
+
+            System.out.printf("%-20s%-15s%-15s\n", namaKaryawan, jmlMasuk, jmlCuti);
             System.out.println();
         }
         System.out.println("=============================================");
