@@ -43,6 +43,8 @@ public class MainApp {
 
     private static String[][] arrayRekapGaji = new String[0][0];
 
+    private static String[][] arrayRekapAbsensi = new String[0][0];
+
     // Cuti Karyawan
     private static String[][] arrayCutiKaryawan = new String[0][0];
     private static String[][] arrayStatusCuti = {
@@ -447,7 +449,6 @@ public class MainApp {
                 hasil_akhir, data_Karyawan[index_Karyawan][4]);
 
         // Slip Gaji
-
         addSlipGaji(id, data_Karyawan[index_Karyawan][0], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
                 potongan_Pajak, hasil_akhir, data_Karyawan[index_Karyawan][4]);
         printSlipGaji(id);
@@ -458,6 +459,7 @@ public class MainApp {
         doPembGaji(id);
 
         enterToContinue("TEKAN ENTER UNTUK KEMBALI KE MENU: ");
+
     }
 
     public static void addPembGaji(String id, String karyawanID) {
@@ -660,6 +662,9 @@ public class MainApp {
 
             if (statusCutiBaru.equalsIgnoreCase("Sedang Cuti")) {
                 arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, namaCuti, statusCutiBaru);
+
+                addRekapAbsensi(arrayStatusCuti[index_Karyawan][0], arrayRekapGaji[indexKaryawan][2], arrayStatusCuti[index_Karyawan][1]);
+
             }
 
             for (int i = 0; i < arrayStatusCuti.length; i++) {
@@ -766,6 +771,38 @@ public class MainApp {
         enterToContinue();
     }
 
+    public static void addRekapAbsensi(String namaCuti, String jmlMasuk, String statusCuti) {
+        String[] str = new String[3];
+        str[0] = namaCuti;
+        str[1] = jmlMasuk;
+        str[2] = statusCuti;
+
+        arrayRekapAbsensi = addElementArray(arrayRekapAbsensi, str);
+    }
+
+    public static void printRekapAbsensi()
+    {
+        System.out.println("=============================================");
+        System.out.println("          Tabel Rekap Jumlah Masuk dan Status Cuti");
+        System.out.println("=============================================");
+        System.out.printf("%-20s%-15s%-15s\n", "Nama Karyawan", "Jumlah Masuk", "Status Cuti");
+        System.out.println("---------------------------------------------");
+
+        if (arrayRekapAbsensi.length <= 0) {
+            System.out.println("Belum ada data perhitungan gaji yang diinputkan!!");
+            enterToContinue();
+            return;
+        }
+
+        for (int i = 0; i < arrayRekapAbsensi.length; i++) {
+            System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", arrayRekapAbsensi[i][0], arrayRekapAbsensi[i][1],
+                    arrayRekapAbsensi[i][2]);
+            System.out.println();
+        }
+        System.out.println("=============================================");
+        enterToContinue();
+    }
+
     public static void login() {
         boolean login = false;
         while (login == false) {
@@ -806,7 +843,7 @@ public class MainApp {
                 System.out.println("Login: " + usernameLogin);
                 System.out.println("\nMenu Utama: ");
                 System.out.println(
-                        "1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. Rekap Gaji\n8. LogOut\n0. Keluar Program");
+                        "1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. Rekap Gaji\n8. Rekap Absensi\n9. LogOut\n0. Keluar Program");
                 System.out.print("\npilih Menu (angka): ");
                 menuItem = intInput();
                 System.out.println();
@@ -841,6 +878,9 @@ public class MainApp {
                         RekapGaji();
                         break;
                     case 8:
+                        printRekapAbsensi();
+                        break;
+                    case 9:
                         System.out.println("Anda Telah Log Out.");
                         isRunning = false;
                         break;
