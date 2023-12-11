@@ -2,6 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MainApp {
+    final static int JATAHCUTI = 20;
     final static String PagarPemisah = "###".repeat(47);
     private static Scanner scInput;
     private static String role = "";
@@ -28,7 +29,7 @@ public class MainApp {
     // Karyawan
     private static String[] dataKaryawan_Info = { "Nama", "Golongan", "No Telephone", "Bank:NoRekening" };
     private static String[][] data_Karyawan = {
-            // NAMA, GOL, NO TELP, BANK:NOREK, STATUS CUTI
+            // NAMA, GOL, NO TELP, BANK:NOREK, ID Karyawan
             { "Raruu", "D", "-", "BRI:789654389987456", null },
             { "Dyyyy", "C", "-", "BTN:1234567890987654", null },
             { "Farhan Kebab", "B", "083843069913", "BSI:1234567890", null },
@@ -47,15 +48,15 @@ public class MainApp {
 
     // Cuti Karyawan
     private static String[][] arrayCutiKaryawan = new String[0][0];
-    private static String[][] arrayStatusCuti = {
-            { "Raruu", "belum mengajukan cuti" },
-            { "Dyyyy", "belum mengajukan cuti" },
-            { "Farhan Kebab", "belum mengajukan cuti" },
-            { "Slamet Kopling", "belum mengajukan cuti" },
-            { "Rian Batagor", "belum mengajukan cuti" },
-            { "Rusdy Ambatukan", "belum mengajukan cuti" },
-            { "Vivo", "belum mengajukan cuti" },
-    };
+    // private static String[][] arrayStatusCuti = {
+    // { "Raruu", "belum mengajukan cuti" },
+    // { "Dyyyy", "belum mengajukan cuti" },
+    // { "Farhan Kebab", "belum mengajukan cuti" },
+    // { "Slamet Kopling", "belum mengajukan cuti" },
+    // { "Rian Batagor", "belum mengajukan cuti" },
+    // { "Rusdy Ambatukan", "belum mengajukan cuti" },
+    // { "Vivo", "belum mengajukan cuti" },
+    // };
 
     // Slip Gaji
     static String[] array_SlipGaji_Info = { "Id: ", "Atas Nama: ", "Golongan\t\t\t\t\t: ",
@@ -238,7 +239,7 @@ public class MainApp {
         boolean karyawan_isFound = false;
         System.out.print("\nMasukkan Nama Karyawan atau dengan index-nya\t: ");
         if (scInput.hasNextInt()) {
-            index_Karyawan = scInput.nextInt() - 1;
+            index_Karyawan = intInput() - 1;
             if (index_Karyawan < data_Karyawan.length && index_Karyawan > -1)
                 karyawan_isFound = true;
         } else {
@@ -642,6 +643,7 @@ public class MainApp {
         }
     }
 
+    // TODO: Delete
     public static void kelolaCutiKaryawan(String[][] arrayStatusCuti) {
 
         System.out.print("Masukkan nama karyawan yang akan mengajukan atau mengubah cuti: ");
@@ -699,36 +701,45 @@ public class MainApp {
     public static void cutiKaryawan() {
         boolean isRunningCuti = true;
         while (isRunningCuti) {
+            clearScreen();
+            System.out.println("Cuti\n");
             System.out.println("\nMenu Cuti Karyawan:");
-            System.out.println("1. Lihat Status Cuti Karyawan");
-            System.out.println("2. Kelola Cuti Karyawan");
-            System.out.println("3. Daftar Karyawan Sedang Cuti");
+            System.out.println("1. Ajukan Cuti");
+            System.out.println("2. Data Cuti");
             System.out.println("0. Kembali");
             System.out.print("Pilih Menu: ");
             menuItem = intInput();
+            clearScreen();
             switch (menuItem) {
                 case 0:
                     isRunningCuti = false;
                     break;
                 case 1:
-                    clearScreen();
-                    System.out.println("Daftar Status Cuti Karyawan");
-                    System.out.println("--------------------------------------");
-                    System.out.printf("%-5s%-20s%-15s\n", "No.", "Nama", "Status Cuti");
-                    System.out.println("--------------------------------------");
-
-                    for (int i = 0; i < arrayStatusCuti.length; i++) {
-                        System.out.printf("%-5d%-20s%-15s\n", (i + 1), arrayStatusCuti[i][0], arrayStatusCuti[i][1]);
+                    printKaryawanList();
+                    while (true) {
+                        if (karyawanSelector())
+                            break;
+                        System.out.println("Karyawan tidak ditemukan, meminta input kembali. . .");
                     }
+                    System.out.print("Alasan Cuti: ");
+                    String whyCuti = scInput.nextLine();
+                    System.out.print("Berapa Lama Cuti: ");
+                    int daysCuti = intInput();
 
-                    System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
-                    scInput.nextLine();
+                    arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, data_Karyawan[index_Karyawan][4],
+                            data_Karyawan[index_Karyawan][0], String.valueOf(daysCuti), whyCuti);
+                    enterToContinue("\nPengajuan Cuti Selesai,\nENTER UNTUK LANJUT: ");
                     break;
                 case 2:
-                    kelolaCutiKaryawan(arrayStatusCuti);
-                    break;
-                case 3:
-                    displayCutiKaryawan();
+                    System.out.println("ID Karyawan |  Nama  | | Cuti Hari | Alasan Cuti");
+                    System.out.println("-----------------------------------------------");
+                    for (int i = 0; i < arrayCutiKaryawan.length; i++) {
+                        System.out.printf("%-10s | %-10s | %-5s | %s\n", arrayCutiKaryawan[i][0],
+                                arrayCutiKaryawan[i][1], arrayCutiKaryawan[i][2], arrayCutiKaryawan[i][3]);
+                    }
+                    enterToContinue("ENTER UNTUK LANJUT: ");
+
+                    // kelolaCutiKaryawan(arrayStatusCuti);
                     break;
                 default:
                     System.out.println("Menu " + menuItem + " tidak valid.");
@@ -833,7 +844,6 @@ public class MainApp {
         scInput = new Scanner(System.in);
         generateKaryawanID();
         printBanner();
-        
         boolean unlogin = true;
         while (unlogin) {
             login();
