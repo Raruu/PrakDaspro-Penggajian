@@ -663,7 +663,8 @@ public class MainApp {
             if (statusCutiBaru.equalsIgnoreCase("Sedang Cuti")) {
                 arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, namaCuti, statusCutiBaru);
 
-                addRekapAbsensi(arrayStatusCuti[index_Karyawan][0], arrayRekapGaji[indexKaryawan][2], arrayStatusCuti[index_Karyawan][1]);
+                addRekapAbsensi(arrayStatusCuti[index_Karyawan][0], arrayRekapGaji[indexKaryawan][2],
+                        arrayStatusCuti[index_Karyawan][1]);
 
             }
 
@@ -780,8 +781,7 @@ public class MainApp {
         arrayRekapAbsensi = addElementArray(arrayRekapAbsensi, str);
     }
 
-    public static void printRekapAbsensi()
-    {
+    public static void printRekapAbsensi() {
         System.out.println("=============================================");
         System.out.println("          Tabel Rekap Jumlah Masuk dan Status Cuti");
         System.out.println("=============================================");
@@ -795,7 +795,7 @@ public class MainApp {
         }
 
         for (int i = 0; i < arrayRekapAbsensi.length; i++) {
-            System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", arrayRekapAbsensi[i][0], arrayRekapAbsensi[i][1],
+            System.out.printf("%-20s%-15s%-15s\n", arrayRekapAbsensi[i][0], arrayRekapAbsensi[i][1],
                     arrayRekapAbsensi[i][2]);
             System.out.println();
         }
@@ -833,7 +833,7 @@ public class MainApp {
         scInput = new Scanner(System.in);
         generateKaryawanID();
         printBanner();
-
+        
         boolean unlogin = true;
         while (unlogin) {
             login();
