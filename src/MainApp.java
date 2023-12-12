@@ -30,13 +30,13 @@ public class MainApp {
     private static String[] dataKaryawan_Info = { "Nama", "Golongan", "No Telephone", "Bank:NoRekening" };
     private static String[][] data_Karyawan = {
             // NAMA, GOL, NO TELP, BANK:NOREK, ID Karyawan
-            { "Raruu", "D", "-", "BRI:789654389987456", null },
-            { "Dyyyy", "C", "-", "BTN:1234567890987654", null },
-            { "Farhan Kebab", "B", "083843069913", "BSI:1234567890", null },
-            { "Slamet Kopling", "B", "089675839108", "BSI:1234567890", null },
-            { "Rian Batagor", "A", "08996906443", "Mandiri:1234567890987", null },
-            { "Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890", null },
-            { "Vivo", "D", "082118325367", "BSI:1234567890", null },
+            { null, "Raruu", "D", "-", "BRI:789654389987456" },
+            { null, "Dyyyy", "C", "-", "BTN:1234567890987654" },
+            { null, "Farhan Kebab", "B", "083843069913", "BSI:1234567890" },
+            { null, "Slamet Kopling", "B", "089675839108", "BSI:1234567890" },
+            { null, "Rian Batagor", "A", "08996906443", "Mandiri:1234567890987" },
+            { null, "Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890" },
+            { null, "Vivo", "D", "082118325367", "BSI:1234567890" },
     };
     private static int index_Karyawan = 0;
 
@@ -121,9 +121,9 @@ public class MainApp {
     public static boolean isKaryawanIDTaken(String id) {
         boolean isTrue = false;
         for (int i = 0; i < data_Karyawan.length; i++) {
-            if (data_Karyawan[i][4] == null)
+            if (data_Karyawan[i][0] == null)
                 continue;
-            if (data_Karyawan[i][4].equals(id)) {
+            if (data_Karyawan[i][0].equals(id)) {
                 isTrue = true;
                 break;
             }
@@ -133,14 +133,14 @@ public class MainApp {
 
     public static void generateKaryawanID() {
         for (int i = 0; i < data_Karyawan.length; i++) {
-            if (data_Karyawan[i][4] != null)
+            if (data_Karyawan[i][0] != null)
                 continue;
             String id;
             do {
                 id = generateID();
 
             } while (isKaryawanIDTaken(id));
-            data_Karyawan[i][4] = id;
+            data_Karyawan[i][0] = id;
         }
     }
 
@@ -150,13 +150,13 @@ public class MainApp {
             id = generateID();
 
         } while (isKaryawanIDTaken(id));
-        data_Karyawan[index][4] = id;
+        data_Karyawan[index][0] = id;
     }
 
     public static String getKaryawanNameById(String id) {
-        int index = getIndexById(data_Karyawan, 4, id);
+        int index = getIndexById(data_Karyawan, 0, id);
         if (index >= 0)
-            return data_Karyawan[index][0];
+            return data_Karyawan[index][1];
         return null;
     }
 
@@ -260,7 +260,7 @@ public class MainApp {
         } else {
             String nama_Input = scInput.nextLine();
             for (int i = 0; i < data_Karyawan.length; i++) {
-                if (nama_Input.equalsIgnoreCase(data_Karyawan[i][0])) {
+                if (nama_Input.equalsIgnoreCase(data_Karyawan[i][1])) {
                     index_Karyawan = i;
                     karyawan_isFound = true;
                 }
@@ -293,7 +293,7 @@ public class MainApp {
         System.out.println("List Karyawan:");
         System.out.println("No.\tNama Karyawan");
         for (int i = 0; i < data_Karyawan.length; i++) {
-            System.out.println((i + 1) + ".\t" + data_Karyawan[i][0]);
+            System.out.println((i + 1) + ".\t" + data_Karyawan[i][1]);
         }
     }
 
@@ -357,7 +357,7 @@ public class MainApp {
                     while (true) {
                         clearScreen();
                         System.out.println();
-                        for (int i = 0; i < dataKaryawan_Info.length; i++) {
+                        for (int i = 1; i < dataKaryawan_Info.length; i++) {
                             System.out.println(
                                     (i + 1) + ". " + dataKaryawan_Info[i] + ": " + data_Karyawan[index_Karyawan][i]);
                         }
@@ -365,13 +365,14 @@ public class MainApp {
                         menuItem = intInput();
                         if (menuItem == 0)
                             break;
-                        int selectedItem = menuItem - 1;
+                        int selectedItem = menuItem;
                         System.out.print(dataKaryawan_Info[selectedItem] + ": ");
 
                         data_Karyawan[index_Karyawan][selectedItem] = scInput.nextLine();
                     }
                     break;
                 case 2:
+                    // TODO: fix this
                     clearScreen();
                     System.out.println("Tambahkan Karyawan");
                     System.out.println();
@@ -379,7 +380,7 @@ public class MainApp {
                     data_Karyawan = addElementArrayInput(data_Karyawan, dataKaryawan_Info);
                     clearScreen();
                     System.out.println(
-                            "\nPenambahan Karyawan " + data_Karyawan[data_Karyawan.length - 1][0] + " Berhasil!");
+                            "\nPenambahan Karyawan " + data_Karyawan[data_Karyawan.length - 1][1] + " Berhasil!");
                     break;
                 case 3:
                     System.out.println("Hapus Karyawan");
@@ -420,7 +421,7 @@ public class MainApp {
         System.out.print("(bilangan real) Masukkan Total Jam Lembur\t: ");
         jamLembur = scInput.nextInt();
         scInput.nextLine();
-        char golongan = data_Karyawan[index_Karyawan][1].toUpperCase().toCharArray()[0];
+        char golongan = data_Karyawan[index_Karyawan][2].toUpperCase().toCharArray()[0];
 
         // Perhitungan Gaji
         switch (golongan) {
@@ -461,17 +462,17 @@ public class MainApp {
         String id = generateRandomString();
 
         // Rekap Gaji
-        addRekapGaji(data_Karyawan[index_Karyawan][0], golongan, jmlMasuk, jamLembur,
-                hasil_akhir, data_Karyawan[index_Karyawan][4]);
+        addRekapGaji(data_Karyawan[index_Karyawan][1], golongan, jmlMasuk, jamLembur,
+                hasil_akhir, data_Karyawan[index_Karyawan][0]);
 
         // Slip Gaji
-        addSlipGaji(id, data_Karyawan[index_Karyawan][0], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
-                potongan_Pajak, hasil_akhir, data_Karyawan[index_Karyawan][4]);
+        addSlipGaji(id, data_Karyawan[index_Karyawan][1], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
+                potongan_Pajak, hasil_akhir, data_Karyawan[index_Karyawan][0]);
         printSlipGaji(id);
         enterToContinue("TEKAN ENTER UNTUK LANJUT: ");
 
         // add array pembGaji
-        addPembGaji(id, data_Karyawan[index_Karyawan][4]);
+        addPembGaji(id, data_Karyawan[index_Karyawan][0]);
         doPembGaji(id);
 
         enterToContinue("TEKAN ENTER UNTUK KEMBALI KE MENU: ");
@@ -494,10 +495,10 @@ public class MainApp {
 
             System.out.println("No\tID\t\tNama");
             for (int i = 0; i < arrayPembGaji.length; i++) {
-                int indexka = getIndexById(data_Karyawan, 4, arrayPembGaji[i][1]);
+                int indexka = getIndexById(data_Karyawan, 0, arrayPembGaji[i][1]);
                 if (indexka < 0)
                     continue;
-                System.out.println((i + 1) + "\t" + arrayPembGaji[i][0] + "\t" + data_Karyawan[indexka][0]);
+                System.out.println((i + 1) + "\t" + arrayPembGaji[i][0] + "\t" + data_Karyawan[indexka][1]);
             }
 
             System.out.println("\nUntuk Kembali, Masukkan 0");
@@ -526,14 +527,14 @@ public class MainApp {
             return;
         }
 
-        int karyawanIndex = getIndexById(data_Karyawan, 4, arrayPembGaji[index][1]);
-        if (!summonDialog("Lanjut ditransfer ke Rekening " + data_Karyawan[karyawanIndex][0]))
+        int karyawanIndex = getIndexById(data_Karyawan, 0, arrayPembGaji[index][1]);
+        if (!summonDialog("Lanjut ditransfer ke Rekening " + data_Karyawan[karyawanIndex][1]))
             return;
 
         clearScreen();
         boolean dataValid = false, transfStatus = false;
         String amount = array_SlipGajis[getIndexById(array_SlipGajis, 0, id)][8];
-        String[] bank_Karyawan = data_Karyawan[karyawanIndex][3].split(":", 2);
+        String[] bank_Karyawan = data_Karyawan[karyawanIndex][4].split(":", 2);
         for (int i = 0; i < listBank.length; i++) {
             if (listBank[i][0].equals(bank_Karyawan[0])) {
                 dataValid = bank_Karyawan[1].length() == listBank[i][1].length();
@@ -555,7 +556,7 @@ public class MainApp {
             }
         } else {
             System.out.println("Data tidak valid! Mohon tijau kembali");
-            System.out.println("Nama\t\t: " + data_Karyawan[karyawanIndex][0]);
+            System.out.println("Nama\t\t: " + data_Karyawan[karyawanIndex][1]);
             System.out.println("Nama Bank\t: " + bank_Karyawan[0]);
             System.out.println("No Rekening\t: " + bank_Karyawan[1]);
         }
@@ -686,9 +687,9 @@ public class MainApp {
                     System.out.print("Berapa Lama Cuti: ");
                     int daysCuti = intInput();
 
-                    addCutiKaryawan(data_Karyawan[index_Karyawan][4], daysCuti,
+                    addCutiKaryawan(data_Karyawan[index_Karyawan][0], daysCuti,
                             whyCuti);
-                    setRekapAbsensi(data_Karyawan[index_Karyawan][4]);
+                    setRekapAbsensi(data_Karyawan[index_Karyawan][0]);
                     enterToContinue("\nPengajuan Cuti Selesai,\nENTER UNTUK LANJUT: ");
                     break;
                 case 2:
@@ -854,8 +855,10 @@ public class MainApp {
                 System.out.println();
                 switch (menuItem) {
                     case 0:
-                        isRunning = false;
-                        unlogin = false;
+                        if (summonDialog("Keluar Program")) {
+                            unlogin = false;
+                            isRunning = false;
+                        }
                         break;
                     case 1:
                         if (checkAdmin(role)) {
