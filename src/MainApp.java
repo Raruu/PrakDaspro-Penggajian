@@ -266,19 +266,28 @@ public class MainApp {
 
     public static boolean karyawanSelector() {
         boolean karyawan_isFound = false;
-        System.out.print("\nMasukkan Nama Karyawan atau dengan index-nya\t: ");
-        if (scInput.hasNextInt()) {
-            index_Karyawan = intInput() - 1;
-            if (index_Karyawan < data_Karyawan.length && index_Karyawan > -1)
-                karyawan_isFound = true;
-        } else {
-            String nama_Input = scInput.nextLine();
-            for (int i = 0; i < data_Karyawan.length; i++) {
-                if (nama_Input.equalsIgnoreCase(data_Karyawan[i][1])) {
-                    index_Karyawan = i;
+        while (!karyawan_isFound) {
+            System.out.print("\nUntuk Keluar Masukkan 0,\nMasukkan Nama Karyawan atau dengan NO urut-nya\t: ");
+            if (scInput.hasNextInt()) {
+                index_Karyawan = intInput() - 1;
+                if (index_Karyawan < 0)
+                    break;
+                if (index_Karyawan < data_Karyawan.length && index_Karyawan > -1) {
                     karyawan_isFound = true;
+                    break;
+                }
+            } else {
+                String nama_Input = scInput.nextLine();
+                for (int i = 0; i < data_Karyawan.length; i++) {
+                    if (nama_Input.equalsIgnoreCase(data_Karyawan[i][1])) {
+                        index_Karyawan = i;
+                        karyawan_isFound = true;
+                        break;
+                    }
                 }
             }
+            if (!karyawan_isFound)
+                System.out.println("Karyawan tidak ditemukan, meminta input kembali. . .");
         }
         return karyawan_isFound;
     }
@@ -362,12 +371,10 @@ public class MainApp {
                     isRunning_dataKaryawan = false;
                     break;
                 case 1:
-                    while (true) {
-                        // Input
-                        if (karyawanSelector())
-                            break;
-                        System.out.println("Karyawan tidak ditemukan, meminta input kembali. . .");
-                    }
+                    // Input
+                    if (!karyawanSelector())
+                        break;
+
                     while (true) {
                         clearScreen();
                         System.out.println();
@@ -387,7 +394,6 @@ public class MainApp {
                     }
                     break;
                 case 2:
-                    // TODO: fix this
                     clearScreen();
                     System.out.println("Tambahkan Karyawan");
                     System.out.println();
@@ -399,13 +405,9 @@ public class MainApp {
                             "\nPenambahan Karyawan " + data_Karyawan[data_Karyawan.length - 1][1] + " Berhasil!");
                     break;
                 case 3:
-                    System.out.println("Hapus Karyawan");
-                    while (true) {
-                        if (karyawanSelector())
-                            break;
-                        else
-                            System.out.println("Karyawan tersebut tidak ada");
-                    }
+                    System.out.println("Hapus Karyawan\n");
+                    if (!karyawanSelector())
+                        break;
                     data_Karyawan = removeElementArray(data_Karyawan, index_Karyawan);
                     break;
                 default:
@@ -427,11 +429,8 @@ public class MainApp {
         System.out.println("Perhitungan Gaji");
         System.out.println();
         printKaryawanList();
-        while (true) {
-            if (karyawanSelector())
-                break;
-            System.out.println("Karyawan tidak ditemukan, meminta input kembali. . .");
-        }
+        if (!karyawanSelector())
+            return;
         System.out.print("(bilangan real) Masukkan Jumlah Masuk\t\t: ");
         jmlMasuk = scInput.nextInt();
         System.out.print("(bilangan real) Masukkan Total Jam Lembur\t: ");
@@ -693,11 +692,8 @@ public class MainApp {
                     break;
                 case 1:
                     printKaryawanList();
-                    while (true) {
-                        if (karyawanSelector())
-                            break;
-                        System.out.println("Karyawan tidak ditemukan, meminta input kembali. . .");
-                    }
+                    if (!karyawanSelector())
+                        break;
                     System.out.print("Alasan Cuti: ");
                     String whyCuti = scInput.nextLine();
                     System.out.print("Berapa Lama Cuti: ");
