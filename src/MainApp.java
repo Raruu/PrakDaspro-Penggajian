@@ -230,6 +230,20 @@ public class MainApp {
         return arrayTemp;
     }
 
+    public static String[][] addElementArrayInput(String[][] arr, String[] msg, int startFillAt) {
+        String[][] arrayTemp = new String[arr.length + 1][arr[0].length];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[0].length; j++) {
+                arrayTemp[i][j] = arr[i][j];
+            }
+        }
+        for (int i = 0; i < msg.length; i++) {
+            System.out.print(msg[i] + ": ");
+            arrayTemp[arr.length][i + startFillAt] = scInput.nextLine();
+        }
+        return arrayTemp;
+    }
+
     public static String[][] removeElementArray(String[][] arr, int indexAt) {
         if (indexAt >= arr.length)
             return arr;
@@ -357,9 +371,10 @@ public class MainApp {
                     while (true) {
                         clearScreen();
                         System.out.println();
-                        for (int i = 1; i < dataKaryawan_Info.length; i++) {
+                        for (int i = 0; i < dataKaryawan_Info.length; i++) {
                             System.out.println(
-                                    (i + 1) + ". " + dataKaryawan_Info[i] + ": " + data_Karyawan[index_Karyawan][i]);
+                                    (i + 1) + ". " + dataKaryawan_Info[i] + ": "
+                                            + data_Karyawan[index_Karyawan][i + 1]);
                         }
                         System.out.print("\nMasukkan '0' untuk keluar,\nPilih nomor untuk di edit: ");
                         menuItem = intInput();
@@ -377,7 +392,8 @@ public class MainApp {
                     System.out.println("Tambahkan Karyawan");
                     System.out.println();
                     System.out.println("Masukkan data-data karyawan:");
-                    data_Karyawan = addElementArrayInput(data_Karyawan, dataKaryawan_Info);
+                    data_Karyawan = addElementArrayInput(data_Karyawan, dataKaryawan_Info, 1);
+                    generateKaryawanID(data_Karyawan.length - 1);
                     clearScreen();
                     System.out.println(
                             "\nPenambahan Karyawan " + data_Karyawan[data_Karyawan.length - 1][1] + " Berhasil!");
