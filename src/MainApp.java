@@ -153,8 +153,23 @@ public class MainApp {
         data_Karyawan[index][4] = id;
     }
 
+    public static String getKaryawanNameById(String id) {
+        int index = getIndexById(data_Karyawan, 4, id);
+        if (index >= 0)
+            return data_Karyawan[index][0];
+        return null;
+    }
+
     public static int getIndexById(String[][] arr, int arrIdAt, String id) {
         for (int i = 0; i < arr.length; i++) {
+            if (arr[i][arrIdAt].equals(id))
+                return i;
+        }
+        return -1;
+    }
+
+    public static int getIndexById(String[][] arr, int arrIdAt, String id, int startAt) {
+        for (int i = startAt; i < arr.length; i++) {
             if (arr[i][arrIdAt].equals(id))
                 return i;
         }
@@ -177,6 +192,15 @@ public class MainApp {
         if (index >= arr.length)
             return false;
         return true;
+    }
+
+    public static int getLengthIndex(String[][] arr, String id, int index) {
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i][index].equals(id))
+                count++;
+        }
+        return count;
     }
 
     public static String[][] addElementArray(String[][] arr, String... str) {
@@ -634,23 +658,6 @@ public class MainApp {
         }
     }
 
-    // TODO: Delete
-    
-    public static void displayCutiKaryawan() {
-        clearScreen();
-        System.out.println("Daftar Karyawan Sedang Cuti");
-        System.out.println("--------------------------------------");
-        System.out.printf("%-5s%-20s%-15s\n", "No.", "Nama", "Status Cuti");
-        System.out.println("--------------------------------------");
-
-        for (int i = 0; i < arrayCutiKaryawan.length; i++) {
-            System.out.printf("%-5d%-20s%-15s\n", (i + 1), arrayCutiKaryawan[i][0], arrayCutiKaryawan[i][1]);
-        }
-
-        System.out.print("TEKAN ENTER UNTUK KEMBALI: ");
-        scInput.nextLine();
-    }
-
     public static void cutiKaryawan() {
         boolean isRunningCuti = true;
         while (isRunningCuti) {
@@ -679,22 +686,19 @@ public class MainApp {
                     System.out.print("Berapa Lama Cuti: ");
                     int daysCuti = intInput();
 
-                    arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, data_Karyawan[index_Karyawan][4],
-                            data_Karyawan[index_Karyawan][0], String.valueOf(daysCuti), whyCuti);
-                    addRekapAbsensi(data_Karyawan[index_Karyawan][0], arrayRekapGaji[index_Karyawan][2],
-                        arrayCutiKaryawan[index_Karyawan][2]);
+                    addCutiKaryawan(data_Karyawan[index_Karyawan][4], daysCuti,
+                            whyCuti);
+                    setRekapAbsensi(data_Karyawan[index_Karyawan][4]);
                     enterToContinue("\nPengajuan Cuti Selesai,\nENTER UNTUK LANJUT: ");
                     break;
                 case 2:
-                    System.out.println("ID Karyawan |  Nama  | | Cuti Hari | Alasan Cuti");
+                    System.out.println("ID Karyawan |  Nama  |  Cuti Hari | Alasan Cuti");
                     System.out.println("-----------------------------------------------");
                     for (int i = 0; i < arrayCutiKaryawan.length; i++) {
                         System.out.printf("%-10s | %-10s | %-5s | %s\n", arrayCutiKaryawan[i][0],
                                 arrayCutiKaryawan[i][1], arrayCutiKaryawan[i][2], arrayCutiKaryawan[i][3]);
                     }
                     enterToContinue("ENTER UNTUK LANJUT: ");
-
-                    // kelolaCutiKaryawan(arrayStatusCuti);
                     break;
                 default:
                     System.out.println("Menu " + menuItem + " tidak valid.");
@@ -703,9 +707,17 @@ public class MainApp {
         }
     }
 
+    public static void addCutiKaryawan(String idKaryawan, int daysCuti, String alasan) {
+        int isIndex = getIndexById(arrayCutiKaryawan, 0, idKaryawan);
+        if (isIndex >= 0)
+            arrayCutiKaryawan = removeElementArray(arrayCutiKaryawan, isIndex);
+        arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, idKaryawan, getKaryawanNameById(idKaryawan),
+                String.valueOf(daysCuti), alasan);
+    }
+
     public static void addRekapGaji(String nama, char gol, int jmlMasuk, int jamLembur,
             double hasil_Akhir, String karyawanID) {
-        String[] str = new String[7];
+        String[] str = new String[6];
         str[0] = nama;
         str[1] = String.valueOf(gol);
         str[2] = String.valueOf(jmlMasuk);
@@ -714,6 +726,17 @@ public class MainApp {
         str[5] = karyawanID;
 
         arrayRekapGaji = addElementArray(arrayRekapGaji, str);
+        setRekapAbsensi(karyawanID);
+    }
+
+    public static long sumofMasuk(String id, int startAt) {
+        // long sum = 0;
+        int index = getIndexById(arrayRekapGaji, 5, id, startAt);
+        if (startAt == arrayRekapGaji.length || index < 0)
+            return 0;
+
+        return Integer.valueOf(arrayRekapGaji[index][2]) + sumofMasuk(id, index + 1);
+
     }
 
     public static void RekapGaji() {
@@ -738,12 +761,22 @@ public class MainApp {
         enterToContinue();
     }
 
-    public static void addRekapAbsensi(String namaCuti, String jmlMasuk, String statusCuti) {
-        String[] str = new String[3];
-        str[0] = namaCuti;
-        str[1] = jmlMasuk;
-        str[2] = statusCuti;
+    public static void setRekapAbsensi(String id) {
+        String[] str = new String[4];
 
+        str[0] = getKaryawanNameById(id);
+        str[1] = String.valueOf(sumofMasuk(id, 0));
+        str[3] = id;
+
+        int indexCuti = getIndexById(arrayCutiKaryawan, 0, id);
+        String daysCuti = "0";
+        if (indexCuti >= 0)
+            daysCuti = arrayCutiKaryawan[indexCuti][2];
+        str[2] = daysCuti;
+
+        int isIndex = getIndexById(arrayRekapAbsensi, 3, id);
+        if (isIndex >= 0)
+            arrayRekapAbsensi = removeElementArray(arrayRekapAbsensi, isIndex);
         arrayRekapAbsensi = addElementArray(arrayRekapAbsensi, str);
     }
 
@@ -753,7 +786,6 @@ public class MainApp {
         System.out.println("=====================================================");
         System.out.printf("%-20s%-15s%-15s\n", "Nama Karyawan", "Jumlah Masuk", "Jumlah Cuti");
         System.out.println("---------------------------------------------");
-
 
         if (arrayRekapAbsensi.length <= 0) {
             System.out.println("Belum ada data perhitungan gaji yang diinputkan!!");
