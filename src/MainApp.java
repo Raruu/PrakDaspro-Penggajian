@@ -27,7 +27,8 @@ public class MainApp {
             { "BCA", "1234567890" } };
 
     // Karyawan
-    private static String[] dataKaryawan_Info = { "Nama", "Golongan", "No Telephone", "Bank:NoRekening" };
+    private static String[] dataKaryawan_Info = { "ID Karyawan", "Nama", "Golongan", "No Telephone",
+            "Bank:NoRekening" };
     private static String[][] data_Karyawan = {
             // NAMA, GOL, NO TELP, BANK:NOREK, ID Karyawan
             { null, "Raruu", "D", "-", "BRI:789654389987456" },
@@ -230,15 +231,15 @@ public class MainApp {
         return arrayTemp;
     }
 
-    public static String[][] addElementArrayInput(String[][] arr, String[] msg, int startFillAt) {
+    public static String[][] addElementArrayInput(String[][] arr, String[] msg, int startFillAt, int msgStartAt) {
         String[][] arrayTemp = new String[arr.length + 1][arr[0].length];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
                 arrayTemp[i][j] = arr[i][j];
             }
         }
-        for (int i = 0; i < msg.length; i++) {
-            System.out.print(msg[i] + ": ");
+        for (int i = 0; i < msg.length - msgStartAt; i++) {
+            System.out.print(msg[i + msgStartAt] + ": ");
             arrayTemp[arr.length][i + startFillAt] = scInput.nextLine();
         }
         return arrayTemp;
@@ -357,7 +358,6 @@ public class MainApp {
     public static void kelolaKaryawan() {
         clearScreen();
         boolean isRunning_dataKaryawan = true;
-        clearScreen();
         while (isRunning_dataKaryawan) {
             System.out.println();
             System.out.println("Pengelolaan Data Karyawan\n");
@@ -381,7 +381,7 @@ public class MainApp {
                         for (int i = 0; i < dataKaryawan_Info.length; i++) {
                             System.out.println(
                                     (i + 1) + ". " + dataKaryawan_Info[i] + ": "
-                                            + data_Karyawan[index_Karyawan][i + 1]);
+                                            + data_Karyawan[index_Karyawan][i]);
                         }
                         System.out.print("\nMasukkan '0' untuk keluar,\nPilih nomor untuk di edit: ");
                         menuItem = intInput();
@@ -398,7 +398,7 @@ public class MainApp {
                     System.out.println("Tambahkan Karyawan");
                     System.out.println();
                     System.out.println("Masukkan data-data karyawan:");
-                    data_Karyawan = addElementArrayInput(data_Karyawan, dataKaryawan_Info, 1);
+                    data_Karyawan = addElementArrayInput(data_Karyawan, dataKaryawan_Info, 1, 1);
                     generateKaryawanID(data_Karyawan.length - 1);
                     clearScreen();
                     System.out.println(
@@ -411,6 +411,7 @@ public class MainApp {
                     data_Karyawan = removeElementArray(data_Karyawan, index_Karyawan);
                     break;
                 default:
+                    clearScreen();
                     System.out.println("Menu " + menuItem + " Tidak ada");
                     break;
             }
@@ -431,11 +432,16 @@ public class MainApp {
         printKaryawanList();
         if (!karyawanSelector())
             return;
-        System.out.print("(bilangan real) Masukkan Jumlah Masuk\t\t: ");
-        jmlMasuk = scInput.nextInt();
-        System.out.print("(bilangan real) Masukkan Total Jam Lembur\t: ");
-        jamLembur = scInput.nextInt();
-        scInput.nextLine();
+        do {
+            System.out.print("(bilangan real) Masukkan Jumlah Masuk\t\t: ");
+            jmlMasuk = intInput();
+            System.out.print("(bilangan real) Masukkan Total Jam Lembur\t: ");
+            jamLembur = intInput();
+            if (jmlMasuk > -1 && jamLembur > -1)
+                break;
+            System.out.println("INPUT TIDAK VALID, MENGULANGI\n");
+        } while (true);
+
         char golongan = data_Karyawan[index_Karyawan][2].toUpperCase().toCharArray()[0];
 
         // Perhitungan Gaji
@@ -705,7 +711,7 @@ public class MainApp {
                     enterToContinue("\nPengajuan Cuti Selesai,\nENTER UNTUK LANJUT: ");
                     break;
                 case 2:
-                    System.out.printf("%-15s%-20s%-15s%-15s\n", "ID Karyawan",   "Nama ",  "Cuti Hari", "Alasan Cuti");
+                    System.out.printf("%-15s%-20s%-15s%-15s\n", "ID Karyawan", "Nama ", "Cuti Hari", "Alasan Cuti");
                     System.out.println("--------------------------------------------------------------");
                     for (int i = 0; i < arrayCutiKaryawan.length; i++) {
                         System.out.printf("%-15s%-20s%-15s%-15s\n", arrayCutiKaryawan[i][0],
