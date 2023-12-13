@@ -231,7 +231,8 @@ public class MainApp {
         return arrayTemp;
     }
 
-    public static String[][] addElementArrayInput(String[][] arr, String[] msg, int startFillAt, int msgStartAt) {
+    public static String[][] addElementArrayInput(String[][] arr, String[] msg, int startFillAt, int msgStartAt,
+            boolean allowEmpty) {
         String[][] arrayTemp = new String[arr.length + 1][arr[0].length];
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
@@ -240,7 +241,13 @@ public class MainApp {
         }
         for (int i = 0; i < msg.length - msgStartAt; i++) {
             System.out.print(msg[i + msgStartAt] + ": ");
-            arrayTemp[arr.length][i + startFillAt] = scInput.nextLine();
+            String input = scInput.nextLine();
+            while (!allowEmpty) {
+                if (!input.equals(""))
+                    break;
+                input = scInput.nextLine();
+            }
+            arrayTemp[arr.length][i + startFillAt] = input;
         }
         return arrayTemp;
     }
@@ -398,7 +405,7 @@ public class MainApp {
                     System.out.println("Tambahkan Karyawan");
                     System.out.println();
                     System.out.println("Masukkan data-data karyawan:");
-                    data_Karyawan = addElementArrayInput(data_Karyawan, dataKaryawan_Info, 1, 1);
+                    data_Karyawan = addElementArrayInput(data_Karyawan, dataKaryawan_Info, 1, 1, false);
                     generateKaryawanID(data_Karyawan.length - 1);
                     clearScreen();
                     System.out.println(
@@ -471,8 +478,9 @@ public class MainApp {
                 bonus = 250000;
                 break;
             default:
-                System.out.println("Golongan: " + golongan
-                        + " tidak ada, melanjutkan perhitungan dengan data seadanya");
+                System.out.println("Golongan: " + golongan + " tidak ada, perhitungan akan menghasilkan 0");
+                System.out.println("Mohon tinjau kembali data pada menu \"Pengelolaan Data Karyawan\"");
+                enterToContinue("ENTER UNTUK LANJUT: ");
         }
         long pokok_Gaji = jmlMasuk * pokok_GajiHarian;
         int bonus_Gaji = jamLembur * bonus;
