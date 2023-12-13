@@ -204,6 +204,17 @@ public class MainApp {
         return count;
     }
 
+    public static String[] addElementArray(String[] arr, String... str) {
+        String[] arrayTemp = new String[arr.length + str.length];
+        for (int i = 0; i < arr.length; i++) {
+            arrayTemp[i] = arr[i];
+        }
+        for (int i = arr.length; i < arr.length + str.length; i++) {
+            arrayTemp[i] = str[i - arr.length];
+        }
+        return arrayTemp;
+    }
+
     public static String[][] addElementArray(String[][] arr, String... str) {
         String[][] arrayTemp = new String[arr.length + 1][str.length];
         for (int i = 0; i < arr.length; i++) {
@@ -491,8 +502,7 @@ public class MainApp {
         String id = generateRandomString();
 
         // Rekap Gaji
-        addRekapGaji(data_Karyawan[index_Karyawan][1], golongan, jmlMasuk, jamLembur,
-                hasil_akhir, data_Karyawan[index_Karyawan][0]);
+        addRekapGaji(data_Karyawan[index_Karyawan][0], jmlMasuk, jamLembur, hasil_akhir, id);
 
         // Slip Gaji
         addSlipGaji(id, data_Karyawan[index_Karyawan][1], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
@@ -631,10 +641,16 @@ public class MainApp {
                 case 2:
                     clearScreen();
                     if (summonDialog("HAPUS SLIP GAJI " + input)) {
-                        array_SlipGajis = removeElementArray(array_SlipGajis, getIndexById(array_SlipGajis, 0, input));
                         int indexPembGaji = getIndexById(arrayPembGaji, 0, input);
-                        if (isIndexValid(arrayPembGaji, indexPembGaji))
+                        if (indexPembGaji > -1)
                             arrayPembGaji = removeElementArray(arrayPembGaji, indexPembGaji);
+                        int indexRekapGaji = getIndexById(arrayRekapGaji, 4, input);
+                        if (indexRekapGaji > -1)
+                            arrayRekapGaji = removeElementArray(arrayRekapGaji, indexRekapGaji);
+
+                        int indexSlipGaji = getIndexById(array_SlipGajis, 0, input);
+                        setRekapAbsensi(array_SlipGajis[indexSlipGaji][9]);
+                        array_SlipGajis = removeElementArray(array_SlipGajis, indexSlipGaji);
                         System.out.println("\nBerhasil dihapus");
                     }
                     break;
@@ -743,47 +759,84 @@ public class MainApp {
                 String.valueOf(daysCuti), alasan);
     }
 
-    public static void addRekapGaji(String nama, char gol, int jmlMasuk, int jamLembur,
-            double hasil_Akhir, String karyawanID) {
-        String[] str = new String[6];
-        str[0] = nama;
-        str[1] = String.valueOf(gol);
-        str[2] = String.valueOf(jmlMasuk);
-        str[3] = String.valueOf(jamLembur);
-        str[4] = String.valueOf((long) hasil_Akhir);
-        str[5] = karyawanID;
+    public static void addRekapGaji(String karyawanId, int jmlMasuk, int jamLembur, double hasil_Akhir, String id) {
+        String[] str = new String[5];
+        str[0] = karyawanId;
+        str[1] = String.valueOf(jmlMasuk);
+        str[2] = String.valueOf(jamLembur);
+        str[3] = String.valueOf((long) hasil_Akhir);
+        str[4] = id;
 
         arrayRekapGaji = addElementArray(arrayRekapGaji, str);
-        setRekapAbsensi(karyawanID);
+        setRekapAbsensi(karyawanId);
     }
 
     public static long sumofMasuk(String id, int startAt) {
-        // long sum = 0;
-        int index = getIndexById(arrayRekapGaji, 5, id, startAt);
+        int index = getIndexById(arrayRekapGaji, 0, id, startAt);
         if (startAt == arrayRekapGaji.length || index < 0)
             return 0;
 
-        return Integer.valueOf(arrayRekapGaji[index][2]) + sumofMasuk(id, index + 1);
+        return Integer.valueOf(arrayRekapGaji[index][1]) + sumofMasuk(id, index + 1);
 
+    }
+
+    public static String[] getAvailableId(String[][] arr, int atIndex) {
+        String[] Ids = new String[0];
+        for (int i = 0; i < arr.length; i++) {
+            boolean isThere = false;
+            for (int j = 0; j < Ids.length; j++) {
+                if (Ids[j].contains(arr[i][atIndex])) {
+                    isThere = true;
+                    break;
+                }
+            }
+            if (!isThere)
+                Ids = addElementArray(Ids, arr[i][atIndex]);
+        }
+        return Ids;
     }
 
     public static void RekapGaji() {
         clearScreen();
-        System.out.println("Rekap Gaji Karyawan");
-        System.out.println("---------------------------------------------------------------------------------------");
-        System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", "Nama", "Golongan", "Jumlah Masuk", "Jam Lembur",
-                "Total Gaji", "Karyawan ID");
-        System.out.println("---------------------------------------------------------------------------------------");
-
         if (arrayRekapGaji.length <= 0) {
             System.out.println("Belum ada data perhitungan gaji yang diinputkan!!");
             enterToContinue();
             return;
         }
 
-        for (int i = 0; i < arrayRekapGaji.length; i++) {
-            System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", arrayRekapGaji[i][0], arrayRekapGaji[i][1],
-                    arrayRekapGaji[i][2], arrayRekapGaji[i][3], arrayRekapGaji[i][4], arrayRekapGaji[i][5]);
+        String[] ids = getAvailableId(arrayRekapGaji, 0);
+        String[][] printArr = new String[ids.length][6];
+        for (int i = 0; i < ids.length; i++) {
+            int karIndex = getIndexById(data_Karyawan, 0, ids[i]);
+            if (karIndex > -1) {
+                printArr[i][0] = data_Karyawan[karIndex][0];
+                printArr[i][1] = data_Karyawan[karIndex][1];
+                printArr[i][2] = data_Karyawan[karIndex][2];
+                int jmlMasuk = 0, jamLembur = 0;
+                long hasilAkhir = 0;
+                for (int j = 0; j < arrayRekapGaji.length; j++) {
+                    if (arrayRekapGaji[j][0].contains(ids[i])) {
+                        jmlMasuk += Integer.valueOf(arrayRekapGaji[j][1]);
+                        jamLembur += Integer.valueOf(arrayRekapGaji[j][2]);
+                        hasilAkhir += Long.valueOf(arrayRekapGaji[j][3]);
+                    }
+                }
+                printArr[i][3] = String.valueOf(jmlMasuk);
+                printArr[i][4] = String.valueOf(jamLembur);
+                printArr[i][5] = String.valueOf(hasilAkhir);
+            }
+        }
+
+        System.out.println("Rekap Gaji Karyawan");
+        System.out.println("---------------------------------------------------------------------------------------");
+        System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", "Karyawan ID", "Nama", "Golongan", "Jumlah Masuk",
+                "Jam Lembur",
+                "Total Gaji");
+        System.out.println("---------------------------------------------------------------------------------------");
+
+        for (int i = 0; i < printArr.length; i++) {
+            System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", printArr[i][0], printArr[i][1],
+                    printArr[i][2], printArr[i][3], printArr[i][4], printArr[i][5]);
             System.out.println();
         }
         enterToContinue();
