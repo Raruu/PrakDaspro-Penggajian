@@ -28,16 +28,16 @@ public class MainApp {
 
     // Karyawan
     private static String[] dataKaryawan_Info = { "ID Karyawan", "Nama", "Golongan", "No Telephone",
-            "Bank:NoRekening" };
+            "Bank", "NoRekening" };
     private static String[][] data_Karyawan = {
             // NAMA, GOL, NO TELP, BANK:NOREK, ID Karyawan
-            { null, "Raruu", "D", "-", "BRI:789654389987456" },
-            { null, "Dyyyy", "C", "-", "BTN:1234567890987654" },
-            { null, "Farhan Kebab", "B", "083843069913", "BSI:1234567890" },
-            { null, "Slamet Kopling", "B", "089675839108", "BSI:1234567890" },
-            { null, "Rian Batagor", "A", "08996906443", "Mandiri:1234567890987" },
-            { null, "Rusdy Ambatukan", "C", "083843069913", "BSI:1234567890" },
-            { null, "Vivo", "D", "082118325367", "BSI:1234567890" },
+            { null, "Raruu", "D", "-", "BRI", "789654389987456" },
+            { null, "Dyyyy", "C", "-", "BTN", "1234567890987654" },
+            { null, "Farhan Kebab", "B", "083843069913", "BSI", "1234567890" },
+            { null, "Slamet Kopling", "B", "089675839108", "BSI", "1234567890" },
+            { null, "Rian Batagor", "A", "08996906443", "Mandiri", "1234567890987" },
+            { null, "Rusdy Ambatukan", "C", "083843069913", "BSI", "1234567890" },
+            { null, "Vivo", "D", "082118325367", "BSI", "1234567890" },
     };
     private static int index_Karyawan = 0;
 
@@ -384,8 +384,8 @@ public class MainApp {
                                             + data_Karyawan[index_Karyawan][i]);
                         }
                         System.out.print("\nMasukkan '0' untuk keluar,\nPilih nomor untuk di edit: ");
-                        menuItem = intInput();
-                        if (menuItem == 0)
+                        menuItem = intInput() - 1;
+                        if (menuItem <= -1)
                             break;
                         int selectedItem = menuItem;
                         System.out.print(dataKaryawan_Info[selectedItem] + ": ");
@@ -555,7 +555,7 @@ public class MainApp {
         clearScreen();
         boolean dataValid = false, transfStatus = false;
         String amount = array_SlipGajis[getIndexById(array_SlipGajis, 0, id)][8];
-        String[] bank_Karyawan = data_Karyawan[karyawanIndex][4].split(":", 2);
+        String[] bank_Karyawan = { data_Karyawan[karyawanIndex][4], data_Karyawan[karyawanIndex][5] };
         for (int i = 0; i < listBank.length; i++) {
             if (listBank[i][0].equals(bank_Karyawan[0])) {
                 dataValid = bank_Karyawan[1].length() == listBank[i][1].length();
