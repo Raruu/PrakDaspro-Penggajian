@@ -705,11 +705,12 @@ public class MainApp {
                     enterToContinue("\nPengajuan Cuti Selesai,\nENTER UNTUK LANJUT: ");
                     break;
                 case 2:
-                    System.out.println("ID Karyawan |  Nama  |  Cuti Hari | Alasan Cuti");
-                    System.out.println("-----------------------------------------------");
+                    System.out.printf("%-15s%-20s%-15s%-15s\n", "ID Karyawan",   "Nama ",  "Cuti Hari", "Alasan Cuti");
+                    System.out.println("--------------------------------------------------------------");
                     for (int i = 0; i < arrayCutiKaryawan.length; i++) {
-                        System.out.printf("%-10s | %-10s | %-5s | %s\n", arrayCutiKaryawan[i][0],
+                        System.out.printf("%-15s%-20s%-15s%-15s\n", arrayCutiKaryawan[i][0],
                                 arrayCutiKaryawan[i][1], arrayCutiKaryawan[i][2], arrayCutiKaryawan[i][3]);
+                        System.out.println();
                     }
                     enterToContinue("ENTER UNTUK LANJUT: ");
                     break;
