@@ -372,19 +372,19 @@ public class MainApp {
         boolean isRunningAcc = true;
         while (isRunningAcc) {
             System.out.println("--  DATA AKUN  --");
-            System.out.println("Username   | Password   | Role");
+            System.out.println("NO   | Username   | Password   | Role");
             System.out.println("-------------------------------");
             for (int i = 0; i < account.length; i++) {
+                String no = String.valueOf(i+1);
                 String usr = account[i][0];
                 String pw = account[i][1];
                 String rl = account[i][2];
-                System.out.printf("%-10s | %-10s | %-5s\n", usr, pw, rl);
+                System.out.printf("%-5s | %-10s | %-10s | %-5s\n", no, usr, pw, rl);
             }
             System.out.println();
             System.out.println("0. Kembali\n1. Tambah Akun\n2. Hapus Akun");
             System.out.print("Pilih Menu: ");
             menuItem = intInput();
-            clearScreen();
             switch (menuItem) {
                 case 0:
                     isRunningAcc = false;
@@ -398,7 +398,7 @@ public class MainApp {
                     break;
                 case 2:
                     System.out.println("Hapus Akun\n");
-                    if (!karyawanSelector())
+                    if (!akunSelector())
                         break;
                     account = removeElementArray(account, index_Karyawan);
                     break;
@@ -406,7 +406,6 @@ public class MainApp {
                     clearScreen();
                     System.out.println("Menu " + menuItem + " Tidak ada");
                     break;
-
             }
         }
     }
