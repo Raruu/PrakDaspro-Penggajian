@@ -311,6 +311,34 @@ public class MainApp {
         return karyawan_isFound;
     }
 
+    public static boolean akunSelector() {
+        boolean akun_isFound = false;
+        while (!akun_isFound) {
+            System.out.print("\nUntuk Keluar Masukkan 0,\nMasukkan Username Akun atau dengan NO urut-nya\t: ");
+            if (scInput.hasNextInt()) {
+                index_Karyawan = intInput() - 1;
+                if (index_Karyawan < 0)
+                    break;
+                if (index_Karyawan < account.length && index_Karyawan > -1) {
+                    akun_isFound = true;
+                    break;
+                }
+            } else {
+                String username_Input = scInput.nextLine();
+                for (int i = 0; i < account.length; i++) {
+                    if (username_Input.equalsIgnoreCase(account[i][0])) {
+                        index_Karyawan = i;
+                        akun_isFound = true;
+                        break;
+                    }
+                }
+            }
+            if (!akun_isFound)
+                System.out.println("Akun tidak ditemukan, meminta input kembali. . .");
+        }
+        return akun_isFound;
+    }
+
     public static int intInput() {
         int input = -1;
         if (scInput.hasNextInt()) {
@@ -343,8 +371,17 @@ public class MainApp {
         clearScreen();
         boolean isRunningAcc = true;
         while (isRunningAcc) {
+            System.out.println("--  DATA AKUN  --");
+            System.out.println("Username   | Password   | Role");
+            System.out.println("-------------------------------");
+            for (int i = 0; i < account.length; i++) {
+                String usr = account[i][0];
+                String pw = account[i][1];
+                String rl = account[i][2];
+                System.out.printf("%-10s | %-10s | %-5s\n", usr, pw, rl);
+            }
             System.out.println();
-            System.out.println("0. Kembali\n1. Data Akun\n2. Tambah Akun");
+            System.out.println("0. Kembali\n1. Tambah Akun\n2. Hapus Akun");
             System.out.print("Pilih Menu: ");
             menuItem = intInput();
             clearScreen();
@@ -353,22 +390,23 @@ public class MainApp {
                     isRunningAcc = false;
                     break;
                 case 1:
-                    System.out.println("Username   | Password   | Role");
-                    System.out.println("-------------------------------");
-                    for (int i = 0; i < account.length; i++) {
-                        String usr = account[i][0];
-                        String pw = account[i][1];
-                        String rl = account[i][2];
-                        System.out.printf("%-10s | %-10s | %-5s\n", usr, pw, rl);
-                    }
-                    break;
-                case 2:
                     System.out.println();
                     System.out.println("---REGISTRASI USER---");
                     account = addElementArrayInput(account, register);
                     clearScreen();
                     System.out.println("Registrasi Berhasil!");
                     break;
+                case 2:
+                    System.out.println("Hapus Akun\n");
+                    if (!karyawanSelector())
+                        break;
+                    account = removeElementArray(account, index_Karyawan);
+                    break;
+                    default:
+                    clearScreen();
+                    System.out.println("Menu " + menuItem + " Tidak ada");
+                    break;
+
             }
         }
     }
@@ -507,7 +545,6 @@ public class MainApp {
         // Slip Gaji
         addSlipGaji(id, data_Karyawan[index_Karyawan][1], golongan, pokok_Gaji, bonus_Gaji, uangTunjangan, total_Gaji,
                 potongan_Pajak, hasil_akhir, data_Karyawan[index_Karyawan][0]);
-        printSlipGaji(id);
         enterToContinue("TEKAN ENTER UNTUK LANJUT: ");
 
         // add array pembGaji
@@ -565,6 +602,8 @@ public class MainApp {
             System.out.println("Tidak dapat menemukan data");
             return;
         }
+
+        printSlipGaji(id);
 
         int karyawanIndex = getIndexById(data_Karyawan, 0, arrayPembGaji[index][1]);
         if (!summonDialog("Lanjut ditransfer ke Rekening " + data_Karyawan[karyawanIndex][1]))
@@ -929,7 +968,7 @@ public class MainApp {
                 System.out.println("Login: " + usernameLogin);
                 System.out.println("\nMenu Utama: ");
                 System.out.println(
-                        "1. Registrasi Pengguna\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. Rekap Gaji\n8. Rekap Absensi\n9. LogOut\n0. Keluar Program");
+                        "1. Pengelolaan Akun\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. Rekap Gaji\n8. Rekap Absensi\n9. LogOut\n0. Keluar Program");
                 System.out.print("\npilih Menu (angka): ");
                 menuItem = intInput();
                 System.out.println();
