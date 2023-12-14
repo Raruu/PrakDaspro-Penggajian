@@ -464,6 +464,31 @@ public class MainApp {
                     System.out.println("Hapus Karyawan\n");
                     if (!karyawanSelector())
                         break;
+
+                    String karyawanId = data_Karyawan[index_Karyawan][0];
+                    int indexPembGaji = getIndexById(arrayPembGaji, 1, karyawanId);
+                    while (indexPembGaji > -1) {
+                        arrayPembGaji = removeElementArray(arrayPembGaji, indexPembGaji);
+                        indexPembGaji = getIndexById(arrayPembGaji, 1, karyawanId);
+                    }
+
+                    int indexRekapGaji = getIndexById(arrayRekapGaji, 0, karyawanId);
+                    while (indexRekapGaji > -1) {
+                        arrayRekapGaji = removeElementArray(arrayRekapGaji, indexRekapGaji);
+                        indexRekapGaji = getIndexById(arrayRekapGaji, 0, karyawanId);
+                    }
+
+                    int indexSlipGaji = getIndexById(array_SlipGajis, 9, karyawanId);
+                    while (indexSlipGaji > -1) {
+                        array_SlipGajis = removeElementArray(array_SlipGajis, indexSlipGaji);
+                        indexSlipGaji = getIndexById(array_SlipGajis, 9, karyawanId);
+                    }
+                    int indexCuti = getIndexById(arrayCutiKaryawan, 0, karyawanId);
+                    while (indexCuti > -1) {
+                        arrayCutiKaryawan = removeElementArray(arrayCutiKaryawan, indexCuti);
+                        indexCuti = getIndexById(arrayCutiKaryawan, 0, karyawanId);
+                    }
+                    setRekapAbsensi(karyawanId);
                     data_Karyawan = removeElementArray(data_Karyawan, index_Karyawan);
                     break;
                 default:
@@ -493,7 +518,7 @@ public class MainApp {
             jmlMasuk = intInput();
             System.out.print("(bilangan real) Masukkan Total Jam Lembur\t: ");
             jamLembur = intInput();
-            if (jmlMasuk > -1 && jamLembur > -1)
+            if (jmlMasuk > 0 && jamLembur > -1)
                 break;
             System.out.println("INPUT TIDAK VALID, MENGULANGI\n");
         } while (true);
@@ -794,8 +819,9 @@ public class MainApp {
         int isIndex = getIndexById(arrayCutiKaryawan, 0, idKaryawan);
         if (isIndex >= 0)
             arrayCutiKaryawan = removeElementArray(arrayCutiKaryawan, isIndex);
-        arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, idKaryawan, getKaryawanNameById(idKaryawan),
-                String.valueOf(daysCuti), alasan);
+        if (daysCuti > 0)
+            arrayCutiKaryawan = addElementArray(arrayCutiKaryawan, idKaryawan, getKaryawanNameById(idKaryawan),
+                    String.valueOf(daysCuti), alasan);
     }
 
     public static void addRekapGaji(String karyawanId, int jmlMasuk, int jamLembur, double hasil_Akhir, String id) {
@@ -897,7 +923,8 @@ public class MainApp {
         int isIndex = getIndexById(arrayRekapAbsensi, 3, id);
         if (isIndex >= 0)
             arrayRekapAbsensi = removeElementArray(arrayRekapAbsensi, isIndex);
-        arrayRekapAbsensi = addElementArray(arrayRekapAbsensi, str);
+        if (Integer.valueOf(str[1]) > 0 || Integer.valueOf(str[2]) > 0)
+            arrayRekapAbsensi = addElementArray(arrayRekapAbsensi, str);
     }
 
     public static void printRekapAbsensi() {
