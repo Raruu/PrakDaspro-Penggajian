@@ -55,6 +55,7 @@ public class MainApp {
             "Gaji Pokok\t\t\t\t\t: Rp.", "Bonus Gaji\t\t\t\t\t: Rp.", "Tunjangan\t\t\t\t\t: Rp.",
             "Total Penghasilan\t\t\t\t: Rp.", "Pajak\t\t\t\t\t\t: Rp.", "Total Gaji Bersih\t\t\t\t: Rp." };
     static String[][] array_SlipGajis = new String[0][0];
+    private static String[][] array_SuccessfulTransfers = new String[0][2];
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -653,6 +654,7 @@ public class MainApp {
             transfStatus = true;
             if (transfStatus) {
                 // Add Element Remove Element Array
+                array_SuccessfulTransfers = addElementArray(array_SuccessfulTransfers, id, data_Karyawan[karyawanIndex][1]);
                 arrayPembGaji = removeElementArray(arrayPembGaji, index);
                 System.out.println("Transfer Berhasil");
             } else {
@@ -768,6 +770,16 @@ public class MainApp {
 
             System.out.println(array_SlipGaji_Info[i] + array_SlipGajis[index][i]);
         }
+    }
+
+        public static void transferList() {
+        clearScreen();
+        System.out.println("Daftar Gaji yang Telah Berhasil Ditransfer\n");
+        System.out.println("No\tID\t\tNama");
+        for (int i = 0; i < array_SuccessfulTransfers.length; i++) {
+            System.out.println((i + 1) + "\t" + array_SuccessfulTransfers[i][0] + "\t" + array_SuccessfulTransfers[i][1]);
+        }
+        enterToContinue("Tekan ENTER untuk kembali ke menu:");
     }
 
     public static void cutiKaryawan() {
@@ -1037,6 +1049,9 @@ public class MainApp {
                         printRekapAbsensi();
                         break;
                     case 9:
+                        transferList();
+                        break;
+                    case 10:
                         System.out.println("Anda Telah Log Out.");
                         isRunning = false;
                         break;
