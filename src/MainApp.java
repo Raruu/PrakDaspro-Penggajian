@@ -2,8 +2,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MainApp {
-    final static int JATAHCUTI = 20;
-    final static String PagarPemisah = "###".repeat(47);
     private static Scanner scInput;
     private static String role = "";
     private static String usernameLogin;
@@ -506,9 +504,7 @@ public class MainApp {
 
     public static void perhitunganGaji() {
         clearScreen();
-        // Butuh Input
         int jmlMasuk, jamLembur;
-        // Ga butuh
         int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;
         double pajak = 0.0, total_Gaji, hasil_akhir;
 
@@ -559,7 +555,6 @@ public class MainApp {
             default:
                 System.out.println("Golongan: " + golongan + " tidak ada, perhitungan akan menghasilkan 0");
                 System.out.println("Mohon tinjau kembali data pada menu \"Pengelolaan Data Karyawan\"");
-                enterToContinue("ENTER UNTUK LANJUT: ");
         }
         long pokok_Gaji = jmlMasuk * pokok_GajiHarian;
         int bonus_Gaji = jamLembur * bonus;
@@ -962,11 +957,6 @@ public class MainApp {
             String namaKaryawan = arrayRekapAbsensi[i][0];
             String jmlMasuk = arrayRekapAbsensi[i][1];
             String jmlCuti = arrayRekapAbsensi[i][2];
-
-            if (jmlCuti == null || jmlCuti.isEmpty()) {
-                jmlCuti = "0";
-            }
-
             System.out.printf("%-20s%-15s%-15s\n", namaKaryawan, jmlMasuk, jmlCuti);
             System.out.println();
         }
