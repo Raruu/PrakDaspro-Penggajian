@@ -372,7 +372,6 @@ public class MainApp {
         boolean isRunningAcc = true;
         while (isRunningAcc) {
             System.out.println("--  DATA AKUN  --");
-            // System.out.println("NO    | Username   | Password   | Role");
             System.out.printf("%-5s | %-10s | %-10s | %-5s\n", "NO", "Username", "Password", "Role");
             System.out.println("-----------------------------------------");
             for (int i = 0; i < account.length; i++) {
