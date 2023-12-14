@@ -376,7 +376,7 @@ public class MainApp {
             System.out.printf("%-5s | %-10s | %-10s | %-5s\n", "NO", "Username", "Password", "Role");
             System.out.println("-----------------------------------------");
             for (int i = 0; i < account.length; i++) {
-                String no = String.valueOf(i+1);
+                String no = String.valueOf(i + 1);
                 String usr = account[i][0];
                 String pw = account[i][1];
                 String rl = account[i][2];
@@ -401,11 +401,12 @@ public class MainApp {
                     System.out.println("Hapus Akun\n");
                     if (!akunSelector())
                         break;
-                    if (!summonDialog("Menghapus Akun "+account[index_Karyawan][0]))
-                        {break;}
+                    if (!summonDialog("Menghapus Akun " + account[index_Karyawan][0])) {
+                        break;
+                    }
                     account = removeElementArray(account, index_Karyawan);
                     break;
-                    default:
+                default:
                     clearScreen();
                     System.out.println("Menu " + menuItem + " Tidak ada");
                     break;
@@ -466,8 +467,9 @@ public class MainApp {
                     System.out.println("Hapus Karyawan\n");
                     if (!karyawanSelector())
                         break;
-                    if (!summonDialog("Menghapus Akun "+data_Karyawan[index_Karyawan][1]))
-                        {break;}
+                    if (!summonDialog("Menghapus Akun " + data_Karyawan[index_Karyawan][1])) {
+                        break;
+                    }
                     String karyawanId = data_Karyawan[index_Karyawan][0];
                     int indexPembGaji = getIndexById(arrayPembGaji, 1, karyawanId);
                     while (indexPembGaji > -1) {
@@ -654,7 +656,8 @@ public class MainApp {
             transfStatus = true;
             if (transfStatus) {
                 // Add Element Remove Element Array
-                array_SuccessfulTransfers = addElementArray(array_SuccessfulTransfers, id, data_Karyawan[karyawanIndex][1]);
+                array_SuccessfulTransfers = addElementArray(array_SuccessfulTransfers, id,
+                        data_Karyawan[karyawanIndex][1]);
                 arrayPembGaji = removeElementArray(arrayPembGaji, index);
                 System.out.println("Transfer Berhasil");
             } else {
@@ -772,12 +775,13 @@ public class MainApp {
         }
     }
 
-        public static void transferList() {
+    public static void transferList() {
         clearScreen();
         System.out.println("Daftar Gaji yang Telah Berhasil Ditransfer\n");
         System.out.println("No\tID\t\tNama");
         for (int i = 0; i < array_SuccessfulTransfers.length; i++) {
-            System.out.println((i + 1) + "\t" + array_SuccessfulTransfers[i][0] + "\t" + array_SuccessfulTransfers[i][1]);
+            System.out
+                    .println((i + 1) + "\t" + array_SuccessfulTransfers[i][0] + "\t" + array_SuccessfulTransfers[i][1]);
         }
         enterToContinue("Tekan ENTER untuk kembali ke menu:");
     }
@@ -915,7 +919,7 @@ public class MainApp {
 
         for (int i = 0; i < printArr.length; i++) {
             System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", printArr[i][0], printArr[i][1],
-                    printArr[i][2], printArr[i][3], printArr[i][4], "Rp. "+printArr[i][5]);
+                    printArr[i][2], printArr[i][3], printArr[i][4], "Rp. " + printArr[i][5]);
             System.out.println();
         }
         enterToContinue();
@@ -1009,7 +1013,8 @@ public class MainApp {
                 System.out.println("Login: " + usernameLogin);
                 System.out.println("\nMenu Utama: ");
                 System.out.println(
-                        "1. Pengelolaan Akun\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n6. Cuti Karyawan\n7. Rekap Gaji\n8. Rekap Absensi\n9. LogOut\n0. Keluar Program");
+                        "1. Pengelolaan Akun\n2. Pengelolaan Data Karyawan\n3. Perhitungan Gaji\n4. Lakukan Pembayaran Gaji\n5. Slip Gaji\n"
+                                + "6. Cuti Karyawan\n7. Rekap Gaji\n8. Rekap Absensi\n9. Riwayat Transaksi\n10. LogOut\n0. Keluar Program");
                 System.out.print("\npilih Menu (angka): ");
                 menuItem = intInput();
                 System.out.println();
