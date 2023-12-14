@@ -372,8 +372,9 @@ public class MainApp {
         boolean isRunningAcc = true;
         while (isRunningAcc) {
             System.out.println("--  DATA AKUN  --");
-            System.out.println("NO   | Username   | Password   | Role");
-            System.out.println("-------------------------------");
+            // System.out.println("NO    | Username   | Password   | Role");
+            System.out.printf("%-5s | %-10s | %-10s | %-5s\n", "NO", "Username", "Password", "Role");
+            System.out.println("-----------------------------------------");
             for (int i = 0; i < account.length; i++) {
                 String no = String.valueOf(i+1);
                 String usr = account[i][0];
@@ -400,6 +401,8 @@ public class MainApp {
                     System.out.println("Hapus Akun\n");
                     if (!akunSelector())
                         break;
+                    if (!summonDialog("Menghapus Akun "+account[index_Karyawan][0]))
+                        {break;}
                     account = removeElementArray(account, index_Karyawan);
                     break;
                     default:
@@ -463,7 +466,8 @@ public class MainApp {
                     System.out.println("Hapus Karyawan\n");
                     if (!karyawanSelector())
                         break;
-
+                    if (!summonDialog("Menghapus Akun "+data_Karyawan[index_Karyawan][1]))
+                        {break;}
                     String karyawanId = data_Karyawan[index_Karyawan][0];
                     int indexPembGaji = getIndexById(arrayPembGaji, 1, karyawanId);
                     while (indexPembGaji > -1) {
