@@ -862,7 +862,7 @@ public class MainApp {
 
         for (int i = 0; i < printArr.length; i++) {
             System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", printArr[i][0], printArr[i][1],
-                    printArr[i][2], printArr[i][3], printArr[i][4], printArr[i][5]);
+                    printArr[i][2], printArr[i][3], printArr[i][4], "Rp. "+printArr[i][5]);
             System.out.println();
         }
         enterToContinue();
