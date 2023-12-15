@@ -413,6 +413,8 @@ public class MainApp {
                         if (menuItem <= -1)
                             break;
                         int selectedItem = menuItem;
+                        if (selectedItem >= register.length)
+                            continue;
                         System.out.print(register[selectedItem] + ": ");
 
                         account[index_Karyawan][selectedItem] = scInput.nextLine();
@@ -468,6 +470,8 @@ public class MainApp {
                         if (menuItem <= -1)
                             break;
                         int selectedItem = menuItem;
+                        if (selectedItem > dataKaryawan_Info.length)
+                            continue;
                         System.out.print(dataKaryawan_Info[selectedItem] + ": ");
 
                         data_Karyawan[index_Karyawan][selectedItem] = scInput.nextLine();
