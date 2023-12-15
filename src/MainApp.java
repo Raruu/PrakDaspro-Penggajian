@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.math.BigInteger;
 
 public class MainApp {
     private static Scanner scInput;
@@ -933,18 +934,18 @@ public class MainApp {
                 printArr[i][0] = data_Karyawan[karIndex][0];
                 printArr[i][1] = data_Karyawan[karIndex][1];
                 printArr[i][2] = data_Karyawan[karIndex][2];
-                int jmlMasuk = 0, jamLembur = 0;
-                long hasilAkhir = 0;
+                long jmlMasuk = 0, jamLembur = 0;
+                BigInteger hasilAkhir = new BigInteger("0");
                 for (int j = 0; j < arrayRekapGaji.length; j++) {
                     if (arrayRekapGaji[j][0].contains(ids[i])) {
                         jmlMasuk += Integer.valueOf(arrayRekapGaji[j][1]);
                         jamLembur += Integer.valueOf(arrayRekapGaji[j][2]);
-                        hasilAkhir += Long.valueOf(arrayRekapGaji[j][3]);
+                        hasilAkhir = hasilAkhir.add(BigInteger.valueOf(Long.valueOf(arrayRekapGaji[j][3])));
                     }
                 }
                 printArr[i][3] = String.valueOf(jmlMasuk);
                 printArr[i][4] = String.valueOf(jamLembur);
-                printArr[i][5] = String.valueOf(hasilAkhir);
+                printArr[i][5] = hasilAkhir.toString();
             }
         }
 
@@ -979,7 +980,7 @@ public class MainApp {
         int isIndex = getIndexById(arrayRekapAbsensi, 3, id);
         if (isIndex >= 0)
             arrayRekapAbsensi = removeElementArray(arrayRekapAbsensi, isIndex);
-        if (Integer.valueOf(str[1]) > 0 || Integer.valueOf(str[2]) > 0)
+        if (Long.valueOf(str[1]) > 0 || Long.valueOf(str[2]) > 0)
             arrayRekapAbsensi = addElementArray(arrayRekapAbsensi, str);
     }
 
