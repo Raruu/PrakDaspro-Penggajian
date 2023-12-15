@@ -652,7 +652,7 @@ public class MainApp {
             if (transfStatus) {
                 // Add Element Remove Element Array
                 array_SuccessfulTransfers = addElementArray(array_SuccessfulTransfers, id,
-                        data_Karyawan[karyawanIndex][1]);
+                        data_Karyawan[karyawanIndex][1], bank_Karyawan[0], bank_Karyawan[1],amount);
                 arrayPembGaji = removeElementArray(arrayPembGaji, index);
                 System.out.println("Transfer Berhasil");
             } else {
@@ -773,10 +773,12 @@ public class MainApp {
     public static void transferList() {
         clearScreen();
         System.out.println("Daftar Gaji yang Telah Berhasil Ditransfer\n");
-        System.out.println("No\tID\t\tNama");
+        System.out.printf("%-5s | %-10s | %-10s | %-27s | %-15s\n", "NO", "ID", "NAMA", "BANK(NO.REK)", "NOMINAL");
+        System.out.println("--------------------------------------------------------------------------");
         for (int i = 0; i < array_SuccessfulTransfers.length; i++) {
-            System.out
-                    .println((i + 1) + "\t" + array_SuccessfulTransfers[i][0] + "\t" + array_SuccessfulTransfers[i][1]);
+            System.out.printf("%-5s | %-10s | %-10s | %-27s | %-15s\n", String.valueOf(1+i), array_SuccessfulTransfers[i][0], array_SuccessfulTransfers[i][1],
+                array_SuccessfulTransfers[i][2] + "("+ array_SuccessfulTransfers[i][3] +")", "Rp. "+array_SuccessfulTransfers[i][4]);
+            System.out.println();
         }
         enterToContinue("Tekan ENTER untuk kembali ke menu:");
     }
