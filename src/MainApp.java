@@ -532,8 +532,8 @@ public class MainApp {
     public static void perhitunganGaji() {
         clearScreen();
         int jmlMasuk, jamLembur;
-        int pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;
-        double pajak = 0.0, total_Gaji, hasil_akhir;
+        long pokok_GajiHarian = 0, uangTunjangan = 0, bonus = 0;
+        double pajak = 0.0;
 
         clearScreen();
         System.out.println("Perhitungan Gaji");
@@ -584,10 +584,10 @@ public class MainApp {
                 System.out.println("Mohon tinjau kembali data pada menu \"Pengelolaan Data Karyawan\"");
         }
         long pokok_Gaji = jmlMasuk * pokok_GajiHarian;
-        int bonus_Gaji = jamLembur * bonus;
-        total_Gaji = pokok_Gaji + bonus_Gaji + uangTunjangan;
+        long bonus_Gaji = jamLembur * bonus;
+        long total_Gaji = pokok_Gaji + bonus_Gaji + uangTunjangan;
         double potongan_Pajak = total_Gaji * pajak;
-        hasil_akhir = total_Gaji - potongan_Pajak;
+        long hasil_akhir = total_Gaji - (long) potongan_Pajak;
 
         String id = generateRandomString();
 
@@ -754,8 +754,8 @@ public class MainApp {
         }
     }
 
-    public static void addSlipGaji(String id, String nama, char gol, long pokok_Gaji, int bonus_Gaji, int uangTunjangan,
-            double total_Gaji, double potongan_Pajak, double hasil_Akhir, String karyawanID) {
+    public static void addSlipGaji(String id, String nama, char gol, long pokok_Gaji, long bonus_Gaji,
+            long uangTunjangan, long total_Gaji, double potongan_Pajak, long hasil_Akhir, String karyawanID) {
         String[] str = new String[10];
         str[0] = id;
         str[1] = nama;
