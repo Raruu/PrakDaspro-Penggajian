@@ -675,7 +675,7 @@ public class MainApp {
             if (transfStatus) {
                 // Add Element Remove Element Array
                 array_SuccessfulTransfers = addElementArray(array_SuccessfulTransfers, id,
-                        data_Karyawan[karyawanIndex][1], bank_Karyawan[0], bank_Karyawan[1],amount);
+                        data_Karyawan[karyawanIndex][1], bank_Karyawan[0], bank_Karyawan[1], amount);
                 arrayPembGaji = removeElementArray(arrayPembGaji, index);
                 System.out.println("Transfer Berhasil");
             } else {
@@ -805,8 +805,10 @@ public class MainApp {
         System.out.printf("%-5s | %-10s | %-10s | %-27s | %-15s\n", "NO", "ID", "NAMA", "BANK(NO.REK)", "NOMINAL");
         System.out.println("--------------------------------------------------------------------------");
         for (int i = 0; i < array_SuccessfulTransfers.length; i++) {
-            System.out.printf("%-5s | %-10s | %-10s | %-27s | %-15s\n", String.valueOf(1+i), array_SuccessfulTransfers[i][0], array_SuccessfulTransfers[i][1],
-                array_SuccessfulTransfers[i][2] + "("+ array_SuccessfulTransfers[i][3] +")", "Rp. "+array_SuccessfulTransfers[i][4]);
+            System.out.printf("%-5s | %-10s | %-10s | %-27s | %-15s\n", String.valueOf(1 + i),
+                    array_SuccessfulTransfers[i][0], array_SuccessfulTransfers[i][1],
+                    array_SuccessfulTransfers[i][2] + "(" + array_SuccessfulTransfers[i][3] + ")",
+                    "Rp. " + array_SuccessfulTransfers[i][4]);
             System.out.println();
         }
         enterToContinue("Tekan ENTER untuk kembali ke menu:");
@@ -847,7 +849,7 @@ public class MainApp {
                         System.out.println("Belum ada pengajuan cuti yang diinputkan!!");
                         enterToContinue();
                         return;
-                    }       
+                    }
                     System.out.printf("%-15s%-20s%-15s%-15s\n", "ID Karyawan", "Nama ", "Cuti Hari", "Alasan Cuti");
                     System.out.println("--------------------------------------------------------------");
                     for (int i = 0; i < arrayCutiKaryawan.length; i++) {
