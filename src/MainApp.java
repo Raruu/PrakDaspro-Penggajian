@@ -382,7 +382,7 @@ public class MainApp {
                 System.out.printf("%-5s | %-10s | %-10s | %-5s\n", no, usr, pw, rl);
             }
             System.out.println();
-            System.out.println("0. Kembali\n1. Tambah Akun\n2. Hapus Akun");
+            System.out.println("0. Kembali\n1. Tambah Akun\n2. Edit Akun\n3. Hapus Akun");
             System.out.print("Pilih Menu: ");
             menuItem = intInput();
             switch (menuItem) {
@@ -397,6 +397,28 @@ public class MainApp {
                     System.out.println("Registrasi Berhasil!");
                     break;
                 case 2:
+                    if (!akunSelector())
+                        break;
+
+                    while (true) {
+                        clearScreen();
+                        System.out.println();
+                        for (int i = 0; i < register.length; i++) {
+                            System.out.println(
+                                    (i + 1) + ". " + register[i] + ": "
+                                            + account[index_Karyawan][i]);
+                        }
+                        System.out.print("\nMasukkan '0' untuk keluar,\nPilih nomor untuk di edit: ");
+                        menuItem = intInput() - 1;
+                        if (menuItem <= -1)
+                            break;
+                        int selectedItem = menuItem;
+                        System.out.print(register[selectedItem] + ": ");
+
+                        account[index_Karyawan][selectedItem] = scInput.nextLine();
+                    }
+                    break;
+                case 3:
                     System.out.println("Hapus Akun\n");
                     if (!akunSelector())
                         break;
