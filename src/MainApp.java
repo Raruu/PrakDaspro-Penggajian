@@ -366,8 +366,9 @@ public class MainApp {
         }
     }
 
-    public static void registerPengguna() {
+    public static void pengelolaanAkun() {
         clearScreen();
+        System.out.println("Pengelolaan Akun\n");
         boolean isRunningAcc = true;
         while (isRunningAcc) {
             System.out.println("--  DATA AKUN  --");
@@ -772,6 +773,12 @@ public class MainApp {
 
     public static void transferList() {
         clearScreen();
+        System.out.println("Riwayat Transakasi\n");
+        if (array_SuccessfulTransfers.length <= 0) {
+            System.out.println("Belum ada transfer yang dilakukan/gagal!!");
+            enterToContinue();
+            return;
+        }
         System.out.println("Daftar Gaji yang Telah Berhasil Ditransfer\n");
         System.out.printf("%-5s | %-10s | %-10s | %-27s | %-15s\n", "NO", "ID", "NAMA", "BANK(NO.REK)", "NOMINAL");
         System.out.println("--------------------------------------------------------------------------");
@@ -814,6 +821,11 @@ public class MainApp {
                     enterToContinue("\nPengajuan Cuti Selesai,\nENTER UNTUK LANJUT: ");
                     break;
                 case 2:
+                    if (arrayCutiKaryawan.length <= 0) {
+                        System.out.println("Belum ada pengajuan cuti yang diinputkan!!");
+                        enterToContinue();
+                        return;
+                    }       
                     System.out.printf("%-15s%-20s%-15s%-15s\n", "ID Karyawan", "Nama ", "Cuti Hari", "Alasan Cuti");
                     System.out.println("--------------------------------------------------------------");
                     for (int i = 0; i < arrayCutiKaryawan.length; i++) {
@@ -878,6 +890,7 @@ public class MainApp {
 
     public static void RekapGaji() {
         clearScreen();
+        System.out.println("Rekap Gaji\n");
         if (arrayRekapGaji.length <= 0) {
             System.out.println("Belum ada data perhitungan gaji yang diinputkan!!");
             enterToContinue();
@@ -943,17 +956,18 @@ public class MainApp {
     }
 
     public static void printRekapAbsensi() {
+        clearScreen();
+        System.out.println("Rekap Absensi\n");
+        if (arrayRekapAbsensi.length <= 0) {
+            System.out.println("Belum ada data absensi yang diinputkan!!");
+            enterToContinue();
+            return;
+        }
         System.out.println("=====================================================");
         System.out.println("          Tabel Rekap Jumlah Masuk dan Status Cuti");
         System.out.println("=====================================================");
         System.out.printf("%-20s%-15s%-15s\n", "Nama Karyawan", "Jumlah Masuk", "Jumlah Cuti");
         System.out.println("---------------------------------------------");
-
-        if (arrayRekapAbsensi.length <= 0) {
-            System.out.println("Belum ada data perhitungan gaji yang diinputkan!!");
-            enterToContinue();
-            return;
-        }
 
         for (int i = 0; i < arrayRekapAbsensi.length; i++) {
             String namaKaryawan = arrayRekapAbsensi[i][0];
@@ -1019,7 +1033,7 @@ public class MainApp {
                         break;
                     case 1:
                         if (checkAdmin(role)) {
-                            registerPengguna();
+                            pengelolaanAkun();
                         } else {
                             System.out.println("Mohon maaf anda tidak memiliki hak Akses!");
                         }
