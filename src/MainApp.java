@@ -51,8 +51,8 @@ public class MainApp {
 
     // Slip Gaji
     static String[] array_SlipGaji_Info = { "Id: ", "Atas Nama: ", "Golongan\t\t\t\t\t: ",
-            "Gaji Pokok\t\t\t\t\t: Rp.", "Bonus Gaji\t\t\t\t\t: Rp.", "Tunjangan\t\t\t\t\t: Rp.",
-            "Total Penghasilan\t\t\t\t: Rp.", "Pajak\t\t\t\t\t\t: Rp.", "Total Gaji Bersih\t\t\t\t: Rp." };
+            "Gaji Pokok\t\t\t\t\t: Rp ", "Bonus Gaji\t\t\t\t\t: Rp ", "Tunjangan\t\t\t\t\t: Rp ",
+            "Total Penghasilan\t\t\t\t: Rp ", "Pajak\t\t\t\t\t\t: Rp ", "Total Gaji Bersih\t\t\t\t: Rp " };
     static String[][] array_SlipGajis = new String[0][0];
     private static String[][] array_SuccessfulTransfers = new String[0][2];
 
@@ -367,6 +367,16 @@ public class MainApp {
         }
     }
 
+    public static String renderUang(String str) {
+        if (str.length() < 4)
+            return str;
+        StringBuilder strBuilder = new StringBuilder(str);
+        for (int i = str.length() - 3; i > 0; i -= 3) {
+            strBuilder.insert(i, '.');
+        }
+        return strBuilder.toString();
+    }
+
     public static void pengelolaanAkun() {
         clearScreen();
         System.out.println("Pengelolaan Akun\n");
@@ -664,7 +674,7 @@ public class MainApp {
 
         clearScreen();
         boolean dataValid = false, transfStatus = false;
-        String amount = array_SlipGajis[getIndexById(array_SlipGajis, 0, id)][8];
+        String amount = renderUang(array_SlipGajis[getIndexById(array_SlipGajis, 0, id)][8]);
         String[] bank_Karyawan = { data_Karyawan[karyawanIndex][4], data_Karyawan[karyawanIndex][5] };
         for (int i = 0; i < listBank.length; i++) {
             if (listBank[i][0].equals(bank_Karyawan[0])) {
@@ -674,7 +684,7 @@ public class MainApp {
         }
         if (dataValid) {
             System.out.println(
-                    "Memulai transfer uang sebesar Rp." + amount +
+                    "Memulai transfer uang sebesar Rp " + amount +
                             " ke " + bank_Karyawan[0] + "(" + bank_Karyawan[1] + ")");
             transfStatus = true;
             if (transfStatus) {
@@ -782,6 +792,9 @@ public class MainApp {
 
         System.out.println("Slip gaji\n");
         for (int i = 0; i < array_SlipGaji_Info.length; i++) {
+            boolean uang = true;
+            if (i == 0)
+                uang = false;
             if (i == 1) {
                 System.out.println(
                         array_SlipGaji_Info[i] + array_SlipGajis[index][i] + " [" + array_SlipGajis[index][9] + "]\n");
@@ -794,7 +807,10 @@ public class MainApp {
             if (i == 7)
                 System.out.println("\nPotongan: ");
 
-            System.out.println(array_SlipGaji_Info[i] + array_SlipGajis[index][i]);
+            if (uang)
+                System.out.println(array_SlipGaji_Info[i] + renderUang(array_SlipGajis[index][i]));
+            else
+                System.out.println(array_SlipGaji_Info[i] + array_SlipGajis[index][i]);
         }
     }
 
@@ -813,7 +829,7 @@ public class MainApp {
             System.out.printf("%-5s | %-10s | %-10s | %-27s | %-15s\n", String.valueOf(1 + i),
                     array_SuccessfulTransfers[i][0], array_SuccessfulTransfers[i][1],
                     array_SuccessfulTransfers[i][2] + "(" + array_SuccessfulTransfers[i][3] + ")",
-                    "Rp. " + array_SuccessfulTransfers[i][4]);
+                    "Rp " + array_SuccessfulTransfers[i][4]);
             System.out.println();
         }
         enterToContinue("Tekan ENTER untuk kembali ke menu:");
@@ -945,7 +961,7 @@ public class MainApp {
                 }
                 printArr[i][3] = String.valueOf(jmlMasuk);
                 printArr[i][4] = String.valueOf(jamLembur);
-                printArr[i][5] = hasilAkhir.toString();
+                printArr[i][5] = renderUang(hasilAkhir.toString());
             }
         }
 
@@ -958,7 +974,7 @@ public class MainApp {
 
         for (int i = 0; i < printArr.length; i++) {
             System.out.printf("%-20s%-15s%-15s%-15s%-15s%-15s\n", printArr[i][0], printArr[i][1],
-                    printArr[i][2], printArr[i][3], printArr[i][4], "Rp. " + printArr[i][5]);
+                    printArr[i][2], printArr[i][3], printArr[i][4], "Rp " + printArr[i][5]);
             System.out.println();
         }
         enterToContinue();
