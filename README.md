@@ -18,10 +18,6 @@ Sistem informasi penggajian adalah sistem yang digunakan untuk mengumpulkan, mem
 
 [Readme MainApp](src/README.md)
 
-## Upcoming
-
-Read on [Trello](https://trello.com/b/MzOBfiwW/projek-prodas)
-
 # Kontributor
 
 ```
