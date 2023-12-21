@@ -816,7 +816,7 @@ public class MainApp {
 
     public static void transferList() {
         clearScreen();
-        System.out.println("Riwayat Transakasi\n");
+        System.out.println("Riwayat Transaksi\n");
         if (array_SuccessfulTransfers.length <= 0) {
             System.out.println("Belum ada transfer yang dilakukan/gagal!!");
             enterToContinue();
