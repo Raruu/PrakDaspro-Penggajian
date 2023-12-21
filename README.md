@@ -4,14 +4,15 @@ Sistem informasi penggajian adalah sistem yang digunakan untuk mengumpulkan, mem
 
 # Fitur
 
-1. Login
-1. Perhitungan Gaji
+1. Login dengan [role](https://github.com/Raruu/PrakDaspro-Sistem-Penggajian/blob/main/src/README.md#login) yang berbeda
+2. Pengelolaan data Karyawan
+1. Perhitungan Gaji 
+1. Pembayaran Gaji otomatis dan manual
 1. Cetak Slip Gaji
-1. Pembayaran Gaji Otomatis
-1. Pengelolaan Data Karyawan
-1. Rekap bonus dan lembur
-1. Manajemen absensi dan cuti
+2. Manajemen Absensi dan Cuti
+1. Rekap Gaji dan Absensi
 1. Menampilkan laporan transaksi
+2. Menyimpan hasil Transaksi jika berhasil
 
 # Dokumentasi
 
